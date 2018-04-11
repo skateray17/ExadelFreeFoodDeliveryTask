@@ -1,0 +1,24 @@
+{
+  "name": "exadelfreefooddeliverytask",
+  "version": "1.0.0",
+  "description": "ТЗ: https://docs.google.com/document/d/1QEBhDP-gYN7BMlMHtRNao6CD8cdxf83f_JSsG4vh8hY/edit?usp=sharing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skateray17/ExadelFreeFoodDeliveryTask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skateray17/ExadelFreeFoodDeliveryTask/issues"
+  },
+  "homepage": "https://github.com/skateray17/ExadelFreeFoodDeliveryTask#readme",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
