@@ -2,4 +2,3 @@
 
 After cloning project from repository run the following commands:
     npm install
-    
