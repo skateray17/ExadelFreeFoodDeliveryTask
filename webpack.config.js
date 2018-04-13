@@ -16,9 +16,17 @@ module.exports = {
           'babel-loader',
         ],
       },
+      {
+        test: /\.hbs/,
+        loader: 'handlebars-loader',
+        exclude: /(node_modules|bower_components)/,
+      }
     ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      handlebars: 'handlebars/dist/handlebars.min.js'
+    },
   },
 };

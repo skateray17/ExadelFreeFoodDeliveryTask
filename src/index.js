@@ -1,1 +1,2 @@
-alert('hello its webpack');
+import handlebars from 'handlebars';
+
