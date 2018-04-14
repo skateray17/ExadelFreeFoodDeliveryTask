@@ -20,8 +20,17 @@ module.exports = {
       {
         test: /\.hbs/,
         loader: 'handlebars-loader',
-        exclude: /(node_modules|bower_components)/,
-      }
+        exclude: /(node_moduless)/,
+      },
+      {
+          test: /\.html$/,
+          use: [{
+              loader: 'html-loader',
+              options: {
+                  minimize: true
+              }
+          }]
+      },
     ],
   },
   resolve: {
