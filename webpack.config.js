@@ -18,6 +18,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.css$/,
+        loader: 'style!css!',
+      },
+      {
         test: /\.hbs/,
         loader: 'handlebars-loader',
         exclude: /(node_moduless)/,
