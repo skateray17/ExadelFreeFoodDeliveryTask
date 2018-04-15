@@ -23,20 +23,20 @@ module.exports = {
         exclude: /(node_moduless)/,
       },
       {
-          test: /\.html$/,
-          use: [{
-              loader: 'html-loader',
-              options: {
-                  minimize: true
-              }
-          }]
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true,
+          },
+        }],
       },
     ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      handlebars: 'handlebars/dist/handlebars.min.js'
+      handlebars: 'handlebars/dist/handlebars.min.js',
     },
   },
 };
