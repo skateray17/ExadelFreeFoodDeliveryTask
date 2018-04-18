@@ -3,5 +3,6 @@
 .idea/
 out/
 node_modules/
+build/
 .vscode/
 *.jshintrc
