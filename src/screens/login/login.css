@@ -1,0 +1,83 @@
+#login__screen {
+    background: #95D1C7 no-repeat fixed;
+    height: 100vh;
+    width: 100vw;
+}
+
+#login__content {
+    text-align: center;
+    margin: 0 auto;
+    padding: 170px 0;
+    width: 350px;
+}
+
+#app-name {
+    color: #FFFFFF;
+    display: block;
+    margin: auto;
+    font-size: 40px;
+    font-weight: lighter;
+}
+
+#wrong-data{
+    color: #7a7a7a;
+    margin: auto;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+.login__input {
+    display: block;
+    margin: 10px auto;
+    width: 340px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 5px;
+    background-color: #95D1C7;
+    border: thin solid #FFFFFF;
+    outline: none;
+}
+::placeholder{
+    color: #FFFFFF;
+}
+
+.login__button {
+    display: block;
+    margin: 20px auto;
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 20px;
+    background-color: #95D1C7;
+    border: thin solid #FFFFFF;
+    outline: none;
+}
+.login__button:hover{
+    background-color: #FFFFFF;
+    border: solid  #95D1C7;
+    color: #95D1C7;
+}
+
+.visible{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
+@media screen and (max-width: 960px) {
+    #login__content {
+        padding: 120px 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #login__content {
+        padding: 50px 0;
+    }
+}
