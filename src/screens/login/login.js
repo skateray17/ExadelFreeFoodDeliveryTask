@@ -11,23 +11,22 @@ export default class LoginScreen {
   render(parent, visibility) {
     const context = { email: this.email, password: this.password, show: visibility };
     parent.innerHTML = loginContent(context);
-    // parent.querySelector('#login__content').addEventListener('submit', this.addListener);
+    parent.querySelector('#login__content').addEventListener('submit', (event) => { this.logOn(event); });
   }
 
-  /*
-    addListener() {
-      const formData = new FormData(this.target);
-      this.email = formData.get('email');
-      this.password = formData.get('password');
-      console.log(this.email + " " + this.password);
-      fetch('/api/account/logon', {
-        method: 'POST',
-        body: { email: this.email, password: this.password },
-      }).then((res) => {
-        alert('there will be user o manager screen');
-      }).catch((err) => {
-        this.render(this.parent, 'visible');
-      });
-    }
-    */
+  logOn(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    this.email = formData.get('email');
+    this.password = formData.get('password');
+    fetch('/api/account/logon', {
+      method: 'POST',
+      body: { email: this.email, password: this.password },
+    }).then((res) => {
+      alert('there will be user o manager screen');
+    }).catch((err) => {
+      this.render(this.parent, 'visible');
+    });
+  }
 }
+
