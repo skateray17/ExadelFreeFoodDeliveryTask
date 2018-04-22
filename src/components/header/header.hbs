@@ -1,0 +1,35 @@
+<header class="shadow">
+    {{#if isManagersPage}}
+    <div class="header-content">
+    {{else}}
+    <div class="header-content header-content--narrow">
+    {{/if}}
+        <div class="header-content__button-container">
+            {{#if isUserManager}}
+            <div class="header-content__switch-mode-button">
+                {{#if isManagersPage}}
+                Заказать обед
+                {{else}}
+                Страница менеджера
+                {{/if}}
+            </div>
+            {{/if}}            
+        </div>
+        <div class="header-content__title-container"><span class="header-content__title">Exadel Food Delivery<span></div>
+        <div class="header-content__tools-container">
+            {{#unless isManagersPage}}
+            <div class="header-content__about-user">
+                <span class="header-content__users-login">{{nickname}}</span>
+                <span class="header-content__balance">{{balance}}<span class="header-content__currency">P</span></span>
+            </div>
+            <i class="history-ico material-icons">&#xE889;</i>
+            {{else}}
+            <span class="header-content__logout-label">Выйти</span>
+            {{/unless}}
+            <i class="exit-ico material-icons md-25">&#xE879;</i>
+        </div>
+
+        {{!link "Подробнее..." poem.url}}
+
+    </div>
+</header>
