@@ -15,13 +15,10 @@ Handlebars.registerHelper('link', function(text, options) {
 });
 
 export default class Header{
-
   constructor(){
   }
 
   render(target, props){
-    console.log(props);
     return template(props);
   }
-
 }

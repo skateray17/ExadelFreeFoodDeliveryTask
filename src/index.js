@@ -1,12 +1,12 @@
 import './index.css';
-import AdminScreen from './screens/admin/admin';
+import AdminHomeScreen from './screens/admin/admin';
 
-const admin = new AdminScreen(document.getElementById("screen"));
+const admin = new AdminHomeScreen();
 
 let props = {
   isManagersPage: true,
-  isUserManager: false,
+  isUserManager: true
 };
 
-admin.render(admin.parent, document.getElementById("header"), props);
+admin.render(document.getElementById("screen"), props);
 
