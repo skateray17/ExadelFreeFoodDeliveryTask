@@ -2,30 +2,30 @@ import './login.css';
 import loginContent from './login.hbs';
 
 export default class LoginScreen {
-  constructor(parent, email, password) {
-    this.parent = parent;
-    this.email = email;
-    this.password = password;
+  constructor() {}
+
+  render(target, props) {
+    const context = { email: props.email, show: props.visibility };
+    target.innerHTML = loginContent(context);
+    target.querySelector('#login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
   }
 
-  render(parent, visibility) {
-    const context = { email: this.email, password: this.password, show: visibility };
-    parent.innerHTML = loginContent(context);
-    parent.querySelector('#login__content').addEventListener('submit', (event) => { this.logOn(event); });
-  }
-
-  logOn(event) {
+  logIn(event, target) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    this.email = formData.get('email');
-    this.password = formData.get('password');
+    const _email = formData.get('email');
+    const _password = formData.get('password');
     fetch('/api/account/logon', {
       method: 'POST',
-      body: { email: this.email, password: this.password },
+      body: { email: _email, password: _password },
     }).then((res) => {
-      alert('there will be user o manager screen');
+      res.json();
+    }).then((data) => {
+      document.cookie = `token = ${data.token};`;
+      const username = data.username;
+      const type = data.type;
     }).catch((err) => {
-      this.render(this.parent, 'visible');
+      this.render(target, { visibility: 'visible', email: _email });
     });
   }
 }

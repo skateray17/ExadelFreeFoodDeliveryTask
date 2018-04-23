@@ -1,5 +1,5 @@
 #login__screen {
-    background: #95D1C7 no-repeat fixed;
+    background: #FFFFFF no-repeat fixed;
     height: 100vh;
     width: 100vw;
 }
@@ -12,7 +12,7 @@
 }
 
 #app-name {
-    color: #FFFFFF;
+    color: #000000;
     display: block;
     margin: auto;
     font-size: 38px;
@@ -33,14 +33,14 @@
     height: 40px;
     font-size: 20px;
     text-align: center;
-    color: #FFFFFF;
+    color: #000000;
     border-radius: 5px;
-    background-color: #95D1C7;
-    border: thin solid #FFFFFF;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
     outline: none;
 }
 ::placeholder{
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .login__button {
@@ -50,16 +50,16 @@
     height: 40px;
     font-size: 20px;
     text-align: center;
-    color: #FFFFFF;
+    color: #000000;
     border-radius: 20px;
-    background-color: #95D1C7;
-    border: thin solid #FFFFFF;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
     outline: none;
 }
 .login__button:hover{
-    background-color: #FFFFFF;
-    border: solid  #95D1C7;
-    color: #95D1C7;
+    background-color: #000000;
+    border: solid  #FFFFFF;
+    color: #FFFFFF;
 }
 
 .visible{
