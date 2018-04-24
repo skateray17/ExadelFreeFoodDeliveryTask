@@ -5,7 +5,7 @@ export default class LoginScreen {
   constructor() {}
 
   render(target, props) {
-    const context = { email: props.email, show: props.visibility };
+    const context = { email: props.email, show: props.displayError };
     target.innerHTML = loginContent(context);
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
   }
@@ -25,7 +25,7 @@ export default class LoginScreen {
       const username = data.username;
       const type = data.type;
     }).catch((err) => {
-      this.render(target, { visibility: 'visible', email: _email });
+      this.render(target, { displayError: 'visible', email: _email });
     });
   }
 }
