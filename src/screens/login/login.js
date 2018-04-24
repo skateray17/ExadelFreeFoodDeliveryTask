@@ -2,10 +2,10 @@ import './login.css';
 import loginContent from './login.hbs';
 
 export default class LoginScreen {
-  constructor() {}
-
   render(target, props) {
-    const context = { email: props.email, show: props.displayError };
+    let showProp;
+    props.displayError ? showProp = 'visible' : showProp = 'hidden';
+    const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
   }
@@ -22,10 +22,8 @@ export default class LoginScreen {
       res.json();
     }).then((data) => {
       document.cookie = `token = ${data.token};`;
-      const username = data.username;
-      const type = data.type;
     }).catch((err) => {
-      this.render(target, { displayError: 'visible', email: _email });
+      this.render(target, { displayError: true, email: _email });
     });
   }
 }
