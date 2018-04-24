@@ -34,8 +34,7 @@ export default class Card {
     if (!props.header.active) {
       const cardContent = target.querySelector('.card-content');
       cardContent.innerText = 'Меню еще недоступно';
-      target.querySelector('.card-inside').style.justifyContent = 'center';
-      target.querySelector('.card-inside').style.textAlign = 'center';
+      target.querySelector('.card-inside').classList.add('.not-available-menu');
     } else if (props.orders.length > 4) {
       const showMore = new ShowMore();
       showMore.render(target.querySelector('.free-space'), {

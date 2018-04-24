@@ -51,3 +51,8 @@
 .textCenter {
     text-align: center;
 }
+
+.not-available-menu {
+    text-align: center;
+    justify-content: center;
+}
