@@ -1,12 +1,6 @@
 import './index.css';
-import AdminHomeScreen from './screens/admin/admin';
 
-const admin = new AdminHomeScreen();
+import LoginScreen from './screens/login/login';
 
-const props = {
-  page: 'managerScreen',
-  userRole: 'manager'
-};
-
-const target = document.getElementById('screen');
-admin.render(target, props);
+const login = new LoginScreen();
+login.render(document.getElementById('screen'), { displayError: false });
