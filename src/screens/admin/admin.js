@@ -8,8 +8,9 @@ export default class AdminHomeScreen {
 
     render(screenTarget, props) {
         let adminContent = AdminContent();
+        screenTarget.innerHTML = adminContent;
         let header = new Header();
-        let child = header.render(screenTarget, props);
-        screenTarget.innerHTML = child + adminContent ;
+        header.render(screenTarget, props);
+        return true;
     }
 }

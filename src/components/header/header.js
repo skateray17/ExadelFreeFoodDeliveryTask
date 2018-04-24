@@ -2,23 +2,34 @@ import './header.css';
 import Handlebars from 'handlebars';
 import template from './header.hbs';
 
-// Handlebars.registerHelper("isManager", function(context, options) {
-//   if(context.userRole){
-//     return options.fn(this);
-//   }
-// });
-
-Handlebars.registerHelper('link', function(text, options) {
-  console.log(options.hash['href']);   //значение, лежащее в poem.url
-  console.log(options.hash['class']); //"poem"
-  return new Handlebars.SafeString("<a href=\"" + options.hash['href'] + "\">" + Handlebars.escapeExpression(text) + "</a>");
-});
-
 export default class Header{
+
   constructor(){
+
   }
 
   render(target, props){
-    return template(props);
-  }
+    let headersProps = {
+        isManagersPage: false,
+        isUserManager: false,
+        isUserOnUsersPage: false,
+        nickname: props.nickname,
+        balance: props.balance
+    };
+    if (props.userRole === 'manager'){
+      headersProps.isUserManager = true;
+    }
+    if (props.page === 'manager'){
+      headersProps.isManagersPage = true;
+    }
+    if (props.page === 'user' && props.userRole === 'user'){
+      headersProps.isUserOnUsersPage = true;
+    }
+    let header = document.createElement('header');
+    header.classList.add('shadow');
+    header.innerHTML = template(headersProps);
+    let nextSibling = target.firstChild;
+    target.insertBefore(header, nextSibling);
+    return header;
+    }
 }

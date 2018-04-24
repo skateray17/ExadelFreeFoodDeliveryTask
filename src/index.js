@@ -4,9 +4,12 @@ import AdminHomeScreen from './screens/admin/admin';
 const admin = new AdminHomeScreen();
 
 let props = {
-  isManagersPage: true,
-  isUserManager: true
+  page: 'managerScreen',
+  userRole: 'manager',
+  nickname: 'И. Фамилия',
+  balance: '-30',
 };
 
-admin.render(document.getElementById("screen"), props);
+let target = document.getElementById('screen');
 
+admin.render(target, props);
