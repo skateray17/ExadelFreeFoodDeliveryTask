@@ -5,9 +5,7 @@ const admin = new AdminHomeScreen();
 
 const props = {
   page: 'managerScreen',
-  userRole: 'manager',
-  nickname: 'И. Фамилия',
-  balance: '-30',
+  userRole: 'manager'
 };
 
 const target = document.getElementById('screen');
