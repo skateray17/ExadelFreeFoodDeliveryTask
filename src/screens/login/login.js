@@ -7,7 +7,7 @@ export default class LoginScreen {
   render(target, props) {
     const context = { email: props.email, show: props.visibility };
     target.innerHTML = loginContent(context);
-    target.querySelector('#login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
+    target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
   }
 
   logIn(event, target) {
