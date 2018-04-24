@@ -11,6 +11,6 @@ export default class AdminHomeScreen {
         screenTarget.innerHTML = adminContent;
         const header = new Header();
         header.render(screenTarget, props);
-        return true;
+        return screenTarget;
     }
 }

@@ -3,6 +3,16 @@ body{
     width: 100%;
     background-color: #EEEEEE;
 }
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  font-size: 0;
+  font-family: 'Roboto', sans-serif;
+}
 .shadow{
   box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15);
 }
