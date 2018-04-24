@@ -101,10 +101,14 @@
     bottom: 20px;
     }
 }
-    
-.material-icons.md-50{
+.print-icon{
     font-size: 50px;
-}
-.material-icons.white{
     color: white;
+}
+.print-icon:hover{
+    font-size: 55px;
+}
+.print:hover{
+    width: 70px;
+    height: 70px;
 }
