@@ -1,6 +1,7 @@
 import './header.css';
-import Handlebars from 'handlebars';
+// import Handlebars from 'handlebars';
 import template from './header.hbs';
+import * as utils from '../../common/utils.js';
 
 export default class Header{
 
@@ -9,6 +10,7 @@ export default class Header{
   }
 
   render(target, props){
+    
     let headersProps = {
         isManagersPage: false,
         isUserManager: false,
@@ -25,12 +27,8 @@ export default class Header{
     if (props.page === 'user' && props.userRole === 'user'){
       headersProps.isUserOnUsersPage = true;
     }
-    let header = document.createElement('header');
-    header.classList.add('shadow');
-    header.innerHTML = template(headersProps);
-    let nextSibling = target.firstChild;
-    target.insertBefore(header, nextSibling);
-    return header;
+    let header = utils.createElementsFromString(template(headersProps))[0];
+    return target.appendChild(header);
     }
 
 }

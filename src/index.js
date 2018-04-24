@@ -12,4 +12,4 @@ let props = {
 
 let target = document.querySelector('#screen');
 
-userScreen.render(target, props);
+console.log(userScreen.render(target, props));

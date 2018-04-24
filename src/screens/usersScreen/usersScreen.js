@@ -1,7 +1,8 @@
 import './usersScreen.css';
-import Handlebars from 'handlebars';
+// import Handlebars from 'handlebars';
 import template from './usersScreen.hbs';
 import Header from '../../components/header/header.js';
+import * as utils from '../../common/utils.js';
 
 export default class UsersScreen{
 
@@ -10,11 +11,13 @@ export default class UsersScreen{
   }
 
   render(target, props){
-    let screen =  template();
-    target.innerHTML = screen;
+
     let header = new Header();
-    header.render(document.querySelector("#screen"), props);
-    return header + screen; 
+    let headerResponse = header.render(target, props);
+    let screen =  utils.createElementsFromString(template())[0];
+    target.appendChild(screen);
+    return [headerResponse, screen];
+    
   }
   
 }
