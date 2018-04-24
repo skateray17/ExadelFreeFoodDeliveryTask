@@ -5,8 +5,10 @@
         <div class="free-space"></div>
         {{#if active}}
             <div class="card-footer">
-                <div class="order-price">Сумма заказа: {{orderPrice}} р</div>
-                <button class="edit-button">Редактировать</button>
+                {{#if sumPrice}}
+                    <div class="order-price">Сумма заказа: {{orderPrice}} р</div>
+                {{/if}}
+                <button class="edit-button">{{button}}</button>
             </div>
         {{/if}}
     </div>

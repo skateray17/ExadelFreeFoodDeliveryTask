@@ -5,8 +5,7 @@ let props = {
   header: {
     weekday: 'Понедельник',
     date: '19.04',
-    active: false,
-    headerStyle: 'inactive-card',
+    active: true,
   },
   orders: [
     {
@@ -55,5 +54,5 @@ let props = {
   menu: 'food',
 };
 
-let card = new Card(props);
-card.render(document.getElementById('card-test'));
+let card = new Card();
+card.render(document.getElementById('card-test'), props);

@@ -2,19 +2,15 @@ import header from './header.hbs';
 import './header.css';
 
 export default class CardHeader {
-  constructor(props) {
-    this.props = props;
-  }
 
-  render(parent) {
+  render(target, props) {
     let context = {
-      weekday: this.props.weekday,
-      date: this.props.date,
-      headerStyle: this.props.headerStyle,
+      weekday: props.weekday,
+      date: props.date,
+      headerStyle: props.headerStyle,
     };
 
     let headerTemplate = header(context);
-    parent.innerHTML = headerTemplate;
-
+    target.innerHTML = headerTemplate;
   }
 }
