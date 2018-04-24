@@ -1,15 +1,15 @@
 import './admin.css';
 import AdminContent from './admin.hbs';
-import Header from '../../components/header/header.js';
+import Header from '../../components/header/header';
 
 export default class AdminHomeScreen {
     constructor() {
     }
 
     render(screenTarget, props) {
-        let adminContent = AdminContent();
+        const adminContent = AdminContent();
         screenTarget.innerHTML = adminContent;
-        let header = new Header();
+        const header = new Header();
         header.render(screenTarget, props);
         return true;
     }

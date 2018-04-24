@@ -1,11 +1,8 @@
 import './header.css';
-import Handlebars from 'handlebars';
 import template from './header.hbs';
 
-export default class Header{
-
-  constructor(){
-
+export default class Header {
+  constructor() {
   }
 
   render(target, props){
