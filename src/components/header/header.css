@@ -7,7 +7,7 @@ header{
 	margin: 0 auto;
 	max-width: 1500px;
 	display: flex;
-	min-height: 100px;
+	min-height: 80px;
 }
 
 .header-content--narrow{
@@ -31,7 +31,7 @@ header{
 	border-radius: 2px;
 	color: white;
 	cursor: pointer;
-	font: 400 24px 'Roboto', sans-serif;
+	font: 400 20px 'Roboto', sans-serif;
 	margin-left: 6px;
 	padding: 5px 10px;
 	transition: border .2s;
@@ -76,14 +76,8 @@ header{
 
 .header-content__balance, .header-content__currency{
 	color: #FFFFFF;
-	font: 400 28px 'Roboto', sans-serif;  
+	font: 400 24px 'Roboto', sans-serif;  
 	margin-top: -5px;
-}
-
-.header-content__logout-label{
-  cursor: pointer;
-  color: #FFFFFF;
-  font: 400 28px 'Roboto', sans-serif;    
 }
 
 .exit-ico, .history-ico{
@@ -91,6 +85,10 @@ header{
 	margin-left: 20px;
 	color: #FFFFFF;
 	font-size: 30px !important;/*  to rewrite default material-icons font-size */
+}
+
+.exit-ico--managers-page{
+	margin: 0;
 }
 
 @media screen and (max-width: 880px){
@@ -104,6 +102,10 @@ header{
 
 	.header-content__button-container, .header-content__tools-container{
 		padding-bottom: 15px;
+	}
+
+	.header-content__tools-container--not-manager{
+		justify-content: center;
 	}
 
 }
@@ -126,6 +128,10 @@ header{
 
 	.header-content__title-container{
 		padding: 15px 20px 10px;
+	}
+
+	.header-content__title{
+		font-size: 30px;
 	}
 
 	.header-content__switch-mode-button{

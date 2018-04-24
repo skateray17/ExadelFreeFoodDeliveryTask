@@ -10,13 +10,11 @@ export default class UsersScreen{
   }
 
   render(target, props){
-    let html = template();
+    let screen =  template();
+    target.innerHTML = screen;
     let header = new Header();
-    let child = header.render(target, props);
-    target.innerHTML = child + html;
-    // let childItem = new Child
-    // child.render(place_to_put, properties)
-    return child + html;
+    header.render(document.querySelector("#screen"), props);
+    return header + screen; 
   }
   
 }
