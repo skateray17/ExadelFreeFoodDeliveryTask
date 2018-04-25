@@ -1,7 +1,8 @@
 import './header.css';
 // import Handlebars from 'handlebars';
-import template from './header.hbs';
-import * as utils from '../../common/utils.js';
+import usersHeader from './usersHeader.hbs';
+import managersHeader from './managersHeader.hbs';
+import { createElementsFromString } from '../../common/utils.js';
 
 export default class Header{
 
@@ -10,25 +11,24 @@ export default class Header{
   }
 
   render(target, props){
-    
-    let headersProps = {
-        isManagersPage: false,
-        isUserManager: false,
-        isUserOnUsersPage: false,
-        nickname: props.nickname,
-        balance: props.balance
-    };
-    if (props.userRole === 'manager'){
-      headersProps.isUserManager = true;
-    }
+
+    let header;
     if (props.page === 'manager'){
-      headersProps.isManagersPage = true;
+      header = createElementsFromString(managersHeader())[0];
     }
-    if (props.page === 'user' && props.userRole === 'user'){
-      headersProps.isUserOnUsersPage = true;
+    if (props.page === 'user'){
+      let headersProps = {
+      isUserManager: false,
+      nickname: props.nickname,
+      balance: props.balance
+      };
+      if (props.userRole === 'manager'){
+        headersProps.isUserManager = true;
+      }
+      header = createElementsFromString(usersHeader(headersProps))[0];
     }
-    let header = utils.createElementsFromString(template(headersProps))[0];
     return target.appendChild(header);
+
     }
 
 }

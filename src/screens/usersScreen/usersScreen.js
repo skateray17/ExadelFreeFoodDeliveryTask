@@ -2,7 +2,7 @@ import './usersScreen.css';
 // import Handlebars from 'handlebars';
 import template from './usersScreen.hbs';
 import Header from '../../components/header/header.js';
-import * as utils from '../../common/utils.js';
+import { createElementsFromString } from '../../common/utils.js';
 
 export default class UsersScreen{
 
@@ -13,10 +13,10 @@ export default class UsersScreen{
   render(target, props){
 
     let header = new Header();
-    let headerResponse = header.render(target, props);
-    let screen =  utils.createElementsFromString(template())[0];
+    header.render(target, props);
+    let screen =  createElementsFromString(template())[0];
     target.appendChild(screen);
-    return [headerResponse, screen];
+    return screen;
     
   }
   
