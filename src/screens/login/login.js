@@ -4,7 +4,11 @@ import loginContent from './login.hbs';
 export default class LoginScreen {
   render(target, props) {
     let showProp;
-    props.displayError ? showProp = 'visible' : showProp = 'hidden';
+    if (props.displayError) {
+      showProp = 'visible';
+    } else {
+      showProp = 'hidden';
+    }
     const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
