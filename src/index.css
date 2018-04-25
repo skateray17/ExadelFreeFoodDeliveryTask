@@ -5,6 +5,10 @@
   outline: none;
   box-shadow: none;
   border: none;
-  font-size: 0;
   font-family: 'Tajawal', sans-serif;
 }
+
+body {
+    background-color: #eee;
+}
+

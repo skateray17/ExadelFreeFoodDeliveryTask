@@ -7,39 +7,14 @@ import ShowMore from './showMore/showMore';
 
 export default class Card {
   render(target, props) {
-    let orderPrice = 0;
-    for (const order of props.orders) {
-      orderPrice += order.price;
-    }
-
-    const cardContext = {
-      orderPrice,
-      active: props.header.active,
-      button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
-      sumPrice: props.orders.length > 0,
-    };
-
-    const cardTemplate = card(cardContext);
+    const cardTemplate = card(this.createCardProps(props));
     target.innerHTML = cardTemplate;
 
-    if (props.header.active) {
-      props.header.headerStyle = 'active-card';
-    } else {
-      props.header.headerStyle = 'inactive-card';
-    }
-
     const header = new Header();
-    header.render(target.querySelector('.header'), props.header);
+    header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
 
-    if (!props.header.active) {
-      const cardContent = target.querySelector('.card-content');
-      cardContent.innerText = 'Меню еще недоступно';
-      target.querySelector('.card-inside').classList.add('.not-available-menu');
-    } else if (props.orders.length > 4) {
-      const showMore = new ShowMore();
-      showMore.render(target.querySelector('.free-space'), {
-        numberOfAdditionalOrders: props.orders.length - 3,
-      });
+    if (props.orders.length > 4) {
+      this.createShowMore(target, props);
 
       for (let i = 0; i < 4; i++) {
         const orderItem = new OrderItem();
@@ -50,14 +25,41 @@ export default class Card {
         const orderItem = new OrderItem();
         orderItem.render(target.querySelector('.card-content'), order);
       }
-    } else if (props.orders.length === 0) {
-      const cardContent = target.querySelector('.card-content');
-      cardContent.innerText = 'Меню не выбрано';
-      target.querySelector('.card-content').style.textAlign = 'center';
-
-      const dog = document.createElement('img');
-      dog.src = 'images/spottyDog.jpg';
-      target.querySelector('.card-content').appendChild(dog);
     }
+  }
+
+  createShowMore(target, props) {
+    const showMore = new ShowMore();
+    showMore.render(target.querySelector('.free-space'), {
+      numberOfAdditionalOrders: props.orders.length - 3,
+    });
+  }
+
+  countOrderPrice(props) {
+    let orderPrice = 0;
+    for (const order of props.orders) {
+      orderPrice += order.price;
+    }
+    return orderPrice;
+  }
+
+  createHeaderProps(props) {
+    return {
+      weekday: props.weekday,
+      date: props.date,
+      headerStyle: props.active ? 'active-card' : 'inactive-card',
+    };
+  }
+
+  createCardProps(props) {
+    let orderPrice = this.countOrderPrice(props);
+
+    return {
+      orderPrice,
+      active: props.header.active,
+      button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
+      sumPrice: props.orders.length > 0,
+      emptyMenu: props.orders.length === 0,
+    };
   }
 }

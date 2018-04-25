@@ -8,6 +8,7 @@ let props = {
     active: true,
   },
   orders: [
+
     {
       name: 'Cуп',
       mass: '250г',
