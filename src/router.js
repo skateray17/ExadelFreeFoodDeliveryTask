@@ -7,22 +7,39 @@ export default class Router {
 
   init() {
     window.addEventListener('hashchange', (url) => { this.render(url); });
-    window.location.hash = 'login';
+    this.render(window.location.hash);
   }
 
-  render(url) {
-    const temp = url.newURL.split('/')[3];
-    const props = url.newURL.split('/')[4];
+  navigate(path) {
+    window.location.hash = path;
+  }
 
-    // Hide whatever page is currently shown.
+  cleanContainer() {
     if (this.rootElement.hasChildNodes()) {
       this.rootElement.removeChild(this.rootElement.childNodes[0]);
     }
-    const field = temp.substring(1);
-    if (this.routes.hasOwnProperty(field)) {
-      const component = new this.routes[field].component().render(this.rootElement, {});
+  }
+
+  render(url) {
+    if (url.newURL) {
+      const temp = url.newURL.split('/')[3];
+
+      if (temp === '') {
+        this.navigate(this.routes.rootPath);
+      }
+
+      const props = url.newURL.split('/')[4];
+
+      this.cleanContainer();
+
+      const field = temp.substring(1);
+      if (this.routes.hasOwnProperty(field)) {
+        const component = new this.routes[field].component().render(this.rootElement, this, {});
+      } else {
+        window.location.hash = 'error';
+      }
     } else {
-      window.location.hash = 'error';
+      this.navigate(this.routes.rootPath);
     }
   }
 }
