@@ -4,14 +4,17 @@
     display: flex;
     flex-direction: column;
     background-color: white;
+    font-size: 19px;
 }
 
 
 .card-inside {
+    font-size: 19px;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-between;
+    font-size: 19px;
 }
 
 .card-header {
@@ -21,6 +24,7 @@
     flex-direction: row;
     line-height: 50px;
     height: 50px;
+    font-size: 19px;
 }
 
 .card-footer {
@@ -34,6 +38,7 @@
 
 .order-price {
     margin: 20px 0;
+    font-size: 19px;
 }
 
 .edit-button {
@@ -49,11 +54,23 @@
     position: relative;
 }
 
-.textCenter {
+.text-center {
     text-align: center;
 }
 
 .not-available-menu {
     text-align: center;
     justify-content: center;
+}
+
+.center-text {
+    flex-grow: 2;
+    justify-content: center;
+    display: flex;
+}
+
+.not-chosen-menu {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
 }

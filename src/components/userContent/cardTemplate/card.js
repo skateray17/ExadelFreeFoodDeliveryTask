@@ -13,14 +13,14 @@ export default class Card {
     const header = new Header();
     header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
 
-    if (props.orders.length > 4) {
+    if (props.orders.length > 3 && props.header.active) {
       this.createShowMore(target, props);
 
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
         const orderItem = new OrderItem();
         orderItem.render(target.querySelector('.card-content'), props.orders[i]);
       }
-    } else if (props.orders.length > 0 && props.orders.length <= 4) {
+    } else if (props.orders.length > 0 && props.orders.length <= 3 && props.header.active) {
       for (const order of props.orders) {
         const orderItem = new OrderItem();
         orderItem.render(target.querySelector('.card-content'), order);
@@ -52,10 +52,8 @@ export default class Card {
   }
 
   createCardProps(props) {
-    let orderPrice = this.countOrderPrice(props);
-
     return {
-      orderPrice,
+      orderPrice: props.orderPrice,
       active: props.header.active,
       button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
       sumPrice: props.orders.length > 0,
