@@ -1,20 +1,19 @@
 import LoginScreen from './screens/login/login';
 import ErrorScreen from './screens/error/error';
 import AdminHomeScreen from './screens/admin/admin';
-import Guards from './guards';
 
 export const routes = {
   login: {
     component: LoginScreen,
-    guards: [Guards.authGuard()],
+    guards: [],
   },
   main: {
     component: LoginScreen,
-    guards: [Guards.authGuard(), Guards.roleGuard(['admin', 'user'])],
+    guards: [],
   },
   admin: {
     component: AdminHomeScreen,
-    guards: [Guards.authGuard(), Guards.roleGuard(['admin'])],
+    guards: [],
   },
   error: {
     component: ErrorScreen,

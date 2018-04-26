@@ -2,7 +2,11 @@ import './login.css';
 import loginContent from './login.hbs';
 
 export default class LoginScreen {
-  render(target, router, props) {
+  constructor(router) {
+    this.router = router;
+  }
+
+  render(target, props) {
     let showProp;
     if (props.displayError) {
       showProp = 'visible';
@@ -11,7 +15,7 @@ export default class LoginScreen {
     }
     const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
-    target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target, router); });
+    target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
   }
 
   logIn(event, target, router) {
@@ -21,12 +25,12 @@ export default class LoginScreen {
     const _password = formData.get('password');
 
     if (_email === 'u@u') {
-      router.navigate('main');
+      this.router.navigate('main');
     }
     if (_email === 'm@m') {
-      router.navigate('admin');
+      this.router.navigate('admin');
     } else {
-      this.render(target, router, { displayError: true, email: _email });
+      this.render(target, { displayError: true, email: _email });
     }
     /*
     fetch('/api/account/logon', {

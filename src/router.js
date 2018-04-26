@@ -34,7 +34,7 @@ export default class Router {
 
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
-        const component = new this.routes[field].component().render(this.rootElement, this, {});
+        const component = new this.routes[field].component(this).render(this.rootElement, {});
       } else {
         window.location.hash = 'error';
       }

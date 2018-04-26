@@ -1,4 +1,3 @@
-
 export default class Guards {
   static authGuard() {
     const token = document.cookie.token;
