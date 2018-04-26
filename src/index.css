@@ -6,11 +6,12 @@
   box-shadow: none;
   border: none;
   font-size: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 body{
-  min-height: 100vh;
   background-color: #EEEEEE;
+  min-height: 100vh;
 }
 
 .shadow{
