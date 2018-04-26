@@ -6,7 +6,7 @@ export default class Router {
   }
 
   init() {
-    window.addEventListener('hashchange', (url) => { this.render(url); });
+    window.addEventListener('hashchange', (url) => { this.render(url.newURL); });
     this.render(window.location.hash);
   }
 
@@ -21,14 +21,14 @@ export default class Router {
   }
 
   render(url) {
-    if (url.newURL) {
-      const temp = url.newURL.split('/')[3];
+    if (url) {
+      const temp = url.split('/')[3];
 
       if (temp === '') {
         this.navigate(this.routes.rootPath);
       }
 
-      const props = url.newURL.split('/')[4];
+      const props = url.split('/')[4];
 
       this.cleanContainer();
 
