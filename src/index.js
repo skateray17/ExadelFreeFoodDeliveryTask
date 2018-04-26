@@ -1,10 +1,12 @@
 import './index.css';
+import UsersScreen from './screens/user/user.js';
+import ManagersScreen from './screens/manager/manager.js';
 
-import UsersScreen from './screens/usersScreen/usersScreen.js';	 
-let userScreen = new UsersScreen();
+let usersScreen = new UsersScreen();
+let managersScreen = new ManagersScreen();
 
 let props = {
-  page: 'user',
+  page: 'manager',
   userRole: 'manager',
   nickname: 'И. Фамилия',
   balance: '-30',
@@ -12,4 +14,4 @@ let props = {
 
 let target = document.querySelector('#screen');
 
-console.log(userScreen.render(target, props));
+console.log(managersScreen.render(target, props));

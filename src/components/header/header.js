@@ -1,5 +1,4 @@
 import './header.css';
-// import Handlebars from 'handlebars';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
 import { createElementsFromString } from '../../common/utils.js';
