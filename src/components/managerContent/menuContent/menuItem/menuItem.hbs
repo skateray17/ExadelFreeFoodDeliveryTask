@@ -1,0 +1,12 @@
+{{#each dayMenu}}
+<div class="menu-item">
+    <div class="menu-item__day">{{day}}</div>
+    {{#each dish}}
+    <div class="menu-item__dish">
+        <div class="dish-name">{{dishName}}</div>
+        <div class="dish-weight">{{dishWeight}}</div>
+        <div class="dish-price">{{dishPrice}}</div>
+    </div>
+    {{/each}}
+</div>
+{{/each}}

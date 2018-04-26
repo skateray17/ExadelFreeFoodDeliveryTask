@@ -1,0 +1,19 @@
+<div class="menu-table">
+    <div class="week-tab">
+        <div class="week-tab__pick-week picked-week">
+            Current week
+        </div>
+        <div class="week-tab__pick-week">
+            Next week
+        </div>
+    </div>
+    <div class="menu-table__date">{{date}}</div>
+    {{#if menu}}
+    <div class="menu-content" id="menu-content"></div>
+    {{else}}
+    <div class="upload-menu">
+        <div class="upload-menu__message">There is no menu loaded.</div>
+        <button class="upload-menu__button">Choose file</button>
+    </div>
+    {{/if}}
+</div>
