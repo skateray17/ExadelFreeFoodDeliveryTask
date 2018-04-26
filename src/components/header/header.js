@@ -1,33 +1,25 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
-import { createElementsFromString } from '../../common/utils.js';
+import { createElementsFromString } from '../../common/utils';
 
-export default class Header{
-
-  constructor(){
-
-  }
-
-  render(target, props){
-
+export default class Header {
+  render(target, props) {
     let header;
-    if (props.page === 'manager'){
-      header = createElementsFromString(managersHeader())[0];
+    if (props.page === 'manager') {
+      header = createElementsFromString(managersHeader());
     }
-    if (props.page === 'user'){
-      let headersProps = {
-      isUserManager: false,
-      nickname: props.nickname,
-      balance: props.balance
+    if (props.page === 'user') {
+      const headersProps = {
+        isUserManager: false,
+        nickname: props.nickname,
+        balance: props.balance,
       };
-      if (props.userRole === 'manager'){
+      if (props.userRole === 'manager') {
         headersProps.isUserManager = true;
       }
-      header = createElementsFromString(usersHeader(headersProps))[0];
+      header = createElementsFromString(usersHeader(headersProps));
     }
     return target.appendChild(header);
-
-    }
-
+  }
 }

@@ -1,22 +1,14 @@
 import './manager.css';
 import template from './manager.hbs';
-import Header from '../../components/header/header.js';
-import { createElementsFromString } from '../../common/utils.js';
+import Header from '../../components/header/header';
+import { createElementsFromString } from '../../common/utils';
 
 export default class ManagersScreen {
-
-  constructor() {
-
-  }
-
   render(target, props) {
-
-    let header = new Header();
+    const header = new Header();
     header.render(target, props);
-    let screen = createElementsFromString(template())[0];
+    const screen = createElementsFromString(template());
     target.appendChild(screen);
     return screen;
-
   }
-
 }
