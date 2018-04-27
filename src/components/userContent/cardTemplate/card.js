@@ -4,6 +4,7 @@ import Header from './cardHeader/header';
 import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
 
+const MAX_VISIBLE_ITEMS = 3;
 
 export default class Card {
   render(target, props) {
@@ -13,25 +14,28 @@ export default class Card {
     const header = new Header();
     header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
 
-    if (props.orders.length > 3 && props.header.active) {
+    if (props.orders.length > MAX_VISIBLE_ITEMS && props.header.active) {
       this.createShowMore(target, props);
 
-      for (let i = 0; i < 3; i++) {
-        const orderItem = new OrderItem();
-        orderItem.render(target.querySelector('.card-content'), props.orders[i]);
+      for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
+        this.createOrderItem(target, props.orders[i]);
       }
-    } else if (props.orders.length > 0 && props.orders.length <= 3 && props.header.active) {
+    } else if (props.orders.length > 0 && props.orders.length <= MAX_VISIBLE_ITEMS && props.header.active) {
       for (const order of props.orders) {
-        const orderItem = new OrderItem();
-        orderItem.render(target.querySelector('.card-content'), order);
+        this.createOrderItem(target, order);
       }
     }
+  }
+
+  createOrderItem(target, order) {
+    const orderItem = new OrderItem();
+    orderItem.render(target.querySelector('.card-content'), order);
   }
 
   createShowMore(target, props) {
     const showMore = new ShowMore();
     showMore.render(target.querySelector('.free-space'), {
-      numberOfAdditionalOrders: props.orders.length - 3,
+      numberOfAdditionalOrders: props.orders.length - MAX_VISIBLE_ITEMS,
     });
   }
 
