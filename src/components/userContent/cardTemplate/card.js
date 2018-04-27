@@ -3,13 +3,14 @@ import card from './card.hbs';
 import Header from './cardHeader/header';
 import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
+import { createElementsFromString } from '../../../common/utils';
 
 const MAX_VISIBLE_ITEMS = 3;
 
 export default class Card {
   render(target, props) {
     const cardTemplate = card(this.createCardProps(props));
-    target.innerHTML = cardTemplate;
+    target.appendChild(createElementsFromString(cardTemplate));
 
     const header = new Header();
     header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
