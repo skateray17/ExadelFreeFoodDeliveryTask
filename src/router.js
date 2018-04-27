@@ -15,7 +15,7 @@ export default class Router {
   }
 
   cleanContainer() {
-    if (this.rootElement.hasChildNodes()) {
+    while (this.rootElement.hasChildNodes()) {
       this.rootElement.removeChild(this.rootElement.childNodes[0]);
     }
   }
