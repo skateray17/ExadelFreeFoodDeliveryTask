@@ -1,0 +1,13 @@
+.card-header {
+    color: white;
+    font-size: 17px;
+    padding: 5px 15px 0 15px;
+}
+
+.active-card {
+    background-color: #5aad3c;
+}
+
+.inactive-card {
+    background-color: #ccc;
+ }
