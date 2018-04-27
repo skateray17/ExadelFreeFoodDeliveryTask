@@ -1,5 +1,6 @@
 import header from './header.hbs';
 import './header.css';
+import { createElementsFromString } from '../../../../../src/common/utils';
 
 export default class CardHeader {
 
@@ -11,6 +12,6 @@ export default class CardHeader {
     };
 
     let headerTemplate = header(context);
-    target.innerHTML = headerTemplate;
+    target.appendChild(createElementsFromString(headerTemplate));
   }
 }

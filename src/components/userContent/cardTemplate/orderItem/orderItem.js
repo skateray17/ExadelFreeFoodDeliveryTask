@@ -1,13 +1,10 @@
 import './orderItem.css';
 import orderItem from './orderItem.hbs';
+import { createElementsFromString } from '../../../../../src/common/utils';
 
 export default class OrderItem {
   render(target, props) {
     let orderItemTemplate = orderItem(props);
-
-    let fieldForOrderItem = document.createElement('div');
-    fieldForOrderItem.innerHTML = orderItemTemplate;
-
-    target.appendChild(fieldForOrderItem);
+    target.appendChild(createElementsFromString(orderItemTemplate));
   }
 }
