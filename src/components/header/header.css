@@ -1,0 +1,148 @@
+header{
+	background-color: #008AFF;
+}
+
+.header-content{
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 1500px;
+	display: flex;
+	min-height: 80px;
+}
+
+.header-content--narrow{
+  max-width: 1000px;
+}
+
+.header-content__button-container, .header-content__title-container, .header-content__tools-container{
+	display: flex;
+	flex: 1;
+}
+
+.header-content__button-container{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.header-content__switch-mode-button{
+  text-align: center;
+	border:  2px solid #008AFF;
+	border-radius: 2px;
+	color: white;
+	cursor: pointer;
+	font: 400 20px 'Roboto', sans-serif;
+	margin-left: 6px;
+	padding: 5px 10px;
+	transition: border .2s;
+}
+
+.header-content__switch-mode-button:hover{
+	border: 2px solid #FFFFFF;
+}
+
+.header-content__title-container{
+	margin: 0 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 325px;
+}
+
+.header-content__title{
+	font: 300 35px 'Roboto', sans-serif;
+	color: white;
+	cursor: pointer;
+}
+
+.header-content__tools-container{
+	padding-right: 16px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.header-content__about-user{
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+}
+
+.header-content__users-login{
+	text-align: right;
+	color: #FFFFFF;
+	font: 400 22px 'Roboto', sans-serif;
+}
+
+.header-content__balance, .header-content__currency{
+	color: #FFFFFF;
+	font: 400 24px 'Roboto', sans-serif;  
+	margin-top: -5px;
+}
+
+.exit-ico, .history-ico{
+	cursor: pointer;
+	margin-left: 20px;
+	color: #FFFFFF;
+	font-size: 30px !important;/*  to rewrite default material-icons font-size */
+}
+
+.exit-ico--managers-page{
+	margin: 0;
+}
+
+@media screen and (max-width: 880px){
+
+	.header-content__title-container{
+		margin: 0;
+		order: -1;
+		min-width: 100%;
+		padding: 15px 0 10px;
+	}
+
+	.header-content__button-container, .header-content__tools-container{
+		padding-bottom: 15px;
+	}
+
+	.header-content__button-container--not-manager{
+		display: none;
+	}
+
+	.header-content__tools-container--not-manager{
+		justify-content: center;
+	}
+
+}
+
+@media screen and (max-width: 550px){
+
+	.header-content__title{
+		text-align: center;
+	}
+
+	.header-content__switch-mode-button{
+		margin: 0;
+	}
+
+	.header-content__button-container, .header-content__tools-container{
+		min-width: 100%;
+		padding: 0 15px 15px;
+		justify-content: center;
+	}
+
+	.header-content__title-container{
+		padding: 15px 20px 10px;
+	}
+
+	.header-content__title{
+		font-size: 30px;
+	}
+
+	.header-content__switch-mode-button{
+		margin-top: 5px;
+		border-color: #FFFFFF;
+		width: 100%;
+		text-align: center;
+	}
+
+}

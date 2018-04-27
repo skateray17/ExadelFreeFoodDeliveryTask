@@ -5,11 +5,15 @@
   outline: none;
   box-shadow: none;
   border: none;
-  font-family: 'Tajawal', sans-serif;
-    font-size: 0;
+  font-size: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
-body {
-    background-color: #eee;
+body{
+  background-color: #EEEEEE;
+  min-height: 100vh;
 }
 
+.shadow{
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15);
+}

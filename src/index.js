@@ -1,5 +1,17 @@
 import './index.css';
-import LoginScreen from './screens/login/login';
+import UsersScreen from './screens/user/user';
+import ManagersScreen from './screens/manager/manager';
 
-const login = new LoginScreen();
-login.render(document.getElementById('screen'), { displayError: false });
+const usersScreen = new UsersScreen();
+const managersScreen = new ManagersScreen();
+
+const props = {
+  page: 'manager',
+  userRole: 'manager',
+  nickname: 'И. Фамилия',
+  balance: '-30',
+};
+
+const target = document.querySelector('#screen');
+
+managersScreen.render(target, props);
