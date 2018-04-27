@@ -1,5 +1,6 @@
 import './login.css';
 import loginContent from './login.hbs';
+import { tempUser } from '../../common/user.service';
 
 export default class LoginScreen {
   constructor(router) {
@@ -25,15 +26,23 @@ export default class LoginScreen {
     const _password = formData.get('password');
 
     if (_email === 'u@u') {
+      tempUser.name = 'Alex';
+      tempUser.role = 1;
+      tempUser.balance = 20;
+      document.cookie = 'token = u@u;';
       this.router.navigate('main');
       return;
     }
     if (_email === 'm@m') {
+      tempUser.name = 'Margo';
+      tempUser.role = 10;
+      tempUser.balance = 0;
+      document.cookie = 'token = m@m;';
       this.router.navigate('admin');
-      return;
     } else {
       this.render(target, { displayError: true, email: _email });
     }
+
     /*
     fetch('/api/account/logon', {
       method: 'POST',

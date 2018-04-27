@@ -35,18 +35,18 @@ export default class Router {
 
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
-        /*
         const guards = this.routes[field].guards;
 
         for (let i = 0; i < guards.length; i++) {
-          if (guards[i]().allow) {
-            continue;
-          } else {
-            this.navigate(guards[i]().path);
-            return;
+          const guard = guards[i];
+          const guardResult = guard();
+          if (!guardResult.allow) {
+            //console.log(guardResult);
+            setTimeout(() => this.navigate(guardResult.path), 0);
+            break;
           }
         }
-        */
+
         const component = new this.routes[field].component(this).render(this.rootElement, {});
       } else {
         this.navigate('error');

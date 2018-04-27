@@ -1,36 +1,32 @@
+import { tempUser } from './common/user.service';
+
 export default class Guards {
-  static checkRole(role) {
+  static checkRole() {
     let rolePath;
-    if (role === 'user') {
+    if (tempUser.role === 1) {
       rolePath = 'main';
     }
-    if (role === 'admin') {
+    if (tempUser.role === 10) {
       rolePath = 'admin';
     }
     return rolePath;
   }
 
-  static guestGuard() {
-    const token = document.cookie.token;
-    const auth = (token === null || token === undefined);
-    const role = 'user';
-    const rolePath = Guards.checkRole(role);
-    return { allow: !auth, path: rolePath };
-  }
-
-  static authGuard() {
-    const token = document.cookie.token;
-    const auth = (token !== null && typeof token !== 'undefined');
-    const role = 'user';
-    const rolePath = Guards.checkRole(role);
-    return { allow: auth, path: 'login' };
+  static authGuard(path) {
+    return function () {
+      const auth = (document.cookie.indexOf('token') !== -1);
+      const rolePath = Guards.checkRole();
+      if (path !== 'login') {
+        return { allow: auth, path: 'login' };
+      }
+      return { allow: !auth, path: rolePath };
+    };
   }
 
   static roleGuard(roles) {
     return function () {
-      const role = 'user';
-      const isAllowed = (roles.indexOf(role) !== -1);
-      const rolePath = Guards.checkRole(role);
+      const isAllowed = (roles.indexOf(tempUser.role) !== -1);
+      const rolePath = Guards.checkRole();
       return { allow: isAllowed, path: 'error' };
     };
   }
