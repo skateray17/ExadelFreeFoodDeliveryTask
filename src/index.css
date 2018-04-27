@@ -1,8 +1,3 @@
-body{
-    height: 100%;
-    width: 100%;
-    background-color: #EEEEEE;
-}
 *{
   margin: 0;
   padding: 0;
@@ -13,6 +8,12 @@ body{
   font-size: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+body{
+  background-color: #EEEEEE;
+  min-height: 100vh;
+}
+
 .shadow{
   box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15);
 }

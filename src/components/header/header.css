@@ -104,6 +104,10 @@ header{
 		padding-bottom: 15px;
 	}
 
+	.header-content__button-container--not-manager{
+		display: none;
+	}
+
 	.header-content__tools-container--not-manager{
 		justify-content: center;
 	}
