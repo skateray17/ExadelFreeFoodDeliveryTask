@@ -35,6 +35,7 @@ export default class Router {
 
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
+        /*
         const guards = this.routes[field].guards;
 
         for (let i = 0; i < guards.length; i++) {
@@ -45,14 +46,13 @@ export default class Router {
             return;
           }
         }
+        */
         const component = new this.routes[field].component(this).render(this.rootElement, {});
       } else {
         this.navigate('error');
-        return;
       }
     } else {
       this.navigate(this.routes.rootPath);
-      return;
     }
   }
 }
