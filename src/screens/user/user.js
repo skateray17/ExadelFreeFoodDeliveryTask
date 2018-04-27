@@ -4,6 +4,10 @@ import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 
 export default class UsersScreen {
+  constructor(router) {
+    this.router = router;
+  }
+
   render(target, props) {
     const header = new Header();
     header.render(target, props);

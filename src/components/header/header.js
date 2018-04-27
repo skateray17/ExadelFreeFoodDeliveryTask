@@ -5,6 +5,12 @@ import { createElementsFromString } from '../../common/utils';
 
 export default class Header {
   render(target, props) {
+    props = {
+      page: 'manager',
+      userRole: 'manager',
+      nickname: 'И. Фамилия',
+      balance: '-30',
+    };
     let header;
     if (props.page === 'manager') {
       header = createElementsFromString(managersHeader());
