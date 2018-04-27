@@ -7,7 +7,7 @@ export default class Router {
 
   init() {
     window.addEventListener('hashchange', (url) => { this.render(url.newURL); });
-    this.render(window.location.hash);
+    this.render(window.location.href);
   }
 
   navigate(path) {
@@ -26,6 +26,7 @@ export default class Router {
 
       if (temp === '') {
         this.navigate(this.routes.rootPath);
+        return;
       }
 
       const props = url.split('/')[4];
@@ -34,12 +35,24 @@ export default class Router {
 
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
+        const guards = this.routes[field].guards;
+
+        for (let i = 0; i < guards.length; i++) {
+          if (guards[i]().allow) {
+            continue;
+          } else {
+            this.navigate(guards[i]().path);
+            return;
+          }
+        }
         const component = new this.routes[field].component(this).render(this.rootElement, {});
       } else {
-        window.location.hash = 'error';
+        this.navigate('error');
+        return;
       }
     } else {
       this.navigate(this.routes.rootPath);
+      return;
     }
   }
 }

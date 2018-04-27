@@ -26,9 +26,11 @@ export default class LoginScreen {
 
     if (_email === 'u@u') {
       this.router.navigate('main');
+      return;
     }
     if (_email === 'm@m') {
       this.router.navigate('admin');
+      return;
     } else {
       this.render(target, { displayError: true, email: _email });
     }
