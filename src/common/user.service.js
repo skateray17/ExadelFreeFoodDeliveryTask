@@ -1,5 +1,8 @@
-export const tempUser = {
-  name: '',
-  role: 0,
-  balance: 0,
-};
+import { getCookie } from './utils';
+
+export function getUserInfo() {
+  return {
+    username: getCookie('username'),
+    type: getCookie('type'),
+  };
+}

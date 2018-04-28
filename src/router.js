@@ -20,34 +20,35 @@ export default class Router {
     }
   }
 
+  checkGuards(guards, field) {
+    for (let i = 0; i < guards.length; i++) {
+      const guard = guards[i];
+      const guardResult = guard(field);
+      if (!guardResult.allow) {
+        setTimeout(() => this.navigate(guardResult.path), 0);
+        return;
+      }
+    }
+  }
+
   render(url) {
     if (url) {
       const temp = url.split('/')[3];
-
       if (temp === '') {
         this.navigate(this.routes.rootPath);
         return;
       }
 
-      const props = url.split('/')[4];
+      const props = url.split('/')[4] || {};
 
       this.cleanContainer();
 
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
-        const guards = this.routes[field].guards;
-
-        for (let i = 0; i < guards.length; i++) {
-          const guard = guards[i];
-          const guardResult = guard();
-          if (!guardResult.allow) {
-            //console.log(guardResult);
-            setTimeout(() => this.navigate(guardResult.path), 0);
-            break;
-          }
-        }
-
-        const component = new this.routes[field].component(this).render(this.rootElement, {});
+        this.checkGuards(this.routes[field].guards, field);
+        const ComponentConstructor = this.routes[field].component;
+        const component = new ComponentConstructor(this);
+        component.render(this.rootElement, props);
       } else {
         this.navigate('error');
       }
