@@ -6,4 +6,8 @@
   "rules": {
     "class-methods-use-this": "off"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
