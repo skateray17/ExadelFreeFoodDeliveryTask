@@ -16,7 +16,7 @@
     margin: auto;
 }
 @media (max-width: 1000px) {
-  #admin-home-screen{
+  #manager-home-screen{
       width: 98%;
   }
 }

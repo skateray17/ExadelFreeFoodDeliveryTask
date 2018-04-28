@@ -26,7 +26,7 @@ function getDayName(key) {
       day = 'Extra';
       break;
     default:
-      day = 'common';
+      day = 'Extra';
       break;
   }
   return day;
