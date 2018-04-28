@@ -1,5 +1,5 @@
 import './table.css';
-import MenuHTML from './table.hbs';
+import template from './table.hbs';
 import weekTab from './weektab.hbs';
 import MenuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
@@ -8,7 +8,6 @@ import MenuObj from '../../../../common/menuObject';
 
 export default class MenuTable {
   render(target) {
-    this.selectTab();
     // get req
     setMenu(MenuObj);
     const weeksMenu = getMenu();
@@ -16,8 +15,8 @@ export default class MenuTable {
     return target;
   }
   renderMenuItems(menuObj) {
-    const items = MenuItem(menuObj);
-    document.getElementById('menu-content').innerHTML = items;
+    const items = createElementsFromString(MenuItem(menuObj));
+    document.getElementById('menu-content').appendChild(items);
   }
   renderWeek(target, menuObj) {
     this.reloadContent();
@@ -25,39 +24,46 @@ export default class MenuTable {
       date: (menuObj) ? menuObj.date : null,
       menu: menuObj,
     };
-    const menu = createElementsFromString(MenuHTML(props))[0];
+    const menu = createElementsFromString(template(props));
     target.appendChild(menu);
 
     if (props.menu) {
       this.renderMenuItems(menuObj);
     } else {
-      document.getElementsByClassName('upload-menu__button')[0].addEventListener('click', this.chooseFile);
+      document.querySelector('.upload-menu__button').addEventListener('click', this.chooseFile);
     }
   }
   renderWeektab(target, weeksMenu) {
     const table = document.createElement('div');
     table.className = 'table-content';
-    const weektab = createElementsFromString(weekTab())[0];
+    const weektab = createElementsFromString(weekTab());
     target.appendChild(weektab);
     target.appendChild(table);
     document.querySelector('#week-tab__current').addEventListener('click', () => {
       this.renderWeek(table, weeksMenu[0]);
+      this.selectWeek(true);
     });
     document.querySelector('#week-tab__next').addEventListener('click', () => {
       this.renderWeek(table, weeksMenu[1]);
+      this.selectWeek();
     });
     this.renderWeek(table, weeksMenu[0]);
+    this.selectWeek(true);
     return target;
   }
   reloadContent() {
     document.querySelector('.table-content').innerHTML = '';
   }
-  selectTab() {
-    const tab = document.getElementById('upload-menu-tab');
-    tab.classList.add('nav-bar-selected');
-  }
   chooseFile() {
     // post menu
   }
+  selectWeek(current) {
+    if (current) {
+      document.querySelector('#week-tab__current').classList.add('picked-week');
+      document.querySelector('#week-tab__next').classList.remove('picked-week');
+    } else {
+      document.querySelector('#week-tab__next').classList.add('picked-week');
+      document.querySelector('#week-tab__current').classList.remove('picked-week');
+    }
+  }
 }
-

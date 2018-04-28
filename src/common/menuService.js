@@ -22,6 +22,9 @@ function getDayName(key) {
     case 'sat':
       day = 'Saturday';
       break;
+    case 'common':
+      day = 'Extra';
+      break;
     default:
       day = 'common';
       break;
@@ -33,7 +36,7 @@ function setWeekMenu(obj, flag) {
   Object.entries(obj).forEach((elem) => {
     const key = elem[0];
     const val = elem[1];
-    if (key !== 'date' && key !== 'common') {
+    if (key !== 'date') {
       days.push({
         day: getDayName(key),
         menuExists: val.menu.length,

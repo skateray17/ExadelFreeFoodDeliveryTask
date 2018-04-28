@@ -5,8 +5,8 @@
     {{#each dish}}
     <div class="menu-item__dish">
         <div class="dish-name">{{name}}</div>
-        <div class="dish-weight">{{weight}}</div>
-        <div class="dish-price">{{cost}}</div>
+        <div class="dish-weight">{{weight}} {{#if weight}}g{{/if}}</div>
+        <div class="dish-price">{{cost}} BYN</div>
     </div>
     {{/each}}
     {{else}}

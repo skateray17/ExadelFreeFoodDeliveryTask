@@ -1,32 +1,31 @@
 import './header.css';
-import template from './header.hbs';
+import usersHeader from './usersHeader.hbs';
+import managersHeader from './managersHeader.hbs';
+import { createElementsFromString } from '../../common/utils';
 
 export default class Header {
-  constructor() {
-  }
-
-  render(target, props){
-    let headersProps = {
-        isManagersPage: false,
-        isUserManager: false,
-        isUserOnUsersPage: false,
-        nickname: props.nickname,
-        balance: props.balance
+  render(target, props) {
+    props = {
+      page: 'manager',
+      userRole: 'manager',
+      nickname: 'И. Фамилия',
+      balance: '-30',
     };
-    if (props.userRole === 'manager'){
-      headersProps.isUserManager = true;
+    let header;
+    if (props.page === 'manager') {
+      header = createElementsFromString(managersHeader());
     }
-    if (props.page === 'manager'){
-      headersProps.isManagersPage = true;
+    if (props.page === 'user') {
+      const headersProps = {
+        isUserManager: false,
+        nickname: props.nickname,
+        balance: props.balance,
+      };
+      if (props.userRole === 'manager') {
+        headersProps.isUserManager = true;
+      }
+      header = createElementsFromString(usersHeader(headersProps));
     }
-    if (props.page === 'user' && props.userRole === 'user'){
-      headersProps.isUserOnUsersPage = true;
-    }
-    let header = document.createElement('header');
-    header.classList.add('shadow');
-    header.innerHTML = template(headersProps);
-    let nextSibling = target.firstChild;
-    target.insertBefore(header, nextSibling);
-    return header;
-    }
+    return target.appendChild(header);
+  }
 }
