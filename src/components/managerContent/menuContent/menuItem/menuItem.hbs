@@ -1,12 +1,16 @@
-{{#each dayMenu}}
+{{#each days}}
 <div class="menu-item">
     <div class="menu-item__day">{{day}}</div>
+    {{#if menuExists}}
     {{#each dish}}
     <div class="menu-item__dish">
-        <div class="dish-name">{{dishName}}</div>
-        <div class="dish-weight">{{dishWeight}}</div>
-        <div class="dish-price">{{dishPrice}}</div>
+        <div class="dish-name">{{name}}</div>
+        <div class="dish-weight">{{weight}}</div>
+        <div class="dish-price">{{cost}}</div>
     </div>
     {{/each}}
+    {{else}}
+    <div style="font-size: 20px">no menu</div>
+    {{/if}}
 </div>
 {{/each}}

@@ -5,7 +5,7 @@ const admin = new AdminHomeScreen();
 
 const props = {
   page: 'managerScreen',
-  userRole: 'manager'
+  userRole: 'manager',
 };
 
 const target = document.getElementById('screen');

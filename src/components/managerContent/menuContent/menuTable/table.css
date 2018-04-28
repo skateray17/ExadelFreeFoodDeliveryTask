@@ -23,6 +23,8 @@
     width: 200px;
     text-align: center;
     padding: 5px;
+    background-color: transparent;
+    cursor: pointer;
 }
 .picked-week{
     border-bottom: 1.8px solid #008AFF;
@@ -79,4 +81,5 @@
     padding: 15px 50px 15px 50px;
     margin: 20px;
     border: 1px solid #008AFF;
+    cursor: pointer;
 }
