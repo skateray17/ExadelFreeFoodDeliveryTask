@@ -72,7 +72,7 @@
 .dish-weight,.dish-price{
     margin-left: 10px;
 }
-.upload-menu__message,.upload-menu__button{
+.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg{
     font-size: 20px;
     font-weight: 300;
 }
@@ -82,4 +82,9 @@
     margin: 20px;
     border: 1px solid #008AFF;
     cursor: pointer;
+}
+.menu-item__no-menu-msg{
+    font-size: 15px;
+    margin: 20px;
+    align-self: flex-start;
 }

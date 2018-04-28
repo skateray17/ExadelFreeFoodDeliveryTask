@@ -61,5 +61,7 @@ export function getMenu() {
 }
 export function setMenu(obj) {
   setWeekMenu(obj[0], true);
-  setWeekMenu(obj[1], false);
+  if (obj[1]) {
+    setWeekMenu(obj[1], false);
+  }
 }
