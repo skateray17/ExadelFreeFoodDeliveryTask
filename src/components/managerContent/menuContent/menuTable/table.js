@@ -1,21 +1,21 @@
 import './table.css';
 import template from './table.hbs';
 import weekTab from './weektab.hbs';
-import MenuItem from '../menuItem/menuItem.hbs';
+import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu } from '../../../../common/menuService';
-import MenuObj from '../../../../common/menuObject';
+import menuObject from '../../../../common/menuObject';
 
 export default class MenuTable {
   render(target) {
     // get req
-    setMenu(MenuObj);
+    setMenu(menuObject);
     const weeksMenu = getMenu();
     this.renderWeektab(target, weeksMenu);
     return target;
   }
-  renderMenuItems(menuObj) {
-    const items = createElementsFromString(MenuItem(menuObj));
+  rendermenuItems(menuObj) {
+    const items = createElementsFromString(menuItem(menuObj));
     document.getElementById('menu-content').appendChild(items);
   }
   renderWeek(target, menuObj) {
@@ -28,7 +28,7 @@ export default class MenuTable {
     target.appendChild(menu);
 
     if (props.menu) {
-      this.renderMenuItems(menuObj);
+      this.rendermenuItems(menuObj);
     } else {
       document.querySelector('.upload-menu__button').addEventListener('click', this.chooseFile);
     }
