@@ -14,4 +14,5 @@ const props = {
 
 const target = document.querySelector('#screen');
 
-managersScreen.render(target, props);
+// managersScreen.render(target, props);
+usersScreen.render(target, props);

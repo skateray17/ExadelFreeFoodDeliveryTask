@@ -5,15 +5,21 @@ import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
 import { createElementsFromString } from '../../../common/utils';
 
+const TIME_TO_STOP_ORDERS = 10 * 60 * 60;
 const MAX_VISIBLE_ITEMS = 3;
+
+function getHours(date) {
+  return date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds();
+}
+
 
 export default class Card {
   render(target, props) {
     const cardTemplate = card(this.createCardProps(props));
-    target.appendChild(createElementsFromString(cardTemplate));
+    const cardItem = target.appendChild(createElementsFromString(cardTemplate));
 
     const header = new Header();
-    header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
+    header.render(cardItem.querySelector('.header'), this.createHeaderProps(props.header));
 
     if (props.orders.length > MAX_VISIBLE_ITEMS && props.header.active) {
       this.createShowMore(target, props);
@@ -23,14 +29,14 @@ export default class Card {
       }
     } else if (props.orders.length > 0 && props.orders.length <= MAX_VISIBLE_ITEMS && props.header.active) {
       for (const order of props.orders) {
-        this.createOrderItem(target, order);
+        this.createOrderItem(cardItem, order);
       }
     }
   }
 
-  createOrderItem(target, order) {
+  createOrderItem(cardItem, order) {
     const orderItem = new OrderItem();
-    orderItem.render(target.querySelector('.card-content'), order);
+    orderItem.render(cardItem.querySelector('.card-content'), order);
   }
 
   createShowMore(target, props) {
@@ -49,9 +55,10 @@ export default class Card {
   }
 
   createHeaderProps(props) {
+    const date = new Date(props.date);
     return {
       weekday: props.weekday,
-      date: props.date,
+      date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
       headerStyle: props.active ? 'active-card' : 'inactive-card',
     };
   }
@@ -63,6 +70,8 @@ export default class Card {
       button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
       sumPrice: props.orders.length > 0,
       emptyMenu: props.orders.length === 0,
+      showButton: new Date(props.header.date).getDate() === new Date().getDate() ?
+        (getHours(new Date()) < TIME_TO_STOP_ORDERS) : true,
     };
   }
 }
