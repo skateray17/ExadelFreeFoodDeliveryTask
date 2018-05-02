@@ -1,0 +1,23 @@
+<div class="today-orders__container">
+  <div class="today-orders__row">
+    {{#each users}}
+    <div class="today-orders__card-outside">
+      <div class="today-orders__card">
+        <div class="today-orders__header">
+          {{name}}
+        </div>
+        <div class="today-orders__card-inside">
+          <div class="today-orders__card-content">
+            {{#each orders}}
+            <div class="today-orders__card-item">
+              <div>{{@ key}}</div>
+              <div class="today-orders__card-item-count">x{{this}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
