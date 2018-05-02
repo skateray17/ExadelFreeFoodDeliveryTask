@@ -1,6 +1,9 @@
+import './userBalanceTable.css';
+import template from './userBalanceTable.hbs';
 import UserBalanceItems from './userBalanceItems/userBalanceItems';
 import UserBalanceHeader from './userBalanceHeader/userBalanceHeader';
 import UserBalanceFooter from './userBalanceFooter/userBalanceFooter';
+import { createElementsFromString } from '../../../common/utils';
 
 const data = {    //example
   users:[
@@ -72,13 +75,14 @@ export default class UserBalanceTable {
     const userBalanceItems = new UserBalanceItems();
     const userBalanceHeader = new UserBalanceHeader();
     const userBalanceFooter = new UserBalanceFooter();
+    const userBalanceTableElement = target.appendChild(createElementsFromString(template()));
 
     if (!data.users.length) {
       data.users = false;
     }
-    const userBalanceHeaderElement = new userBalanceHeader.render(target, props);
-    const userBalanceItemsElement = userBalanceItems.render(target, data);
-    const userBalanceFooterElement = userBalanceFooter.render(target, data);
-    return target;
+    const userBalanceHeaderElement = userBalanceHeader.render(userBalanceTableElement, props);
+    const userBalanceItemsElement = userBalanceItems.render(userBalanceTableElement, data);
+    const userBalanceFooterElement = userBalanceFooter.render(userBalanceTableElement, data);
+    return userBalanceTableElement;
   }
 }
