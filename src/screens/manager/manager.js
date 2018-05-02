@@ -10,7 +10,7 @@ export default class ManagerHomeScreen {
     header.render(screenTarget, props);
     const screen = createElementsFromString(template());
     screenTarget.appendChild(screen);
-    const contentTarget = document.getElementById('manager-content');
+    const contentTarget = document.querySelector('.manager-content');
     this.renderMenu(contentTarget);
     return screenTarget;
   }
@@ -18,7 +18,7 @@ export default class ManagerHomeScreen {
     const menu = new Menu();
     target.innerHTML = '';
     menu.render(target);
-    this.selectTab(document.getElementById('upload-menu-tab'));
+    this.selectTab(document.querySelector('.upload-menu-tab'));
     return target;
   }
   selectTab(tab) {

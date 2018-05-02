@@ -1,28 +1,20 @@
+import { daysOfWeek } from './constants';
+
 let currentMenu;
 let nextMenu;
 const menu = [];
-const dayNames = {
-    mon: 'Monday',
-    tue: 'Tuesday',
-    wed: 'Wednesday',
-    thu: 'Thursday',
-    fri: 'Friday',
-    sat: 'Saturday',
-}
-function setWeekMenu(obj, flag) {
+function setWeekMenu(obj, isCurrentWeek) {
   const days = [];
-  Object.entries(obj).forEach((elem) => {
-    const key = elem[0];
-    const val = elem[1];
+  Object.keys(obj).forEach((key) => {
     if (key !== 'date') {
       days.push({
-        day: dayNames[key] || 'Extra',
-        menuExists: val.menu.length,
-        dish: val.menu,
+        day: daysOfWeek[key] || 'Extra',
+        menuExists: obj[key].menu.length,
+        dish: obj[key].menu,
       });
     }
   });
-  if (flag) {
+  if (isCurrentWeek) {
     currentMenu = {
       date: obj.date,
       days,

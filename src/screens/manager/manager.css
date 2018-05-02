@@ -7,7 +7,7 @@
     border: none;
     font-size: 0;
 }
-#manager-home-screen{
+.manager-home-screen{
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -16,7 +16,7 @@
     margin: auto;
 }
 @media (max-width: 1000px) {
-  #manager-home-screen{
+  .manager-home-screen{
       width: 98%;
   }
 }
