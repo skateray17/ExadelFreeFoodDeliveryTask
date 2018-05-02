@@ -1,8 +1,8 @@
 import './login.css';
 import loginContent from './login.hbs';
 import { getUserInfo } from '../../common/user.service';
-import { checkType } from '../../common/utils';
-import { setCookie } from '../../common/utils';
+import { checkType, removeCookie, setCookie } from '../../common/utils';
+import { login } from '../../common/login.service';
 
 export default class LoginScreen {
   constructor(router) {
@@ -28,11 +28,7 @@ export default class LoginScreen {
     const _email = formData.get('email');
     const _password = formData.get('password');
 
-    fetch('http://localhost:3000/api/account/login', {
-      method: 'POST',
-      body: JSON.stringify({ email: _email, password: _password }),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-    }).then((res) => {
+    login(_email, _password).then((res) => {
       if (!res.ok) {
         return Promise.reject();
       }
@@ -46,5 +42,12 @@ export default class LoginScreen {
       }).catch(() => {
         this.render(target, { displayError: true, email: _email });
       });
+  }
+
+  static logOut() {
+    removeCookie('token');
+    removeCookie('username');
+    removeCookie('type');
+    this.router.navigate('login');
   }
 }

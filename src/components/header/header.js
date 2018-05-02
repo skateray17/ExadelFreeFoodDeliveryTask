@@ -1,15 +1,13 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
-import { createElementsFromString } from '../../common/utils';
+import { createElementsFromString, checkType } from '../../common/utils';
+import { getUserInfo } from '../../common/user.service';
 
 export default class Header {
   render(target, props) {
     props = {
       page: 'manager',
-      userRole: 'manager',
-      nickname: 'И. Фамилия',
-      balance: '-30',
     };
     let header;
     if (props.page === 'manager') {
@@ -18,10 +16,10 @@ export default class Header {
     if (props.page === 'user') {
       const headersProps = {
         isUserManager: false,
-        nickname: props.nickname,
-        balance: props.balance,
+        nickname: getUserInfo().username,
+        balance: getUserInfo().balance,
       };
-      if (props.userRole === 'manager') {
+      if (checkType(getUserInfo().type) === 'manager') {
         headersProps.isUserManager = true;
       }
       header = createElementsFromString(usersHeader(headersProps));

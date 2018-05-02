@@ -14,7 +14,7 @@ export function createElementsFromString(str) {
 
 const typeMapping = {
   1: 'main',
-  10: 'admin',
+  10: 'manager',
 };
 
 export function checkType(userType) {
@@ -47,4 +47,8 @@ export function getCookie(cname) {
 export function checkCookie(key) {
   const value = getCookie(key);
   return (value !== '');
+}
+
+export function removeCookie(key) {
+  setCookie(key, '', 0);
 }
