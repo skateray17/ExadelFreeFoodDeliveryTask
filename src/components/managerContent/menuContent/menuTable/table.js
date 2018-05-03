@@ -70,6 +70,6 @@ export default class MenuTable {
     }
   }
   chooseFile() {
-    //post
+    // post
   }
 }
