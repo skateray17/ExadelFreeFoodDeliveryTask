@@ -1,5 +1,6 @@
 .edit-card {
     width: 450px;
+    height: 470px;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -19,20 +20,28 @@
   display: flex;
   justify-content: space-between;
   color: rgb(90, 173, 60);
+  font-size: 19px;
 }
 .edit-card-footer{
   padding: 10px 20px 5px 20px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-.edit-card-clear{
+.edit-card-cancel{
   background: red;
   color: white;
   width: 49%;
   height: 30px;
+  font-size: 19px;
 }
 .edit-card-sub{
   background: #0acd0a;
   color: white;
   width: 49%;
   height: 30px;
+  font-size: 19px;
+}
+.edit-card-txt-T,.edit-card-txt-C{
+  font-size: 19px; 
 }

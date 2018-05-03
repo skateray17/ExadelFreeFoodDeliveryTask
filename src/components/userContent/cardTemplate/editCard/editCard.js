@@ -9,15 +9,17 @@ export default class EditCard {
     this.state = {
       totalCost: 0,
       order: [],
-      target: null,
     };
-    this.callback = this.callback.bind(this);
+    this.itemChange = this.itemChange.bind(this);
     this.updateTotal = this.updateTotal.bind(this);
+    this.submit = this.submit.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
   render(target, props) {
+    this.callback = props.callback;
     const cardTemplate = card(this.createCardProps(props));
     target.appendChild(createElementsFromString(cardTemplate));
-    this.state.target = target;
+    this.target = target;
     this.state.totalCost = props.totalCost;
     this.updateTotal();
     const header = new Header();
@@ -33,21 +35,22 @@ export default class EditCard {
         if (!temp.index) {
           temp.index = I++;
         }
+        temp.callback = this.itemChange;
         this.state.order.push(temp);
         this.createMenuItem(target, temp);
       });
     }
-    target.querySelector('.edit-card-clear').addEventListener('click', () => {
-      this.clear();
+    target.querySelector('.edit-card-cancel').addEventListener('click', () => {
+      this.cancel();
     });
     target.querySelector('.edit-card-sub').addEventListener('click', () => {
       this.submit();
     });
   }
   updateTotal() {
-    this.state.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)}Р`;
+    this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)}Р`;
   }
-  callback(state) {
+  itemChange(state) {
     this.state.order[state.index].quantity = state.quantity;
     this.state.totalCost = 0;
     this.state.order.forEach((el) => {
@@ -55,16 +58,21 @@ export default class EditCard {
     });
     this.updateTotal();
   }
-  clear() {
-    this.state.target.removeChild(this.state.target.firstChild);
+  cancel() {
+    this.callback({
+      status: 'Cancel',
+    });
   }
   submit() {
-    ;
+    this.callback({
+      status: 'Ok',
+      order: this.state.order,
+    });
   }
 
   createMenuItem(target, item) {
     const menuItem = new MenuItem();
-    menuItem.render(target.querySelector('.edit-card-content'), item, this.callback);
+    menuItem.render(target.querySelector('.edit-card-content'), item);
   }
 
   createHeaderProps(props) {

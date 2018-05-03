@@ -1,6 +1,7 @@
 import './index.css';
 import Card from './components/userContent/cardTemplate/card/card';
 import EditCard from './components/userContent/cardTemplate/editCard/editCard';
+import Popup from './components/popup/popup';
 
 const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const engDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -266,7 +267,13 @@ const propsEdit = {
   menu: menuFromServer.menu.mon.menu,
   totalCost: 6.5,
 };
+const propsPopup = {
+  data: propsEdit,
+  elem: EditCard,
+};
 const card = new Card();
 const editCard = new EditCard();
 //card.render(document.getElementById('card-test'), props);
-editCard.render(document.getElementById('card-test'), propsEdit);
+const popup = new Popup();
+popup.render(propsPopup);
+//editCard.render(document.getElementById('card-test'), propsEdit);

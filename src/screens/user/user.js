@@ -2,7 +2,9 @@ import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
-import Card from '../../components/userContent/cardTemplate/card';
+import Card from '../../components/userContent/cardTemplate/card/card';
+import Popup from '../../components/popup/popup';
+import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -359,13 +361,38 @@ export default class UsersScreen {
     propsForCards = propsForCards.sort((x, y) => new Date(x.header.date).getTime() - new Date(y.header.date).getTime());
 
     for (const props of propsForCards) {
+      const temp = props;
+      temp.callback = this.makePopup;
       const card = new Card();
       this.cards.push(card);
-      card.render(target.querySelector('.menus-cards-container'), props);
+      card.render(target.querySelector('.menus-cards-container'), temp);
     }
     return screen;
   }
-
+  makePopup(indx) {
+    const cardProps = createPropsForCards()[indx];
+    const { menu } = menuFromServer.menu[`${engDays[days.indexOf(cardProps.header.weekday)]}`];
+    cardProps.orders.forEach((order) => {
+      menu.find((el, i) => {
+        if (el.name === order.name) {
+          menu[i].quantity = order.quantity;
+          return true;
+        }
+        return false;
+      });
+    });
+    const propsEdit = {
+      header: cardProps.header,
+      menu,
+      totalCost: cardProps.orderPrice,
+    };
+    const propsPopup = {
+      data: propsEdit,
+      elem: EditCard,
+    };
+    const popup = new Popup();
+    popup.render(propsPopup);
+  }
   update(cardUpdates) {
     const date = new Date(cardUpdates.header.date);
     for (const card of this.cards) {

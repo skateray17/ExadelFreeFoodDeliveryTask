@@ -9,7 +9,7 @@ export default class MenuItem {
       index: 0,
     };
   }
-  render(target, props, callback) {
+  render(target, props) {
     this.state.quantity = props.quantity;
     this.state.index = props.index;
     const menuItemTemplate = menuItem(props);
@@ -31,7 +31,7 @@ export default class MenuItem {
           quantity.innerHTML--;
         }
       }
-      callback(this.state);
+      props.callback(this.state);
     });
   }
 }

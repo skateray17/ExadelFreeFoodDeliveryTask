@@ -21,16 +21,21 @@ export default class Card {
     const domCards = target.childNodes;
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
-
+    const htmlElem = createElementsFromString(cardTemplate);
     if (domCards.length < 8) {
-      const cardItem = target.appendChild(createElementsFromString(cardTemplate));
+      const cardItem = target.appendChild(htmlElem);
       this.insertCardContent(cardItem, props, target);
     } else {
       const position = domCards[getNumberOfCardInDom(new Date(props.header.date))];
       target.removeChild(position);
-      const cardItem = target.insertBefore(createElementsFromString(cardTemplate), domCards[position + 1]);
+      const cardItem = target.insertBefore(htmlElem, domCards[position + 1]);
       this.insertCardContent(cardItem, props, target);
     }
+    target.addEventListener('click', (event) => {
+      if (event.target === htmlElem.querySelector('.edit-button')) {
+        props.callback(1);
+      }
+    });
   }
 
   createOrderItem(cardItem, order) {

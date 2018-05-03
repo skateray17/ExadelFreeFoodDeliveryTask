@@ -53,3 +53,6 @@
     align-items: center;
     justify-content: space-between;
 }
+.weight,.cost{
+  font-size: 19px;
+}
