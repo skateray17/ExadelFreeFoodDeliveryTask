@@ -12,25 +12,24 @@ function getHours(date) {
   return date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds();
 }
 
+function getNumberOfCardInDom(date) {
+  return date.getDate() - Date.now().getDate();
+}
 
 export default class Card {
   render(target, props) {
-    const cardTemplate = card(this.createCardProps(props));
-    const cardItem = target.appendChild(createElementsFromString(cardTemplate));
+    const domCards = target.childNodes;
+    const cardProps = this.createCardProps(props);
+    const cardTemplate = card(cardProps);
 
-    const header = new Header();
-    header.render(cardItem.querySelector('.header'), this.createHeaderProps(props.header));
-
-    if (props.orders.length > MAX_VISIBLE_ITEMS && props.header.active) {
-      this.createShowMore(target, props);
-
-      for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
-        this.createOrderItem(target, props.orders[i]);
-      }
-    } else if (props.orders.length > 0 && props.orders.length <= MAX_VISIBLE_ITEMS && props.header.active) {
-      for (const order of props.orders) {
-        this.createOrderItem(cardItem, order);
-      }
+    if (domCards.length < 8) {
+      const cardItem = target.appendChild(createElementsFromString(cardTemplate));
+      this.insertCardContent(cardItem, props, target);
+    } else {
+      const position = domCards[getNumberOfCardInDom(new Date(props.header.date))];
+      target.removeChild(position);
+      const cardItem = target.insertBefore(createElementsFromString(cardTemplate), domCards[position + 1]);
+      this.insertCardContent(cardItem, props, target);
     }
   }
 
@@ -44,14 +43,6 @@ export default class Card {
     showMore.render(target.querySelector('.free-space'), {
       numberOfAdditionalOrders: props.orders.length - MAX_VISIBLE_ITEMS,
     });
-  }
-
-  countOrderPrice(props) {
-    let orderPrice = 0;
-    for (const order of props.orders) {
-      orderPrice += order.price;
-    }
-    return orderPrice;
   }
 
   createHeaderProps(props) {
@@ -73,5 +64,26 @@ export default class Card {
       showButton: new Date(props.header.date).getDate() === new Date().getDate() ?
         (getHours(new Date()) < TIME_TO_STOP_ORDERS) : true,
     };
+  }
+
+  insertCardContent(cardItem, props, target) {
+    const header = new Header();
+    header.render(cardItem.querySelector('.header'), this.createHeaderProps(props.header));
+
+    if (props.orders.length > MAX_VISIBLE_ITEMS && props.header.active) {
+      this.createShowMore(target, props);
+
+      for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
+        this.createOrderItem(target, props.orders[i]);
+      }
+    } else if (
+      props.orders.length > 0
+      && props.orders.length <= MAX_VISIBLE_ITEMS
+      && props.header.active
+    ) {
+      for (const order of props.orders) {
+        this.createOrderItem(cardItem, order);
+      }
+    }
   }
 }

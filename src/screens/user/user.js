@@ -6,7 +6,7 @@ import Card from '../../components/userContent/cardTemplate/card';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const engDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const engDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 const userOrders = [
   {
@@ -22,7 +22,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-04-29T21:00:00.000Z',
+    date: '2018-05-02T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -40,7 +40,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-04-30T21:00:00.000Z',
+    date: '2018-05-03T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -58,28 +58,11 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-01T21:00:00.000Z',
+    date: '2018-05-04T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
 
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345c2',
-        dishTitle: 'блинчики',
-        amount: 4,
-      },
-      {
-        _id: '5adee2bd192937063c8345b5',
-        dishTitle: 'компот',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-02T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b8',
-    totalPrice: 20.15,
-  },
 ];
 const menuFromServer = {
   date: '30.04.2018-06.05.2018',
@@ -358,6 +341,7 @@ export default class UsersScreen {
     currentDate = clearHours(currentDate);
 
     let indexOfCheckedCard = 0;
+    const numberOfCardsWithMenu = propsForCards.length;
     for (let i = 0; i < VISIBLE_NUMBER_OF_CARDS + 1; i++) {
       if (
         currentDate !== new Date(propsForCards[indexOfCheckedCard].header.date).getTime() &&
@@ -365,7 +349,9 @@ export default class UsersScreen {
       ) {
         propsForCards.push(createInactiveCard(new Date(currentDate)));
       } else {
-        indexOfCheckedCard += 1;
+        if (new Date(currentDate).getDay() !== 0) {
+          indexOfCheckedCard += 1;
+        }
       }
       currentDate += 24 * 60 * 60 * 1000;
     }
@@ -378,5 +364,14 @@ export default class UsersScreen {
       card.render(target.querySelector('.menus-cards-container'), props);
     }
     return screen;
+  }
+
+  update(cardUpdates) {
+    const date = new Date(cardUpdates.header.date);
+    for (const card of this.cards) {
+      if (new Date(card.header.date) === date) {
+        card.render(cardUpdates);
+      }
+    }
   }
 }
