@@ -380,4 +380,3 @@ export default class UsersScreen {
     return screen;
   }
 }
-
