@@ -1,11 +1,11 @@
 import './index.css';
-import Card from './components/managerContent/todayOrdersContent/todayOrders';
-import Manager from './screens/manager/manager'
+import TodayOrders from './components/managerContent/todayOrdersContent/todayOrders';
+import Manager from './screens/manager/manager';
 
-const card = new Card();
+const todayOrders = new TodayOrders();
 const m = new Manager();
 m.render(document.getElementById('card-test'));
-card.render(document.querySelector('.content'), {
+todayOrders.render(document.querySelector('.content'), {
   users: [{
     name: 'Alexander Kovalchuck',
     orders: {
