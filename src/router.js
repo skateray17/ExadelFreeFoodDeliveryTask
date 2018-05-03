@@ -1,3 +1,5 @@
+import { getUrlParams } from './common/utils';
+
 export default class Router {
   constructor(routes, element) {
     this.routes = routes;
@@ -39,7 +41,7 @@ export default class Router {
         return;
       }
 
-      const props = url.split('/')[4] || {};
+      const props = getUrlParams();
 
       this.cleanContainer();
 

@@ -52,3 +52,14 @@ export function checkCookie(key) {
 export function removeCookie(key) {
   setCookie(key, '', 0);
 }
+
+export function getUrlParams() {
+  const props = {};
+  const SearchString = window.location.search.substring(1);
+  const VariableArray = SearchString.split('&');
+  for (let i = 0; i < VariableArray.length; i++) {
+    const KeyValuePair = VariableArray[i].split('=');
+    props[KeyValuePair[0]] = KeyValuePair[1];
+  }
+  return props;
+}
