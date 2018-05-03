@@ -6,6 +6,7 @@
   box-shadow: none;
   border: none;
   font-family: 'Roboto', sans-serif;
+  user-select: none;
 }
 
 body{

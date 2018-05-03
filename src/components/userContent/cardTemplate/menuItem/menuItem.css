@@ -1,0 +1,55 @@
+.menu-item-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 19px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px 5px 20px;
+    font-size: 19px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-item-name {
+    padding-bottom: 5px;
+    font-size: 19px;
+    font-size: 19px;
+}
+.crmnt-icon{
+  font-size: 15px;
+}
+.crmnt-button{
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: inherit; 
+    background-color: inherit;
+    text-align: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px; 
+}
+.cost, .weight{
+    width: 80px;
+}
+.cost{
+    text-align: end;
+}
+.weight{
+    text-align: start;
+}
+.quantity-center{
+    color: white;
+    background: rgb(90, 173, 60);
+    border-radius: 100px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

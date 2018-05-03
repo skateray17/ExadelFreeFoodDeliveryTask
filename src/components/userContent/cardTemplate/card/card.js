@@ -1,9 +1,9 @@
 import './card.css';
 import card from './card.hbs';
-import Header from './cardHeader/header';
-import OrderItem from './orderItem/orderItem';
-import ShowMore from './showMore/showMore';
-import { createElementsFromString } from '../../../common/utils';
+import Header from '../cardHeader/header';
+import OrderItem from '../orderItem/orderItem';
+import ShowMore from '../showMore/showMore';
+import { createElementsFromString } from '../../../../common/utils';
 
 const MAX_VISIBLE_ITEMS = 3;
 
