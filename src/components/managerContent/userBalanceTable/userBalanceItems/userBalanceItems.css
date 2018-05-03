@@ -1,0 +1,129 @@
+.user-balance__table-header{
+  border-bottom: 1px solid #E0E0E0;
+  border-top: 1px solid #E0E0E0;
+  display: flex;
+  min-height: 40px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 270px 0 34px;
+}
+
+.user-balance__user-name-title, .user-balance__balance-title{
+  font-size: 18px;
+  color: #6E6E6E;
+}
+
+.user-balance__user-item{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-row-gap: 10px;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  padding: 0 34px;
+  height: 40px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.user-balance__user-name, .user-balance__balance, .user-balance__currency{
+  font-size: 18px;
+  color: #212121;
+}
+
+.user-balance__balance-input{
+  padding-bottom: 3px;
+  text-align: center;
+  font-size: 18px;
+  height: 23px;
+  width: 67px;
+  border-bottom: 1px solid #6E6E6E;
+}
+
+.user-balance__balance-input--active{     /* add to set balance input active */
+  border-color: #008AFF;
+}
+
+.user-balance__submit-button{
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 2px;
+  height: 25px;
+  width: 110px;
+  background-color: #B2B2B2;
+  color: #FFFFFF;
+  cursor: default;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+}
+
+.user-balance__submit-button--active{     /* add to set submit button active */
+  cursor: pointer;
+  background-color: #008AFF;
+}
+
+.user-balance__empty-list{
+  display: block;
+  font-size: 20px;
+  color: #6E6E6E;
+  margin: 20px 30px;
+  text-align: center;
+}
+
+@media screen and (max-width: 650px){
+
+  .user-balance__user-item{
+    height: auto;
+    grid-template-columns: 1fr auto auto;
+    grid-template-rows: 40px auto;
+    padding: 10px 34px;
+  }
+
+  .user-balance__balance-container{
+    text-align: right;
+  }
+
+  .user-balance__balance-input{
+    justify-self: center;
+  }
+
+  .user-balance__submit-button{
+    grid-column: span 3;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+  }
+
+  .user-balance__table-header{
+    padding-right: 130px;
+  }
+
+  .user-balance__balance-title{
+    margin-left: 20px;
+  }
+
+}
+
+@media screen and (max-width: 375px){
+
+  .user-balance__user-item{
+    grid-template-columns: auto auto;
+    grid-template-rows: 40px 40px auto;
+  }
+
+  .user-balance__submit-button, .user-balance__balance-input{
+    grid-column: span 2;
+  }  
+
+  .user-balance__table-header{
+    padding-right: 34px;
+  }
+
+  .user-balance__balance-input{
+    width: 100%;
+  }
+
+}

@@ -32,7 +32,7 @@ const props = {
   header: {
     weekday: days[new Date(dataFromServer.date).getDay()],
     date: new Date(dataFromServer.date).toDateString(),
-    active: true,
+    active: false,
   },
   orderPrice: dataFromServer.totalPrice,
   orders: [],

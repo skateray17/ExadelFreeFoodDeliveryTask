@@ -19,3 +19,7 @@
     font-size: 19px;
 
 }
+
+.mass, .quantity, .price, .weekday, .date {
+    font-size: 19px;
+}
