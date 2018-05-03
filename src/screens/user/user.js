@@ -278,34 +278,41 @@ function createHeaderForCard(date) {
   };
 }
 
+
+function createCardPropsWithEmptyOrders(day) {
+  const date = new Date(day.date);
+  return {
+    header: createHeaderForCard(date),
+    orderPrice: day.totalPrice,
+    orders: [],
+  };
+}
+
+function addOrderToCardProps(order, dishes, cardProps) {
+  for (const dish of dishes) {
+    if (dish.name === order.dishTitle) {
+      cardProps.orders.push({
+        name: dish.name,
+        mass: dish.weight,
+        quantity: order.amount,
+        price: dish.cost,
+      });
+      break;
+    }
+  }
+}
+
 function createPropsForCards() {
   const propsForCards = [];
 
   for (const day of userOrders) {
     if (new Date(day.date).getTime() > new Date().getTime()) {
-      let cardProps = {};
-      const date = new Date(day.date);
-      cardProps = {
-        header: createHeaderForCard(date),
-        orderPrice: day.totalPrice,
-        orders: [],
-      };
+      let cardProps = createCardPropsWithEmptyOrders(day);
 
       for (const order of day.dishList) {
         const dayOfTheWeek = engDays[new Date(day.date).getDay()];
         const dishes = menuFromServer.menu[dayOfTheWeek].menu;
-
-        for (const dish of dishes) {
-          if (dish.name === order.dishTitle) {
-            cardProps.orders.push({
-              name: dish.name,
-              mass: dish.weight,
-              quantity: order.amount,
-              price: dish.cost,
-            });
-            break;
-          }
-        }
+        addOrderToCardProps(order, dishes, cardProps);
       }
       propsForCards.push(cardProps);
     }
@@ -341,7 +348,6 @@ export default class UsersScreen {
     currentDate = clearHours(currentDate);
 
     let indexOfCheckedCard = 0;
-    const numberOfCardsWithMenu = propsForCards.length;
     for (let i = 0; i < VISIBLE_NUMBER_OF_CARDS + 1; i++) {
       if (
         currentDate !== new Date(propsForCards[indexOfCheckedCard].header.date).getTime() &&
