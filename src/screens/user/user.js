@@ -10,11 +10,13 @@ export default class UsersScreen {
   }
 
   render(target, props) {
-    const header = new Header();
+    props = {
+      page: 'manager',
+      router: this.router,
+    }; const header = new Header();
     header.render(target, props);
     const screen = createElementsFromString(template());
     target.appendChild(screen);
-    target.querySelector('.exit-ico').addEventListener('click', () => { logout(this.router); });
     return screen;
   }
 }

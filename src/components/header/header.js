@@ -3,12 +3,10 @@ import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
 import { createElementsFromString, checkType } from '../../common/utils';
 import { getUserInfo } from '../../common/user.service';
+import { logout } from '../../common/login.service';
 
 export default class Header {
   render(target, props) {
-    props = {
-      page: 'manager',
-    };
     let header;
     if (props.page === 'manager') {
       header = createElementsFromString(managersHeader());
@@ -24,6 +22,9 @@ export default class Header {
       }
       header = createElementsFromString(usersHeader(headersProps));
     }
-    return target.appendChild(header);
+    const screenWithHeader = target.appendChild(header);
+    target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
+
+    return screenWithHeader;
   }
 }

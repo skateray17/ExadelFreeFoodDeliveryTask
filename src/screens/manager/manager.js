@@ -2,7 +2,7 @@ import './manager.css';
 import template from './manager.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
-import { logout } from '../../common/login.service';
+import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 
 export default class ManagersScreen {
   constructor(router) {
@@ -10,11 +10,16 @@ export default class ManagersScreen {
   }
 
   render(target, props) {
+    props = {
+      page: 'manager',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
     const screen = createElementsFromString(template());
     target.appendChild(screen);
-    target.querySelector('.exit-ico').addEventListener('click', () => { logout(this.router); });
+    const userBalanceTable = new UserBalanceTable();
+    userBalanceTable.render(document.querySelector('.content'));
     return screen;
   }
 }

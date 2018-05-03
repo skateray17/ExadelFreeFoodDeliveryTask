@@ -25,10 +25,10 @@ export default class LoginScreen {
   logIn(event, target) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const _email = formData.get('email');
-    const _password = formData.get('password');
+    const email = formData.get('email');
+    const password = formData.get('password');
 
-    login(_email, _password).then((res) => {
+    login(email, password).then((res) => {
       if (!res.ok) {
         return Promise.reject();
       }
@@ -40,7 +40,7 @@ export default class LoginScreen {
         setCookie('type', data.type, 365);
         this.router.navigate(checkType(getUserInfo().type));
       }).catch(() => {
-        this.render(target, { displayError: true, email: _email });
+        this.render(target, { displayError: true, email: email });
       });
   }
 
