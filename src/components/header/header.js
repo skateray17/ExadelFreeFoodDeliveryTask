@@ -1,7 +1,7 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
-import { createElementsFromString, checkType } from '../../common/utils';
+import { createElementsFromString, roles } from '../../common/utils';
 import { getUserInfo } from '../../common/user.service';
 import { logout } from '../../common/login.service';
 
@@ -17,7 +17,7 @@ export default class Header {
         nickname: getUserInfo().username,
         balance: getUserInfo().balance,
       };
-      if (checkType(getUserInfo().type) === 'manager') {
+      if (getUserInfo().type == roles.manager) {
         headersProps.isUserManager = true;
       }
       header = createElementsFromString(usersHeader(headersProps));

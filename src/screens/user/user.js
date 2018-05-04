@@ -11,7 +11,7 @@ export default class UsersScreen {
 
   render(target, props) {
     props = {
-      page: 'manager',
+      page: 'user',
       router: this.router,
     }; const header = new Header();
     header.render(target, props);

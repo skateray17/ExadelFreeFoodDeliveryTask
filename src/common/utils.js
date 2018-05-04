@@ -12,6 +12,11 @@ export function createElementsFromString(str) {
   return result;
 }
 
+export const roles = {
+  user: 1,
+  manager: 10,
+};
+
 const typeMapping = {
   1: 'main',
   10: 'manager',
