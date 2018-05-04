@@ -5,7 +5,10 @@
     {{else}}
     <div class="upload-menu">
         <div class="upload-menu__message">There is no menu loaded.</div>
-        <input type="file" class="upload-menu__button">Choose file</input>
+        <form class="sendMenu">
+            <input name="fileInput" type="file" class="upload-menu__button choose-file"></input>
+            <button name="sendFile" type="submit" class="upload-menu__button">Send file</input>
+        </form>
     </div>
     {{/if}}
 </div>

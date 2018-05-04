@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 import { createElementsFromString } from '../../common/utils';
+import EmptyComponent from '../../components/emptyComponent/empty';
 
 const tabs = [
   {
@@ -12,6 +13,7 @@ const tabs = [
     icon: '&#xE561;',
   },
   {
+    component: new EmptyComponent(),
     title: 'Today\'s orders',
     icon: '&#xE8DF;',
   },
@@ -21,6 +23,7 @@ const tabs = [
     icon: '&#xE926;',
   },
   {
+    component: new EmptyComponent(),
     title: 'Make an order',
     icon: '&#xE8CC;',
   },

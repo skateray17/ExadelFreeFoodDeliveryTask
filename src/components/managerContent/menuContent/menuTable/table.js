@@ -38,7 +38,7 @@ export default class MenuTable {
     if (props.menu) {
       this.rendermenuItems(target, menuObj);
     } else {
-      document.querySelector('.upload-menu__button').addEventListener('onload', this.chooseFile);
+      document.querySelector('.sendMenu').addEventListener('submit', this.sendFile);
     }
     return target;
   }
@@ -69,21 +69,8 @@ export default class MenuTable {
       target.querySelector('.week-tab__current').classList.remove('picked-week');
     }
   }
-  chooseFile() {
-    const xhr = new XMLHttpRequest();
-   
-    xhr.open('POST', '/api/menu', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-
-    xhr.send(body);
-  }
-  getRequest() {
-    fetch('/api/menu', { method: 'GET' })
-      .then((res) => {
-        setMenu(res);
-        return res;
-      })
-      .catch(alert);
+  sendFile(e) {
+    e.preventDefault();
+    // post req
   }
 }
