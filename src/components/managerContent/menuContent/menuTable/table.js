@@ -38,7 +38,7 @@ export default class MenuTable {
     if (props.menu) {
       this.rendermenuItems(target, menuObj);
     } else {
-      document.querySelector('.sendMenu').addEventListener('submit', this.sendFile);
+      document.querySelector('.send-menu').addEventListener('submit', this.sendFile);
     }
     return target;
   }

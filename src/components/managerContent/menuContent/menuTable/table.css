@@ -12,6 +12,11 @@
 .upload-menu{
    align-items: center;
 }
+.send-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .week-tab{
     display: flex;
     justify-content: space-around;
@@ -76,12 +81,21 @@
     font-size: 20px;
     font-weight: 300;
 }
-.upload-menu__button{
+.upload-menu__button,.choose-file{
     background-color: white;
     padding: 15px 50px 15px 50px;
     margin: 20px;
     border: 1px solid #008AFF;
     cursor: pointer;
+}
+.upload-menu__button{
+    width: 200px;
+    align-self: center;
+}
+.choose-file{
+    width: 300px;
+    font-size: 15px;
+    padding: 15px;
 }
 .menu-item__no-menu-msg{
     font-size: 15px;
