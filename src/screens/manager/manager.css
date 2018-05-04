@@ -79,6 +79,7 @@
 }
 .content{
     width: 100%;
+    min-height: 500px;
     background-color: white;
     margin-bottom: 100px;
     position: relative;
