@@ -1,5 +1,5 @@
 import './manager.css';
-import template from './manager.hbs';
+import managerTemplate from './manager.hbs';
 import Header from '../../components/header/header';
 import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
@@ -28,6 +28,21 @@ const tabs = [
     icon: '&#xE8CC;',
   },
 ];
+
+export default class ManagerHomeScreen {
+  render(screenTarget, props) {
+    const header = new Header();
+    header.render(screenTarget, props);
+    const screen = createElementsFromString(managerTemplate({ tab: tabs }));
+    screenTarget.appendChild(screen);
+    const contentTarget = screenTarget.querySelector('.manager-content');
+    const navBar = screenTarget.querySelector('.nav-bar');
+    renderTab(contentTarget, 0, navBar);
+    managerListeners(contentTarget, navBar);
+    return screenTarget;
+  }
+}
+
 function selectTab(index, navBar) {
   const tab = navBar.children[index];
   const currentTab = document.querySelector('.nav-bar-selected');
@@ -47,16 +62,4 @@ function managerListeners(target, navBar) {
     });
   });
 }
-export default class ManagerHomeScreen {
-  render(screenTarget, props) {
-    const header = new Header();
-    header.render(screenTarget, props);
-    const screen = createElementsFromString(template({ tab: tabs }));
-    screenTarget.appendChild(screen);
-    const contentTarget = screenTarget.querySelector('.manager-content');
-    const navBar = screenTarget.querySelector('.nav-bar');
-    renderTab(contentTarget, 0, navBar);
-    managerListeners(contentTarget, navBar);
-    return screenTarget;
-  }
-}
+

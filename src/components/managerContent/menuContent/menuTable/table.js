@@ -1,7 +1,7 @@
 import './table.css';
-import table from './table.hbs';
-import template from './menuTable.hbs';
-import weekTab from './weektab.hbs';
+import tableTemplate from './table.hbs';
+import menuTableTemplate from './menuTable.hbs';
+import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu } from '../../../../common/menuService';
@@ -15,24 +15,27 @@ export default class MenuTable {
     this.renderContent(target, weeksMenu);
     return target;
   }
+
   renderContent(target, weeksMenu) {
-    const content = createElementsFromString(template());
+    const content = createElementsFromString(menuTableTemplate());
     this.renderWeektab(content, weeksMenu);
     this.renderWeek(content.querySelector('.menu-table__content'), weeksMenu[0]);
     target.appendChild(content);
     return target;
   }
+
   rendermenuItems(target, menuObj) {
     const items = createElementsFromString(menuItem(menuObj));
     target.appendChild(items);
   }
+
   renderWeek(target, menuObj) {
     this.reloadContent(target);
     const props = {
       date: (menuObj) ? menuObj.date : null,
       menu: menuObj,
     };
-    const menu = createElementsFromString(table(props));
+    const menu = createElementsFromString(tableTemplate(props));
     target.appendChild(menu);
 
     if (props.menu) {
@@ -42,9 +45,10 @@ export default class MenuTable {
     }
     return target;
   }
+
   renderWeektab(content, weeksMenu) {
     const target = content.querySelector('.menu-table__tabs');
-    const weektab = createElementsFromString(weekTab());
+    const weektab = createElementsFromString(weekTabTemplate());
     target.appendChild(weektab);
     this.selectWeek(target, true);
     target.querySelector('.week-tab__current').addEventListener('click', () => {
@@ -57,9 +61,11 @@ export default class MenuTable {
     });
     return content;
   }
+
   reloadContent(target) {
     target.innerHTML = '';
   }
+
   selectWeek(target, current) {
     if (current) {
       target.querySelector('.week-tab__current').classList.add('picked-week');
@@ -69,6 +75,7 @@ export default class MenuTable {
       target.querySelector('.week-tab__current').classList.remove('picked-week');
     }
   }
+
   sendFile(e) {
     e.preventDefault();
     // post req
