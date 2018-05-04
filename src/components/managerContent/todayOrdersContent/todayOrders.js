@@ -2,7 +2,7 @@ import './todayOrders.css';
 import orders from './todayOrders.hbs';
 import { createElementsFromString } from '../../../common/utils';
 
-export default class Card {
+export default class {
   constructor() {
     this.state = {};
   }
