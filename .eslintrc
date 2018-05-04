@@ -6,6 +6,6 @@
   "rules": {
     "class-methods-use-this": "off",
     "no-plusplus": "off",
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": "off"
   }
 }
