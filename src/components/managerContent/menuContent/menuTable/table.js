@@ -38,7 +38,7 @@ export default class MenuTable {
     if (props.menu) {
       this.rendermenuItems(target, menuObj);
     } else {
-      document.querySelector('.upload-menu__button').addEventListener('click', this.chooseFile);
+      document.querySelector('.upload-menu__button').addEventListener('onload', this.chooseFile);
     }
     return target;
   }
@@ -70,6 +70,20 @@ export default class MenuTable {
     }
   }
   chooseFile() {
-    // post
+    const xhr = new XMLHttpRequest();
+   
+    xhr.open('POST', '/api/menu', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+
+    xhr.send(body);
+  }
+  getRequest() {
+    fetch('/api/menu', { method: 'GET' })
+      .then((res) => {
+        setMenu(res);
+        return res;
+      })
+      .catch(alert);
   }
 }

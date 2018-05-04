@@ -31,7 +31,7 @@
     text-decoration: none; 
     background-color: white;
     border: 1px solid #008AFF;
-    border-radius: 10px;
+    border-radius: 2px;
     flex: 1;
     margin: 3px;
     padding: 2px;
@@ -40,6 +40,7 @@
     align-items: center;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
+    transition: .4s;
 }
 .left-link{
     margin-left: 0;
@@ -51,11 +52,11 @@
     font: 300 18px 'Roboto', sans-serif;
     padding: 2px;
 }
-.menu-icon,.today-icon,.order-icon,.balance-icon{
+.tab-icon{
     display: none;
 }
 .nav-bar__link:hover{
-    border: 2px solid #008AFF;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .nav-bar__link:active,.nav-bar-selected{
     background-color: #008AFF;
@@ -72,7 +73,7 @@
     .nav-bar__link-text{
       display: none;
     }
-    .menu-icon,.today-icon,.order-icon,.balance-icon{
+    .tab-icon{
         display: block;
     }
 }
@@ -92,6 +93,7 @@
     background-color: #008AFF;
     border-radius: 50%;
     cursor: pointer;
+    transition: .4s;
 }
 @media (max-width: 600px) {
     .print{
@@ -103,10 +105,7 @@
     font-size: 50px;
     color: white;
 }
-.print-icon:hover{
-    font-size: 55px;
-}
+
 .print:hover{
-    width: 70px;
-    height: 70px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

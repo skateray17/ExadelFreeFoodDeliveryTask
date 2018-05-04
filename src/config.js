@@ -7,15 +7,15 @@ import Guards from './guards';
 export const routes = {
   login: {
     component: LoginScreen,
-    guards: [Guards.guestGuard],
+    guards: [Guards.authGuard],
   },
   main: {
     component: UsersScreen,
-    guards: [Guards.authGuard, Guards.roleGuard(['admin', 'user'])],
+    guards: [Guards.authGuard, Guards.roleGuard([1, 10])],
   },
   admin: {
     component: AdminHomeScreen,
-    guards: [Guards.authGuard, Guards.roleGuard('admin')],
+    guards: [Guards.authGuard, Guards.roleGuard([10])],
   },
   error: {
     component: ErrorScreen,

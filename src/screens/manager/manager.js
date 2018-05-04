@@ -5,49 +5,55 @@ import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 import { createElementsFromString } from '../../common/utils';
 
-function selectTab(tab) {
+const tabs = [
+  {
+    component: new Menu(),
+    title: 'Upload menu',
+    icon: '&#xE561;',
+  },
+  {
+    title: 'Today\'s orders',
+    icon: '&#xE8DF;',
+  },
+  {
+    component: new UserBalanceTable(),
+    title: 'Replenish balance',
+    icon: '&#xE926;',
+  },
+  {
+    title: 'Make an order',
+    icon: '&#xE8CC;',
+  },
+];
+function selectTab(index, navBar) {
+  const tab = navBar.children[index];
   const currentTab = document.querySelector('.nav-bar-selected');
   if (currentTab) currentTab.classList.remove('nav-bar-selected');
   tab.classList.add('nav-bar-selected');
 }
-function renderMenu(target) {
-  const menu = new Menu();
+function renderTab(target, indexOfTab, navBar) {
   target.innerHTML = '';
-  menu.render(target);
-  selectTab(document.querySelector('.upload-menu-tab'));
-  return target;
+  tabs[indexOfTab].component.render(document.querySelector('.manager-content'));
+  selectTab(indexOfTab, navBar);
 }
-function renderBalance(target) {
-  target.innerHTML = '';
-  const userBalanceTable = new UserBalanceTable();
-  userBalanceTable.render(document.querySelector('.content'));
-  selectTab(document.querySelector('.balance-tab'));
-}
-const managerTabSelector = {
-  uploadMenu: (target) => {
-    renderMenu(target);
-  },
-  balance: (target) => {
-    renderBalance(target);
-  },
-};
-function managerListeners() {
-  document.querySelector('.upload-menu-tab').addEventListener('click', () => {
-    managerTabSelector.uploadMenu(document.querySelector('.manager-content'));
-  });
-  document.querySelector('.balance-tab').addEventListener('click', () => {
-    managerTabSelector.balance(document.querySelector('.manager-content'));
+
+function managerListeners(target, navBar) {
+  [].forEach.call(navBar.children, (elem, index) => {
+    elem.addEventListener('click', () => {
+      renderTab(target, index, navBar);
+    });
   });
 }
 export default class ManagerHomeScreen {
   render(screenTarget, props) {
     const header = new Header();
     header.render(screenTarget, props);
-    const screen = createElementsFromString(template());
+    const screen = createElementsFromString(template({ tab: tabs }));
     screenTarget.appendChild(screen);
-    const contentTarget = document.querySelector('.manager-content');
-    managerTabSelector.uploadMenu(contentTarget);
-    managerListeners();
+    const contentTarget = screenTarget.querySelector('.manager-content');
+    const navBar = screenTarget.querySelector('.nav-bar');
+    renderTab(contentTarget, 0, navBar);
+    managerListeners(contentTarget, navBar);
     return screenTarget;
   }
 }
