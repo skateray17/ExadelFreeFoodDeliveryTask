@@ -12,10 +12,6 @@ function getHours(date) {
   return date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds();
 }
 
-function getNumberOfCardInDom(date) {
-  return date.getDate() - Date.now().getDate();
-}
-
 export default class Card {
   constructor(props, target) {
     this.target = target;

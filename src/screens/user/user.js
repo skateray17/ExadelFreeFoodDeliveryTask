@@ -311,38 +311,6 @@ function addOrderItemsToProps(cardProps, day) {
   });
 }
 
-function createPropsForCards() {
-  let propsForCards = [];
-
-  for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
-      const cardProps = createCardPropsWithEmptyOrders(day);
-      addOrderItemsToProps(cardProps, day);
-      propsForCards.push(cardProps);
-    }
-  }
-
-  let currentDate = new Date();
-  currentDate = clearHours(currentDate);
-
-  let indexOfCheckedCard = 0;
-  for (let i = 0; i < VISIBLE_NUMBER_OF_CARDS + 1; i++) {
-    if (
-      currentDate !== new Date(propsForCards[indexOfCheckedCard].header.date).getTime() &&
-      new Date(currentDate).getDay() !== 0
-    ) {
-      propsForCards.push(createInactiveCard(new Date(currentDate)));
-    } else if (new Date(currentDate).getDay() !== 0) {
-      indexOfCheckedCard += 1;
-    }
-    currentDate += 24 * 60 * 60 * 1000;
-  }
-
-  propsForCards = propsForCards.sort((x, y) => new Date(x.header.date).getTime() - new Date(y.header.date).getTime());
-
-  return propsForCards;
-}
-
 function createInactiveCard(date) {
   return {
     header: createHeaderForCard(date),
@@ -350,10 +318,41 @@ function createInactiveCard(date) {
   };
 }
 
+function createPropsForCards() {
+  const cardsWithOrders = [];
+
+  for (const day of userOrders) {
+    if (new Date(day.date) > new Date()) {
+      const cardProps = createCardPropsWithEmptyOrders(day);
+      addOrderItemsToProps(cardProps, day);
+      cardsWithOrders.push(cardProps);
+    }
+  }
+
+  const days = [];
+  let currentDate = new Date();
+  clearHours(currentDate);
+
+  for (let i = 0; i < 9; i++) {
+    if (currentDate.getDay() !== 1) {
+      days.push(currentDate);
+    }
+    currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+  }
+
+  let propsForCards = days.map(day =>
+    cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime()) || createInactiveCard(day)
+  );
+
+  return propsForCards;
+}
+
+
 function clearHours(date) {
   date.setHours(0, 0, 0, 0);
   return date.getTime();
 }
+
 export default class UsersScreen {
   constructor() {
     this.cards = [];
