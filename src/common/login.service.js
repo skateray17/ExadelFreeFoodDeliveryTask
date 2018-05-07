@@ -1,11 +1,10 @@
 import { removeCookie } from './utils';
+import { post } from './requests';
 
 export function login(email, password) {
-  return fetch('http://localhost:3000/api/account/login', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-    headers: new Headers({ 'Content-Type': 'application/json' }),
-  });
+  return post('http://localhost:3000/api/account/login', {
+    'Content-Type': 'application/json',
+  }, JSON.stringify({ email, password }));
 }
 
 export function logout(router) {
