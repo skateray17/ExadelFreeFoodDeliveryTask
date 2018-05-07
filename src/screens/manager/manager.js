@@ -30,7 +30,15 @@ const tabs = [
 ];
 
 export default class ManagerHomeScreen {
+  constructor(router) {
+    this.router = router;
+  }
+
   render(screenTarget, props) {
+    props = {
+      page: 'manager',
+      router: this.router,
+    };
     const header = new Header();
     header.render(screenTarget, props);
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
@@ -49,6 +57,7 @@ function selectTab(index, navBar) {
   if (currentTab) currentTab.classList.remove('nav-bar-selected');
   tab.classList.add('nav-bar-selected');
 }
+
 function renderTab(target, indexOfTab, navBar) {
   target.innerHTML = '';
   tabs[indexOfTab].component.render(document.querySelector('.manager-content'));
@@ -62,4 +71,3 @@ function managerListeners(target, navBar) {
     });
   });
 }
-

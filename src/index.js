@@ -1,10 +1,5 @@
 import './index.css';
-import ManagerHomeScreen from './screens/manager/manager';
+import Router from './router';
+import { routes } from './config';
 
-const screen = new ManagerHomeScreen();
-const props = {
-  page: 'manager',
-  userRole: 'manager',
-};
-const target = document.getElementById('screen');
-screen.render(target, props);
+const router = new Router(routes, document.getElementById('screen'));
