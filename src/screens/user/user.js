@@ -334,15 +334,17 @@ function createPropsForCards() {
   clearHours(currentDate);
 
   for (let i = 0; i < 9; i++) {
-    if (currentDate.getDay() !== 1) {
+    if (currentDate.getDay() !== 0) {
       days.push(currentDate);
     }
-    currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+    // const date = new Date(currentDate);
+    currentDate = new Date(currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1);
   }
 
-  let propsForCards = days.map(day =>
-    cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime()) || createInactiveCard(day)
-  );
+  const propsForCards = days.map(day =>
+    cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime())
+    || createInactiveCard(day));
 
   return propsForCards;
 }
