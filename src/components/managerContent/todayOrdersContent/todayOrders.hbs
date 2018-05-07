@@ -3,15 +3,15 @@
     {{#each users}}
     <div class="today-orders__card-outside">
       <div class="today-orders__card">
-        <div class="today-orders__header">
+        <div class="today-orders__header today-orders__text">
           {{name}}
         </div>
         <div class="today-orders__card-inside">
           <div class="today-orders__card-content">
             {{#each orders}}
             <div class="today-orders__card-item">
-              <div>{{@ key}}</div>
-              <div class="today-orders__card-item-count">x{{this}}</div>
+              <div class="today-orders__text">{{@ key}}</div>
+              <div class="today-orders__card-item-count today-orders__text">x{{this}}</div>
             </div>
             {{/each}}
           </div>

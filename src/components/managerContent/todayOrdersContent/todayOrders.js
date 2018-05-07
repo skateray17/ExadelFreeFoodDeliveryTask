@@ -10,5 +10,6 @@ export default class {
   render(target, props) {
     const cardTemplate = orders(props);
     target.appendChild(createElementsFromString(cardTemplate));
+    return target.lastElementChild;
   }
 }

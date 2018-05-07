@@ -75,3 +75,6 @@
 .today-orders__card-item-count{
   margin-left: auto;
 }
+.today-orders__text{
+  font-size: 18px;
+}
