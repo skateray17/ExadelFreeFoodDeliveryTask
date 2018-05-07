@@ -354,18 +354,41 @@ function clearHours(date) {
   date.setHours(0, 0, 0, 0);
   return date.getTime();
 }
-import { logout } from '../../common/login.service';
 
 export default class UsersScreen {
-  constructor(router) {
-    this.router = router;
+  constructor() {
+    this.cards = [];
   }
 
   render(target, props) {
     const header = new Header();
     header.render(target, props);
+
     const screen = createElementsFromString(template());
     target.appendChild(screen);
+
+    const propsForCards = createPropsForCards(userOrders);
+
+    propsForCards.forEach((props) => {
+      const card = new Card(target.querySelector('.menus-cards-container'), props);
+      const containerForCard = document.createElement('div');
+
+      target.querySelector('.menus-cards-container').appendChild(containerForCard);
+      card.render(containerForCard, props);
+
+      this.cards.push(card);
+    });
+
     return screen;
   }
+  /*
+    update(cardUpdates) {
+      const date = new Date(cardUpdates.header.date);
+      for (const card of this.cards) {
+        if (new Date(card.header.date) === date) {
+          card.render(cardUpdates);
+        }
+      }
+    }
+    */
 }
