@@ -14,5 +14,22 @@ const props = {
 
 const target = document.querySelector('#screen');
 
-// managersScreen.render(target, props);
 usersScreen.render(target, props);
+/*
+usersScreen.update({
+  header: {
+    weekday: 'Чт',
+    date: 'Fri May 04 2018',
+    active: true,
+  },
+  orderPrice: 10.15,
+  orders: [
+    {
+      name: 'голубцы ленивые',
+      mass: 150,
+      price: 5.50,
+      quantity: 3,
+    },
+  ],
+});
+*/

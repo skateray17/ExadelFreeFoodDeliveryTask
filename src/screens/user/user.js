@@ -22,7 +22,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-02T21:00:00.000Z',
+    date: '2018-05-06T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -40,7 +40,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-03T21:00:00.000Z',
+    date: '2018-05-07T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -58,18 +58,18 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-04T21:00:00.000Z',
+    date: '2018-05-08T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
 
 ];
 const menuFromServer = {
-  date: '30.04.2018-06.05.2018',
+  date: '07.05.2018-14.05.2018',
   menu: {
-    date: '30.04.2018-06.05.2018',
+    date: '07.05.2018-07.05.2018',
     mon: {
-      day: '2018-04-29T21:00:00.000Z',
+      day: '2018-05-06T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -99,7 +99,7 @@ const menuFromServer = {
       ],
     },
     tue: {
-      day: '2018-04-20T21:00:00.000Z',
+      day: '2018-05-07T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -129,7 +129,7 @@ const menuFromServer = {
       ],
     },
     wed: {
-      day: '2018-05-01T21:00:00.000Z',
+      day: '2018-05-08T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -159,7 +159,7 @@ const menuFromServer = {
       ],
     },
     thu: {
-      day: '2018--05-02T21:00:00.000Z',
+      day: '2018-05-09T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -189,7 +189,7 @@ const menuFromServer = {
       ],
     },
     fri: {
-      day: '2018-05-03T21:00:00.000Z',
+      day: '2018-05-10T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -219,7 +219,7 @@ const menuFromServer = {
       ],
     },
     sat: {
-      day: '2018-05-04T21:00:00.000Z',
+      day: '2018-05-11T21:00:00.000Z',
       menu: [
         {
           name: 'суп из чечевицы с овощами',
@@ -288,7 +288,7 @@ function createCardPropsWithEmptyOrders(day) {
   };
 }
 
-function addOrderToCardProps(order, dishes, cardProps) {
+function addOrderItem(order, dishes, cardProps) {
   for (const dish of dishes) {
     if (dish.name === order.dishTitle) {
       cardProps.orders.push({
@@ -302,21 +302,44 @@ function addOrderToCardProps(order, dishes, cardProps) {
   }
 }
 
+function addOrderItemsToProps(cardProps, day) {
+  day.dishList.forEach((item) => {
+    const dayOfTheWeek = engDays[new Date(day.date).getDay()];
+    const dishes = menuFromServer.menu[dayOfTheWeek].menu;
+
+    addOrderItem(item, dishes, cardProps);
+  });
+}
+
 function createPropsForCards() {
-  const propsForCards = [];
+  let propsForCards = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date).getTime() > new Date().getTime()) {
-      let cardProps = createCardPropsWithEmptyOrders(day);
-
-      for (const order of day.dishList) {
-        const dayOfTheWeek = engDays[new Date(day.date).getDay()];
-        const dishes = menuFromServer.menu[dayOfTheWeek].menu;
-        addOrderToCardProps(order, dishes, cardProps);
-      }
+    if (new Date(day.date) > new Date()) {
+      const cardProps = createCardPropsWithEmptyOrders(day);
+      addOrderItemsToProps(cardProps, day);
       propsForCards.push(cardProps);
     }
   }
+
+  let currentDate = new Date();
+  currentDate = clearHours(currentDate);
+
+  let indexOfCheckedCard = 0;
+  for (let i = 0; i < VISIBLE_NUMBER_OF_CARDS + 1; i++) {
+    if (
+      currentDate !== new Date(propsForCards[indexOfCheckedCard].header.date).getTime() &&
+      new Date(currentDate).getDay() !== 0
+    ) {
+      propsForCards.push(createInactiveCard(new Date(currentDate)));
+    } else if (new Date(currentDate).getDay() !== 0) {
+      indexOfCheckedCard += 1;
+    }
+    currentDate += 24 * 60 * 60 * 1000;
+  }
+
+  propsForCards = propsForCards.sort((x, y) => new Date(x.header.date).getTime() - new Date(y.header.date).getTime());
+
   return propsForCards;
 }
 
@@ -339,39 +362,25 @@ export default class UsersScreen {
   render(target, props) {
     const header = new Header();
     header.render(target, props);
+
     const screen = createElementsFromString(template());
     target.appendChild(screen);
 
-    let propsForCards = createPropsForCards(userOrders);
+    const propsForCards = createPropsForCards(userOrders);
 
-    let currentDate = new Date();
-    currentDate = clearHours(currentDate);
+    propsForCards.forEach((props) => {
+      const card = new Card(target.querySelector('.menus-cards-container'), props);
+      const containerForCard = document.createElement('div');
 
-    let indexOfCheckedCard = 0;
-    for (let i = 0; i < VISIBLE_NUMBER_OF_CARDS + 1; i++) {
-      if (
-        currentDate !== new Date(propsForCards[indexOfCheckedCard].header.date).getTime() &&
-        new Date(currentDate).getDay() !== 0
-      ) {
-        propsForCards.push(createInactiveCard(new Date(currentDate)));
-      } else {
-        if (new Date(currentDate).getDay() !== 0) {
-          indexOfCheckedCard += 1;
-        }
-      }
-      currentDate += 24 * 60 * 60 * 1000;
-    }
+      target.querySelector('.menus-cards-container').appendChild(containerForCard);
+      card.render(containerForCard, props);
 
-    propsForCards = propsForCards.sort((x, y) => new Date(x.header.date).getTime() - new Date(y.header.date).getTime());
-
-    for (const props of propsForCards) {
-      const card = new Card();
       this.cards.push(card);
-      card.render(target.querySelector('.menus-cards-container'), props);
-    }
+    });
+
     return screen;
   }
-
+/*
   update(cardUpdates) {
     const date = new Date(cardUpdates.header.date);
     for (const card of this.cards) {
@@ -380,4 +389,5 @@ export default class UsersScreen {
       }
     }
   }
+  */
 }

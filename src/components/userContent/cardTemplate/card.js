@@ -17,20 +17,18 @@ function getNumberOfCardInDom(date) {
 }
 
 export default class Card {
+  constructor(props, target) {
+    this.target = target;
+    this.props = props;
+  }
+
   render(target, props) {
-    const domCards = target.childNodes;
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
 
-    if (domCards.length < 8) {
-      const cardItem = target.appendChild(createElementsFromString(cardTemplate));
-      this.insertCardContent(cardItem, props, target);
-    } else {
-      const position = domCards[getNumberOfCardInDom(new Date(props.header.date))];
-      target.removeChild(position);
-      const cardItem = target.insertBefore(createElementsFromString(cardTemplate), domCards[position + 1]);
-      this.insertCardContent(cardItem, props, target);
-    }
+    target.innerHTML = '';
+    const cardItem = target.appendChild(createElementsFromString(cardTemplate));
+    this.insertCardContent(cardItem, props, target);
   }
 
   createOrderItem(cardItem, order) {
