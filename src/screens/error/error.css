@@ -1,8 +1,9 @@
-body{
+.error__content{
     background: #008AFF;
     color: #FFFFFF;
-    max-height:700px;
     overflow: hidden;
+    height: 100vh;
+    width: 100vw;
 }
 
 .error-message{

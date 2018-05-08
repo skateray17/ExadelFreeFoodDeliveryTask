@@ -12,7 +12,7 @@
 }
 
 .app-name {
-    color: #000000;
+    color: #008AFF;
     display: block;
     margin: auto;
     font-size: 38px;
@@ -33,14 +33,14 @@
     height: 40px;
     font-size: 20px;
     text-align: center;
-    color: #000000;
+    color: #008AFF;
     border-radius: 5px;
     background-color: #FFFFFF;
-    border: 1px solid #000000;
+    border: 1px solid #008AFF;
     outline: none;
 }
 ::placeholder{
-    color: #000000;
+    color: #008AFF;
 }
 
 .login__button {
@@ -50,14 +50,14 @@
     height: 40px;
     font-size: 20px;
     text-align: center;
-    color: #000000;
+    color: #008AFF;
     border-radius: 20px;
     background-color: #FFFFFF;
-    border: 1px solid #000000;
+    border: 1px solid #008AFF;
     outline: none;
 }
 .login__button:hover{
-    background-color: #000000;
+    background-color: #008AFF;
     border: solid  #FFFFFF;
     color: #FFFFFF;
 }
