@@ -12,9 +12,14 @@ export function createElementsFromString(str) {
   return result;
 }
 
+export const roles = {
+  user: 1,
+  manager: 10,
+};
+
 const typeMapping = {
   1: 'main',
-  10: 'admin',
+  10: 'manager',
 };
 
 export function checkType(userType) {
@@ -47,4 +52,19 @@ export function getCookie(cname) {
 export function checkCookie(key) {
   const value = getCookie(key);
   return (value !== '');
+}
+
+export function removeCookie(key) {
+  setCookie(key, '', 0);
+}
+
+export function getUrlParams() {
+  const props = {};
+  const SearchString = window.location.search.substring(1);
+  const VariableArray = SearchString.split('&');
+  for (let i = 0; i < VariableArray.length; i++) {
+    const KeyValuePair = VariableArray[i].split('=');
+    props[KeyValuePair[0]] = KeyValuePair[1];
+  }
+  return props;
 }
