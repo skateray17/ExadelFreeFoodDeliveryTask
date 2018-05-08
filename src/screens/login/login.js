@@ -1,5 +1,6 @@
 import './login.css';
 import loginContent from './login.hbs';
+import Toast from '../../components/toast/toast';
 import { getUserInfo } from '../../common/user.service';
 import { checkType, removeCookie, setCookie } from '../../common/utils';
 import { login } from '../../common/login.service';
@@ -18,6 +19,7 @@ export default class LoginScreen {
     }
     const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
+    target.querySelector('.app-name').addEventListener('click', () => Toast.show('some text'));
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
     return loginContent(context);
   }
@@ -39,7 +41,7 @@ export default class LoginScreen {
         setCookie('username', data.username, 365);
         setCookie('type', data.type, 365);
         this.router.navigate(checkType(getUserInfo().type));
-      }).catch(() => {
+      }).catch((err) => {
         this.render(target, { displayError: true, email: email });
       });
   }
