@@ -1,3 +1,53 @@
+body{
+    background: #008AFF;
+    color: #FFFFFF;
+    max-height:700px;
+    overflow: hidden;
+}
+
 .error-message{
-    font-size: 100px;
+    text-align: center;
+    display: block;
+    position: relative;
+    width: 100vw;
+    margin:100px auto;
+}
+
+.word404{
+    font-size: 190px;
+    position: relative;
+    display: inline-block;
+    height: 250px;
+    letter-spacing: 15px;
+    margin: 5px auto;
+}
+
+.first-word{
+    text-align:center;
+    display:block;
+    position:relative;
+    letter-spacing: 12px;
+    line-height: 80%;
+    font-size: 50px;
+    margin: 5px auto;
+}
+
+.second-word{
+    text-align:center;
+    display:block;
+    position: relative;
+    font-size: 20px;
+    margin: 5px auto;
+}
+
+.return__button{
+    background-color: #FFFFFF;
+    position: relative;
+    display: inline-block;
+    width: 340px;
+    padding: 5px;
+    font-size: 25px;
+    margin: 5px auto;
+    color: #008AFF;
+    text-decoration: none;
 }

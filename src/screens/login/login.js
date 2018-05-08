@@ -42,7 +42,7 @@ export default class LoginScreen {
         setCookie('type', data.type, 365);
         this.router.navigate(checkType(getUserInfo().type));
       }).catch((err) => {
-        this.render(target, { displayError: true, email: email });
+        this.render(target, { displayError: true, email });
       });
   }
 
