@@ -25,6 +25,8 @@ export default class Card {
     target.innerHTML = '';
     const cardItem = target.appendChild(createElementsFromString(cardTemplate));
     this.insertCardContent(cardItem, props, target);
+
+    return cardItem;
   }
 
   createOrderItem(cardItem, order) {
