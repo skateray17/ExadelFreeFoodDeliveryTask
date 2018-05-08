@@ -1,11 +1,11 @@
-.make-order__header{
+.user-balance__header{
   min-height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.make-order__header-title{
+.user-balance__header-input{
   font-size: 18px;
   border-bottom: 1px solid #6E6E6E;
   text-align: center;

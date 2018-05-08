@@ -1,14 +1,22 @@
-#manager-home-screen{
-    margin: auto;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    font-size: 0;
+}
+.manager-home-screen{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     width: 1000px;
+    margin: auto;
 }
-    
 @media (max-width: 1000px) {
-  #manager-home-screen{
+  .manager-home-screen{
       width: 98%;
   }
 }
@@ -23,7 +31,7 @@
     text-decoration: none; 
     background-color: white;
     border: 1px solid #008AFF;
-    border-radius: 10px;
+    border-radius: 2px;
     flex: 1;
     margin: 3px;
     padding: 2px;
@@ -32,6 +40,7 @@
     align-items: center;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
+    transition: .4s;
 }
 .left-link{
     margin-left: 0;
@@ -41,17 +50,17 @@
 }
 .nav-bar__link-text{
     font: 300 18px 'Roboto', sans-serif;
+    padding: 2px;
 }
-.menu-icon,.today-icon,.order-icon,.balance-icon{
+.tab-icon{
     display: none;
-    color: #014681;
 }
 .nav-bar__link:hover{
-    border: 2px solid #008AFF;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .nav-bar__link:active,.nav-bar-selected{
     background-color: #008AFF;
-    color: white;
+    color: white; 
 }
 .nav-bar__link:visited { text-decoration: none; } 
 .nav-bar__link:active { text-decoration: none; }
@@ -64,7 +73,7 @@
     .nav-bar__link-text{
       display: none;
     }
-    .menu-icon,.today-icon,.order-icon,.balance-icon{
+    .tab-icon{
         display: block;
     }
 }
@@ -72,19 +81,20 @@
     width: 100%;
     min-height: 500px;
     background-color: white;
-    margin-bottom: 20px;
+    margin-bottom: 100px;
     position: relative;
 }
 .print{
     width: 65px;
     height: 65px;
     position: fixed;
-    right: 50px;
-    bottom: 50px;
+    right: 30px;
+    bottom: 30px;
     z-index: 1;
     background-color: #008AFF;
     border-radius: 50%;
     cursor: pointer;
+    transition: .4s;
 }
 @media (max-width: 600px) {
     .print{
@@ -96,10 +106,7 @@
     font-size: 50px;
     color: white;
 }
-.print-icon:hover{
-    font-size: 55px;
-}
+
 .print:hover{
-    width: 70px;
-    height: 70px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

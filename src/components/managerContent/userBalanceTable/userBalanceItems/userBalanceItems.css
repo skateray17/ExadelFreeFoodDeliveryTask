@@ -1,4 +1,4 @@
-.make-order__table-header{
+.user-balance__table-header{
   border-bottom: 1px solid #E0E0E0;
   border-top: 1px solid #E0E0E0;
   display: flex;
@@ -8,7 +8,7 @@
   padding: 0 270px 0 34px;
 }
 
-.make-order__dish-header-title, .make-order__dish-amount{
+.user-balance__user-name-title, .user-balance__balance-title{
   font-size: 18px;
   color: #6E6E6E;
 }
@@ -29,7 +29,7 @@
   color: #212121;
 }
 
-.make-order__header{
+.user-balance__balance-input{
   padding-bottom: 3px;
   text-align: center;
   font-size: 18px;
@@ -85,7 +85,7 @@
     text-align: right;
   }
 
-  .make-order__header{
+  .user-balance__balance-input{
     justify-self: center;
   }
 
@@ -97,11 +97,11 @@
     font-size: 18px;
   }
 
-  .make-order__table-header{
+  .user-balance__table-header{
     padding-right: 130px;
   }
 
-  .make-order__dish-amount{
+  .user-balance__balance-title{
     margin-left: 20px;
   }
 
@@ -114,15 +114,15 @@
     grid-template-rows: 40px 40px auto;
   }
 
-  .user-balance__submit-button, .make-order__header{
+  .user-balance__submit-button, .user-balance__balance-input{
     grid-column: span 2;
-  }  
+  }
 
-  .make-order__table-header{
+  .user-balance__table-header{
     padding-right: 34px;
   }
 
-  .make-order__header{
+  .user-balance__balance-input{
     width: 100%;
   }
 

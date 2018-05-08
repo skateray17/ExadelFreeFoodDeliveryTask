@@ -1,16 +1,12 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
-import { createElementsFromString } from '../../common/utils';
+import { createElementsFromString, roles } from '../../common/utils';
+import { getUserInfo } from '../../common/user.service';
+import { logout } from '../../common/login.service';
 
 export default class Header {
   render(target, props) {
-    props = {
-      page: 'manager',
-      userRole: 'manager',
-      nickname: 'И. Фамилия',
-      balance: '-30',
-    };
     let header;
     if (props.page === 'manager') {
       header = createElementsFromString(managersHeader());
@@ -18,14 +14,30 @@ export default class Header {
     if (props.page === 'user') {
       const headersProps = {
         isUserManager: false,
-        nickname: props.nickname,
-        balance: props.balance,
+        nickname: getUserInfo().username,
+        balance: getUserInfo().balance,
       };
-      if (props.userRole === 'manager') {
+      if (getUserInfo().type == roles.manager) {
         headersProps.isUserManager = true;
       }
       header = createElementsFromString(usersHeader(headersProps));
     }
-    return target.appendChild(header);
+    const screenWithHeader = target.appendChild(header);
+    if (getUserInfo().type == roles.manager) {
+      target.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
+        switchMode(props);
+      });
+    } target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
+
+    return screenWithHeader;
+  }
+}
+
+function switchMode(props) {
+  if (props.page === 'manager') {
+    props.router.navigate('main');
+  }
+  if (props.page === 'user') {
+    props.router.navigate('manager');
   }
 }

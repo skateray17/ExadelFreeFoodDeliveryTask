@@ -1,0 +1,104 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+.menu-table,.upload-menu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-bottom: 20px;
+}
+.upload-menu{
+   align-items: center;
+}
+.send-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.week-tab{
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #95989A;
+}
+.week-tab__pick-week{
+    font-size: 18px;
+    font-weight: 300;
+    width: 200px;
+    text-align: center;
+    padding: 5px;
+    background-color: transparent;
+    cursor: pointer;
+}
+.picked-week{
+    border-bottom: 1.8px solid #008AFF;
+    font-size: 20px;
+}
+.menu-table__date{
+    align-self: center;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.menu-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.menu-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 10px;
+}
+.menu-item__day{
+    color: #008AFF;
+    font-size: 20px;
+    border-bottom: 0.6px solid #95989A;
+}
+.menu-item__dish{
+    display: flex;
+    justify-content:  space-between;
+    border-bottom: 0.6px solid #95989A;
+    padding: 5px;
+    font-size: 8px;
+    color: #000000d1;
+}
+.dish-name{
+    margin-left: 10px;
+    flex: 1;
+}
+.dish-name,.dish-weight,.dish-price{
+    font-size: 18px;
+    color: #000000d1;
+    font-weight: 300;
+}
+.dish-weight,.dish-price{
+    margin-left: 10px;
+}
+.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg{
+    font-size: 20px;
+    font-weight: 300;
+}
+.upload-menu__button,.choose-file{
+    background-color: white;
+    padding: 15px 50px 15px 50px;
+    margin: 20px;
+    border: 1px solid #008AFF;
+    cursor: pointer;
+}
+.upload-menu__button{
+    width: 200px;
+    align-self: center;
+}
+.choose-file{
+    width: 300px;
+    font-size: 15px;
+    padding: 15px;
+}
+.menu-item__no-menu-msg{
+    font-size: 15px;
+    margin: 20px;
+    align-self: flex-start;
+}
