@@ -2,9 +2,9 @@ import { removeCookie } from './utils';
 import { post } from './requests';
 
 export function login(email, password) {
-  return post('http://localhost:3000/api/account/login', {
+  return post('account/login', {
     'Content-Type': 'application/json',
-  }, JSON.stringify({ email, password }));
+  }, null, JSON.stringify({ email, password }));
 }
 
 export function logout(router) {
