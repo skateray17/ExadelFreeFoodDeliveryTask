@@ -1,5 +1,5 @@
-<div class="user-balance__table-header">
-  <span class="user-balance__user-name-title">Пользователь</span><span class="user-balance__balance-title">Баланс</span>
+<div class="make-order__table-header">
+  <span class="make-order__dish-header-title">Пользователь</span><span class="make-order__dish-amount">Баланс</span>
 </div>
 {{#each users}}
   <div class="user-balance__user-item">
@@ -8,7 +8,7 @@
           <span class="user-balance__balance">{{balance}}</span>
           <span class="user-balance__currency">P</span>
       </div>
-      <input type='text' class="user-balance__balance-input" placeholder="сумма"></input>
+      <input type='text' class="make-order__header" placeholder="сумма"></input>
       <div class="user-balance__submit-button">зачислить</div>
   </div>
 {{/each}}

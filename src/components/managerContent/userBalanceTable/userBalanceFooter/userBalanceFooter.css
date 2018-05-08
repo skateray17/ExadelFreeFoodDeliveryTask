@@ -1,4 +1,4 @@
-.user-balance__footer{
+.make-order__table-footer{
   align-items: center;
   display: flex;
   justify-content: flex-end;
@@ -53,7 +53,7 @@
 
 @media screen and (max-width: 650px){
 
-  .user-balance__footer{
+  .make-order__table-footer{
     justify-content: space-between;
     flex-wrap: wrap;
   }

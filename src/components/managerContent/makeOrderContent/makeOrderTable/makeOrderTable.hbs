@@ -1,0 +1,18 @@
+<div class="table">
+    <div class="make-order__table-header">
+        <span class="make-order__dish-header-title">Наименование</span><span
+            class="make-order__dish-amount">Количество</span>
+    </div>
+    {{#each items}}
+
+        <div class="make-order_order-item">
+            <span class="make-order__dish-title">{{dishTitle}}</span>
+            <span class="make-order__amount">{{amount}}</span>
+
+        </div>
+
+    {{/each}}
+    {{#unless items}}
+    {{/unless}}
+
+</div>

@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    font-size: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #EEEEEE;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+#screen {
+    margin: auto;
+    background-color: white;
+    max-width: 1000px;
+}
+
+hr {
+    background-color: #000000;
+    opacity: .12;
+    height: 1px;
+}
+
+.make-order__table-header, .make-order_order-item {
+    min-height: 42px;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 0 34px 0 34px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.make-order__dish-header-title, .make-order__dish-amount {
+    font-size: 18px;
+    color: #6E6E6E;
+}
+
+.make-order__dish-title {
+    font-size: 18px;
+    color: #212121;
+}
+
+.make-order__amount {
+    font-size: 18px;
+    padding-left: 60px;
+    color: #212121;
+}
+
+.make-order__header {
+    min-height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    text-align: center;
+    padding: 8px 0;
+}
+
+
+
+.make-order__table-footer {
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 34px;
+}
+
+.make-order__footer-price {
+    font-size: 18px;
+    color: #008AFF;
+}
+
+.make-order_buttons {
+    height: 40px;
+    width: 35%;
+    background-color: #5aad3c;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+
+}
+
+.make-order_print-button-container {
+    padding: 10px 20%;
+    display: flex;
+    justify-content: space-evenly;
+}
