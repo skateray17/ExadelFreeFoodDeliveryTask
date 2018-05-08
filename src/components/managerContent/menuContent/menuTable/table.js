@@ -6,10 +6,27 @@ import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu } from '../../../../common/menuService';
 import menuObject from '../../../../common/menuObject';
+import { get } from '../../../../common/requests';
 
 export default class MenuTable {
   render(target) {
-    // get req
+    // get('https://fooddel123.herokuapp.com/api/menu', {})
+    //   .then(res => res.status)
+    //   .then((data) => {
+    //     setMenu(data);
+    //   })
+    //   .catch(() => {
+    //     console.error();
+    //   });
+
+    fetch('https://fooddel123.herokuapp.com/api/menu', { method: 'GET' })
+      .then(res => res.status)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        console.error();
+      });
     setMenu(menuObject);
     const weeksMenu = getMenu();
     this.renderContent(target, weeksMenu);
