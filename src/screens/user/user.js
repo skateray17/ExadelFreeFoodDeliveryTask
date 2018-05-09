@@ -381,14 +381,14 @@ export default class UsersScreen {
 
     return screen;
   }
-  /*
-    update(cardUpdates) {
-      const date = new Date(cardUpdates.header.date);
-      for (const card of this.cards) {
-        if (new Date(card.header.date) === date) {
-          card.render(cardUpdates);
-        }
+
+  update(cardUpdates) {
+    const date = new Date(cardUpdates.header.date);
+    for (const card of this.cards) {
+      if (new Date(card.header.date) === date) {
+        card.render(cardUpdates);
       }
     }
-    */
+  }
+
 }
