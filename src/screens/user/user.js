@@ -63,6 +63,42 @@ const userOrders = [
     totalPrice: 60.34,
   },
 
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-09T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-10T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
 ];
 const menuFromServer = {
   date: '07.05.2018-14.05.2018',
@@ -202,7 +238,7 @@ const menuFromServer = {
           cost: 3.2,
         },
         {
-          name: 'торт',
+          name: 'мясцо',
           weight: 156,
           cost: 1.8,
         },
@@ -370,11 +406,11 @@ export default class UsersScreen {
     const propsForCards = createPropsForCards(userOrders);
 
     propsForCards.forEach((props) => {
-      const card = new Card(target.querySelector('.menus-cards-container'), props);
-      const containerForCard = document.createElement('div');
+      const cardContainer = document.createElement('div');
 
-      target.querySelector('.menus-cards-container').appendChild(containerForCard);
-      card.render(containerForCard, props);
+      target.querySelector('.menus-cards-container').appendChild(cardContainer);
+      const card = new Card(cardContainer, props);
+      card.render(cardContainer, props);
 
       this.cards.push(card);
     });
@@ -385,8 +421,8 @@ export default class UsersScreen {
   update(cardUpdates) {
     const date = new Date(cardUpdates.header.date);
     for (const card of this.cards) {
-      if (new Date(card.header.date) === date) {
-        card.render(cardUpdates);
+      if (new Date(card.props.header.date).getTime() === date.getTime()) {
+        card.render(card.target, cardUpdates);
       }
     }
   }
