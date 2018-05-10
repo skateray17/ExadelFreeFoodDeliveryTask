@@ -33,7 +33,7 @@ export default class Card {
     }
     target.addEventListener('click', (event) => {
       if (event.target === htmlElem.querySelector('.edit-button')) {
-        props.callback(1);
+        props.callback(props.header);
       }
     });
   }

@@ -9,6 +9,7 @@ export default class Popup {
     this.editCardCallback = this.editCardCallback.bind(this);
   }
   render(props) {
+    this.props = props;
     document.querySelector('body').appendChild(createElementsFromString(popup()));
     const elem = new props.elem();
     const popupEl = document.querySelector('.popup');
@@ -21,7 +22,7 @@ export default class Popup {
     if (res.status === 'Cancel') {
       this.close();
     } else {
-      console.log(res.order);
+      this.props.callback(Object.assign(this.props.header, res.order));
     }
   }
   backClick(event) {

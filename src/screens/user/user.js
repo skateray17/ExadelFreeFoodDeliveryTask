@@ -369,8 +369,14 @@ export default class UsersScreen {
     }
     return screen;
   }
-  makePopup(indx) {
-    const cardProps = createPropsForCards()[indx];
+  makePopup(header) {
+    const cardsProps = createPropsForCards();
+    let cardProps;
+    cardsProps.forEach((prp) => {
+      if (prp.header.date === header.date) {
+        cardProps = prp;
+      }
+    });
     const { menu } = menuFromServer.menu[`${engDays[days.indexOf(cardProps.header.weekday)]}`];
     cardProps.orders.forEach((order) => {
       menu.find((el, i) => {
@@ -389,6 +395,7 @@ export default class UsersScreen {
     const propsPopup = {
       data: propsEdit,
       elem: EditCard,
+      callback: this.update,
     };
     const popup = new Popup();
     popup.render(propsPopup);
