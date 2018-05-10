@@ -13,7 +13,7 @@ function getHours(date) {
 }
 
 export default class Card {
-  constructor(props, target) {
+  constructor(target, props) {
     this.target = target;
     this.props = props;
   }
@@ -26,7 +26,7 @@ export default class Card {
     this.insertCardContent(cardItem, props, target);
     target.addEventListener('click', (event) => {
       if (event.target === target.querySelector('.edit-button')) {
-        props.callback(props.header);
+        props.callback(props);
       }
     });
     return cardItem;

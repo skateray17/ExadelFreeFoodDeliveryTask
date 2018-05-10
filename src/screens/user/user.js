@@ -24,7 +24,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-06T21:00:00.000Z',
+    date: '2018-05-09T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -42,7 +42,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-07T21:00:00.000Z',
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -60,7 +60,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-08T21:00:00.000Z',
+    date: '2018-05-11T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -324,7 +324,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -360,9 +360,15 @@ function clearHours(date) {
 export default class UsersScreen {
   constructor() {
     this.cards = [];
+    this.makePopup = this.makePopup.bind(this);
+    this.update = this.update.bind(this);
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
 
@@ -372,32 +378,18 @@ export default class UsersScreen {
     const propsForCards = createPropsForCards(userOrders);
 
     propsForCards.forEach((props) => {
-      const card = new Card(target.querySelector('.menus-cards-container'), props);
-      const containerForCard = document.createElement('div');
+      const cardContainer = document.createElement('div');
 
-      target.querySelector('.menus-cards-container').appendChild(containerForCard);
-      card.render(containerForCard, props);
+      target.querySelector('.menus-cards-container').appendChild(cardContainer);
+      const card = new Card(cardContainer, props);
+      card.render(cardContainer, Object.assign(props, { callback: this.makePopup }));
 
-<<<<<<< HEAD
-    propsForCards = propsForCards.sort((x, y) => new Date(x.header.date).getTime() - new Date(y.header.date).getTime());
-
-    for (const props of propsForCards) {
-      const temp = props;
-      temp.callback = this.makePopup;
-      const card = new Card();
       this.cards.push(card);
-      card.render(target.querySelector('.menus-cards-container'), temp);
-    }
+    });
     return screen;
   }
-  makePopup(header) {
-    const cardsProps = createPropsForCards();
-    let cardProps;
-    cardsProps.forEach((prp) => {
-      if (prp.header.date === header.date) {
-        cardProps = prp;
-      }
-    });
+  makePopup(props) {
+    const cardProps = props;
     const { menu } = menuFromServer.menu[`${engDays[days.indexOf(cardProps.header.weekday)]}`];
     cardProps.orders.forEach((order) => {
       menu.find((el, i) => {
@@ -422,25 +414,12 @@ export default class UsersScreen {
     popup.render(propsPopup);
   }
   update(cardUpdates) {
+    ///server work
     const date = new Date(cardUpdates.header.date);
     for (const card of this.cards) {
-      if (new Date(card.header.date) === date) {
-        card.render(cardUpdates);
-=======
-      this.cards.push(card);
-    });
-
-    return screen;
-  }
-  /*
-    update(cardUpdates) {
-      const date = new Date(cardUpdates.header.date);
-      for (const card of this.cards) {
-        if (new Date(card.header.date) === date) {
-          card.render(cardUpdates);
-        }
->>>>>>> origin
+      if (new Date(card.props.header.date).getTime() === date.getTime()) {
+        card.render(card.target, Object.assign(cardUpdates, { callback: this.makePopup }));
       }
     }
-    */
+  }
 }

@@ -1,6 +1,5 @@
 .edit-card {
     width: 450px;
-    height: 470px;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -27,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 10px;
 }
 .edit-card-cancel{
   background: red;

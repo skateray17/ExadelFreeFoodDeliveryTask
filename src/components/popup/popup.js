@@ -22,7 +22,22 @@ export default class Popup {
     if (res.status === 'Cancel') {
       this.close();
     } else {
-      this.props.callback(Object.assign(this.props.header, res.order));
+      const orders = [];
+      res.order.forEach((el) => {
+        if (el.quantity !== 0) {
+          const temp = {};
+          temp.mass = el.weight;
+          temp.name = el.name;
+          temp.price = el.cost;
+          temp.quantity = el.quantity;
+          orders.push(temp);
+        }
+      });
+      this.props.callback({
+        orders,
+        header: this.props.data.header,
+      });
+      this.close();
     }
   }
   backClick(event) {
