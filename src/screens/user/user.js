@@ -373,7 +373,7 @@ function createPropsForCards() {
     if (currentDate.getDay() !== 0) {
       days.push(currentDate);
     }
-    // const date = new Date(currentDate);
+
     currentDate = new Date(currentDate.getFullYear(),
       currentDate.getMonth(), currentDate.getDate() + 1);
   }
@@ -392,11 +392,16 @@ function clearHours(date) {
 }
 
 export default class UsersScreen {
-  constructor() {
+  constructor(router) {
+    this.router = router;
     this.cards = [];
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
 
