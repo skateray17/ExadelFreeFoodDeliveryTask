@@ -410,6 +410,7 @@ export default class UsersScreen {
 
       target.querySelector('.menus-cards-container').appendChild(cardContainer);
       const card = new Card(cardContainer, props);
+      console.log(card.props);
       card.render(cardContainer, props);
 
       this.cards.push(card);
