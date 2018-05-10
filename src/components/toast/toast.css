@@ -6,40 +6,61 @@
 
 #snackbar {
     visibility: hidden;
+    max-width: 350px;
     min-width: 350px;
     background-color: #333;
     color: #fff;
     text-align: center;
     border-radius: 2px;
-    padding: 16px;
+    padding: 10px;
     position: fixed;
     z-index: 1;
-    bottom: 0px;
+    bottom: 0;
     font-size: 17px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.dismiss__button{
+    font-size: 15px;
+    visibility: hidden;
+    background-color: rgba(0,0,0,0);
+}
+
+.show{
+    visibility: visible;
 }
 
 #snackbar.show {
     visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s;
+    animation: fadein 0.5s, fadeout 0.5s;
+    -webkit-animation-delay: 2.5s;
+    animation-delay: 2.5s;
 }
 
 @-webkit-keyframes fadein {
-    from {bottom: -60px; opacity: 1;}
-    to {bottom: 0px; opacity: 1;}
+    from {bottom: -60px; opacity: 0;}
+    to {bottom: 0; opacity: 1;}
 }
 
 @keyframes fadein {
-    from {bottom: -60px; opacity: 1;}
-    to {bottom: 0px; opacity: 1;}
+    from {bottom: -60px; opacity: 0;}
+    to {bottom: 0; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 0px; opacity: 1;}
-    to {bottom: -60px; opacity: 1;}
+    from {bottom: 0; opacity: 1;}
+    to {bottom: -60px; opacity: 0;}
 }
 
 @keyframes fadeout {
-    from {bottom: 0px; opacity: 1;}
-    to {bottom: -60px; opacity: 1;}
+    from {bottom: 0; opacity: 1;}
+    to {bottom: -60px; opacity: 0;}
 }

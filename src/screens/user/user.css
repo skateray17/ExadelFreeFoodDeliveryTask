@@ -1,6 +1,9 @@
 .menus-cards-container{
-	background-color: #008AFF;
-	height: 100vh;
+	background-color: #eee;
 	margin: 16px auto;
 	max-width: 1500px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }

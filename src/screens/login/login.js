@@ -19,7 +19,13 @@ export default class LoginScreen {
     }
     const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
-    target.querySelector('.app-name').addEventListener('click', () => Toast.show('some text'));
+
+    // toast component (for testing)
+    target.querySelector('.app-name').addEventListener('click', () => Toast.show({
+      title: 'some text text text text text text text text text text', type: 'info', canDismiss: true, timeout: 5000,
+    }));
+    // /////////////////////////////
+
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
     return loginContent(context);
   }
