@@ -1,6 +1,6 @@
 import LoginScreen from './screens/login/login';
 import ErrorScreen from './screens/error/error';
-import AdminHomeScreen from './screens/manager/manager';
+import ManagersScreen from './screens/manager/manager';
 import UsersScreen from './screens/user/user';
 import Guards from './guards';
 
@@ -13,8 +13,8 @@ export const routes = {
     component: UsersScreen,
     guards: [Guards.authGuard, Guards.roleGuard([1, 10])],
   },
-  admin: {
-    component: AdminHomeScreen,
+  manager: {
+    component: ManagersScreen,
     guards: [Guards.authGuard, Guards.roleGuard([10])],
   },
   error: {

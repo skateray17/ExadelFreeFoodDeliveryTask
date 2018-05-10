@@ -12,30 +12,24 @@ function getHours(date) {
   return date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds();
 }
 
-function getNumberOfCardInDom(date) {
-  return date.getDate() - Date.now().getDate();
-}
-
 export default class Card {
+  constructor(props, target) {
+    this.target = target;
+    this.props = props;
+  }
+
   render(target, props) {
-    const domCards = target.childNodes;
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
-    const htmlElem = createElementsFromString(cardTemplate);
-    if (domCards.length < 8) {
-      const cardItem = target.appendChild(htmlElem);
-      this.insertCardContent(cardItem, props, target);
-    } else {
-      const position = domCards[getNumberOfCardInDom(new Date(props.header.date))];
-      target.removeChild(position);
-      const cardItem = target.insertBefore(htmlElem, domCards[position + 1]);
-      this.insertCardContent(cardItem, props, target);
-    }
+    target.innerHTML = '';
+    const cardItem = target.appendChild(createElementsFromString(cardTemplate));
+    this.insertCardContent(cardItem, props, target);
     target.addEventListener('click', (event) => {
-      if (event.target === htmlElem.querySelector('.edit-button')) {
+      if (event.target === target.querySelector('.edit-button')) {
         props.callback(props.header);
       }
     });
+    return cardItem;
   }
 
   createOrderItem(cardItem, order) {
