@@ -17,13 +17,17 @@ export default class Header {
         nickname: getUserInfo().username,
         balance: getUserInfo().balance,
       };
-      if (getUserInfo().type == roles.manager) {
+      if (getUserInfo().type === roles.manager) {
         headersProps.isUserManager = true;
       }
       header = createElementsFromString(usersHeader(headersProps));
     }
     const screenWithHeader = target.appendChild(header);
-    target.querySelector('.header-content__switch-mode-button').addEventListener('click', () => { switchMode(props); });
+    if (getUserInfo().type === roles.manager) {
+      target.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
+        switchMode(props);
+      });
+    }
     target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
 
     return screenWithHeader;
