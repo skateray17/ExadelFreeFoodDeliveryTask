@@ -17,17 +17,19 @@ export default class EditCard {
   }
   render(target, props) {
     this.callback = props.callback;
-    const cardTemplate = card(this.createCardProps(props));
-    target.appendChild(createElementsFromString(cardTemplate));
+    const cardTemplate = card(this.createCardProps(props.data));
+    const editCardHTML = createElementsFromString(cardTemplate);
+    target.appendChild(editCardHTML);
     this.target = target;
-    this.state.totalCost = props.totalCost;
+    this.state.totalCost = props.data.totalCost;
+    this.state.header = props.data.header;
     this.updateTotal();
     const header = new Header();
-    header.render(target.querySelector('.header'), this.createHeaderProps(props.header));
+    header.render(target.querySelector('.header'), this.createHeaderProps(props.data.header));
 
-    if (props.menu) {
+    if (props.data.menu) {
       let I = 0;
-      props.menu.forEach((item) => {
+      props.data.menu.forEach((item) => {
         const temp = item;
         if (!temp.quantity) {
           temp.quantity = 0;
@@ -46,6 +48,7 @@ export default class EditCard {
     target.querySelector('.edit-card-sub').addEventListener('click', () => {
       this.submit();
     });
+    return editCardHTML;
   }
   updateTotal() {
     this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)}Р`;
@@ -67,6 +70,7 @@ export default class EditCard {
     this.callback({
       status: 'Ok',
       order: this.state.order,
+      header: this.state.header,
     });
   }
 

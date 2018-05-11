@@ -362,6 +362,7 @@ export default class UsersScreen {
     this.cards = [];
     this.makePopup = this.makePopup.bind(this);
     this.update = this.update.bind(this);
+    this.editCardCallback = this.editCardCallback.bind(this);
   }
 
   render(target, props) {
@@ -408,10 +409,31 @@ export default class UsersScreen {
     const propsPopup = {
       data: propsEdit,
       elem: EditCard,
-      callback: this.update,
+      callback: this.editCardCallback,
     };
-    const popup = new Popup();
-    popup.render(propsPopup);
+    this.closePopup = Popup.show(propsPopup);
+  }
+  editCardCallback(res) {
+    if (res.status === 'Cancel') {
+      this.closePopup();
+    } else {
+      const orders = [];
+      res.order.forEach((el) => {
+        if (el.quantity !== 0) {
+          const temp = {};
+          temp.mass = el.weight;
+          temp.name = el.name;
+          temp.price = el.cost;
+          temp.quantity = el.quantity;
+          orders.push(temp);
+        }
+      });
+      this.update({
+        orders,
+        header: res.header,
+      });
+      this.closePopup();
+    }
   }
   update(cardUpdates) {
     ///server work

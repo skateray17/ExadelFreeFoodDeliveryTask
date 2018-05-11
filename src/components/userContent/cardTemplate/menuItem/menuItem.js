@@ -9,6 +9,10 @@ export default class MenuItem {
       index: 0,
     };
   }
+  updateHTML(el) {
+    const quantity = el.querySelector('.quantity');
+    quantity.innerHTML = this.state.quantity;
+  }
   render(target, props) {
     this.state.quantity = props.quantity;
     this.state.index = props.index;
@@ -22,16 +26,15 @@ export default class MenuItem {
         if (event.target.className.includes('decr')) {
           C = false;
         }
-        const quantity = editContent.querySelector('.quantity');
         if (C) {
           this.state.quantity++;
-          quantity.innerHTML++;
-        } else if (quantity.innerHTML !== '0') {
+        } else if (this.state.quantity !== 0) {
           this.state.quantity--;
-          quantity.innerHTML--;
         }
+        this.updateHTML(editContent);
       }
       props.callback(this.state);
     });
+    return elemDOM;
   }
 }
