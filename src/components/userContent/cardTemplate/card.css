@@ -1,5 +1,6 @@
 .card {
-    width: 355px;
+    margin-bottom: 30px;
+    min-width: 355px;
     height: 480px;
     display: flex;
     flex-direction: column;
@@ -14,7 +15,6 @@
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 19px;
 }
 
 .card-header {
@@ -32,7 +32,7 @@
     flex-direction: column;
     border-top: 1px solid #ddd;
     font-size: 19px;
-    color: #5aad3c;
+    color: #3e2dd6;
     padding: 10px 20px 5px 20px;
 }
 
@@ -46,7 +46,7 @@
     color: white;
     font-size: 14px;
     padding: 8px 0 8px 0;
-    background-color: #5aad3c;
+    background-color: #008AFF;
     margin-bottom: 10px;
 }
 
@@ -61,6 +61,7 @@
 .not-available-menu {
     text-align: center;
     justify-content: center;
+    font-size: 19px;
 }
 
 .center-text {
@@ -73,4 +74,8 @@
     justify-content: center;
     display: flex;
     flex-direction: column;
+}
+
+.card p {
+    font-size: 19px;
 }
