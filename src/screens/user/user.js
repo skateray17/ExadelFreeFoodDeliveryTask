@@ -358,7 +358,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -423,11 +423,10 @@ export default class UsersScreen {
     return screen;
   }
 
-  update(cardUpdates) {
-    const date = new Date(cardUpdates.header.date);
+  updateCard(newCardProps) {
     for (const card of this.cards) {
-      if (new Date(card.props.header.date).getTime() === date.getTime()) {
-        card.render(card.target, cardUpdates);
+      if (card.id === newCardProps.id) {
+        card.render(card.target, newCardProps);
       }
     }
   }

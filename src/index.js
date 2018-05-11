@@ -16,8 +16,9 @@ const props = {
 
 const target = document.querySelector('#screen');
 
-//usersScreen.render(target, props);
-/*usersScreen.update({
+usersScreen.render(target, props);
+usersScreen.updateCard({
+  id: 1525986000000,
   header: {
     active: 'true',
     date: 'Fri May 11 2018',
@@ -27,5 +28,4 @@ const target = document.querySelector('#screen');
   ],
   orderPrice: 6.4,
 });
-*/
-const router = new Router(routes, document.getElementById('screen'));
+//const router = new Router(routes, document.getElementById('screen'));
