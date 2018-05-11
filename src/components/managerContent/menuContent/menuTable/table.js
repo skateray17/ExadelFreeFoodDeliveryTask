@@ -83,10 +83,10 @@ export default class MenuTable {
   sendFile(target, current) {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
-      post('https://fooddel123.herokuapp.com/api/menu', {
+      post('menu/', {
         authorization: getCookie('token'),
         'content-type': 'text/plain',
-      }, file)
+      }, {}, file)
         .then((res) => {
           if (res.status !== 200) {
             return Promise.reject();
@@ -111,7 +111,7 @@ export default class MenuTable {
     }
   }
   sendGetRequest() {
-    return get('https://fooddel123.herokuapp.com/api/menu', {
+    return get('menu/', {
       authorization: getCookie('token'),
     })
       .then(res => res.json())

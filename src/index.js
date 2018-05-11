@@ -4,18 +4,18 @@ import ManagersScreen from './screens/manager/manager';
 import Router from './router';
 import { routes } from './config';
 
-const usersScreen = new UsersScreen();
-const managersScreen = new ManagersScreen();
+// const usersScreen = new UsersScreen();
+// const managersScreen = new ManagersScreen();
 
-const props = {
-  page: 'manager',
-  userRole: 'manager',
-  nickname: 'И. Фамилия',
-  balance: '-30',
-};
+// const props = {
+//   page: 'manager',
+//   userRole: 'manager',
+//   nickname: 'И. Фамилия',
+//   balance: '-30',
+// };
 
-const target = document.querySelector('#screen');
+// const target = document.querySelector('#screen');
 
-usersScreen.render(target, props);
+// usersScreen.render(target, props);
 
-//const router = new Router(routes, document.getElementById('screen'));
+const router = new Router(routes, document.getElementById('screen'));
