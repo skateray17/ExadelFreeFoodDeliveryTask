@@ -18,6 +18,7 @@ export default class Header {
         balance: getUserInfo().balance,
       };
       if (getUserInfo().type == roles.manager) {
+      if (getUserInfo().type === roles.manager) {
         headersProps.isUserManager = true;
       }
       header = createElementsFromString(usersHeader(headersProps));
@@ -28,6 +29,12 @@ export default class Header {
         switchMode(props);
       });
     } target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
+    if (getUserInfo().type === roles.manager) {
+      target.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
+        switchMode(props);
+      });
+    }
+    target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
 
     return screenWithHeader;
   }

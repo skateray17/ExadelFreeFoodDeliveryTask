@@ -6,6 +6,12 @@ export function login(email, password) {
     body: JSON.stringify({ email, password }),
     headers: new Headers({ 'Content-Type': 'application/json' }),
   });
+import { post } from './requests';
+
+export function login(email, password) {
+  return post('account/login', {
+    'Content-Type': 'application/json',
+  }, null, JSON.stringify({ email, password }));
 }
 
 export function logout(router) {

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow">
     <div class="header"></div>
     <div class="card-inside">
         <div class="card-content {{#if emptyMenu}} center-text {{/if}}">
@@ -10,7 +10,7 @@
                 {{#if active}}
                 <div class="not-chosen-menu">
                     <p>Меню не выбрано</p>
-                    <img src="src/images/spottyDog.jpg" />
+                    <img src="../../../images/spottyDog.jpg">
                 </div>
                     {{/if}}
             {{/if}}
@@ -21,7 +21,9 @@
                 {{#if sumPrice}}
                     <div class="order-price">Сумма заказа: {{orderPrice}} р</div>
                 {{/if}}
-                <button class="edit-button">{{button}}</button>
+                {{#if showButton }}
+                    <button class="edit-button">{{button}}</button>
+                {{/if}}
             </div>
         {{/if}}
     </div>
