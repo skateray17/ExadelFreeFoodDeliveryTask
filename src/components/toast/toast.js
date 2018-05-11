@@ -7,27 +7,32 @@ export default class Toast {
   static show(props) {
     const context = { title: props.title };
     document.body.appendChild(createElementsFromString(toastContent(context)));
-    const toast = document.querySelector('#snackbar');
-    const dismissButton = document.querySelector('.dismiss__button');
-    toast.className = 'show';
-    toast.style.backgroundColor = typeOfToast[props.type];
+    const toast = document.querySelector('.snackbar__container:last-child');
+    const dismissButton = toast.querySelector('.dismiss__button');
+    const showClassName = 'show';
+
+    // fix animation
+    setImmediate(() => { toast.classList.add(showClassName); });
+
+    toast.querySelector('#snackbar').style.backgroundColor = typeOfToast[props.type];
     const time = props.timeout || 3000;
-    toast.style.animationDelay = `${(time - 500) / 1000}s`;
     if (props.canDismiss) {
-      dismissButton.classList.add('show');
-      dismissButton.addEventListener('click', () => { removeToast(); });
+      dismissButton.classList.add(showClassName);
+      dismissButton.addEventListener('click', (event) => {
+        const target = event.target.closest('.snackbar__container');
+        removeToast(target);
+      });
     } else {
-      dismissButton.className.replace('show', '');
+      dismissButton.classList.remove(showClassName);
     }
     setTimeout(() => {
-      removeToast();
+      removeToast(toast);
     }, time);
     return toast;
   }
 }
 
-function removeToast() {
-  document.querySelectorAll('.snackbar__container').forEach((a) => {
-    a.remove();
-  });
+function removeToast(target) {
+  target.classList.remove('show');
+  setTimeout(() => { target.remove(); }, 500);
 }
