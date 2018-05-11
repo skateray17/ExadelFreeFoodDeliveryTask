@@ -17,6 +17,7 @@ const props = {
 const target = document.querySelector('#screen');
 
 usersScreen.render(target, props);
+/*
 usersScreen.update({
   header: {
     active: 'true',
@@ -27,5 +28,7 @@ usersScreen.update({
   ],
   orderPrice: 6.4,
 });
+*/
+
 
 //const router = new Router(routes, document.getElementById('screen'));
