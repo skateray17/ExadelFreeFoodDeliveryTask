@@ -1,6 +1,5 @@
 import { getUserInfo } from './common/user.service';
-import { checkType } from './common/utils';
-import { checkCookie } from './common/utils';
+import { checkType, checkCookie } from './common/utils';
 
 export default class Guards {
   static authGuard(path) {

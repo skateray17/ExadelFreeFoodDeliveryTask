@@ -1,10 +1,21 @@
 import './index.css';
-import ManagerHomeScreen from './screens/manager/manager';
+import UsersScreen from './screens/user/user';
+import ManagersScreen from './screens/manager/manager';
+import Router from './router';
+import { routes } from './config';
 
-const screen = new ManagerHomeScreen();
+const usersScreen = new UsersScreen();
+const managersScreen = new ManagersScreen();
+
 const props = {
   page: 'manager',
   userRole: 'manager',
+  nickname: 'И. Фамилия',
+  balance: '-30',
 };
-const target = document.getElementById('screen');
-screen.render(target, props);
+
+const target = document.querySelector('#screen');
+
+usersScreen.render(target, props);
+
+//const router = new Router(routes, document.getElementById('screen'));
