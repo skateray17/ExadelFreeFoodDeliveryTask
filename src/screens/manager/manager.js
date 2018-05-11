@@ -5,6 +5,7 @@ import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 import { createElementsFromString } from '../../common/utils';
 import EmptyComponent from '../../components/emptyComponent/empty';
+import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder'
 
 const tabs = [
   {
@@ -23,7 +24,7 @@ const tabs = [
     icon: '&#xE926;',
   },
   {
-    component: new EmptyComponent(),
+    component: new MakeOrder(),
     title: 'Make an order',
     icon: '&#xE8CC;',
   },

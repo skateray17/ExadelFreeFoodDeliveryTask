@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-evenly;
 }
-.make-order_buttons {
+.make-order_submit-button,.make-order_print-button {
     height: 40px;
     width: 35%;
     background-color: #5aad3c;
