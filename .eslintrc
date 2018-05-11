@@ -5,7 +5,7 @@
   },
   "rules": {
     "class-methods-use-this": "off",
-    "linebreak-style": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "linebreak-style": "off"
   }
 }
