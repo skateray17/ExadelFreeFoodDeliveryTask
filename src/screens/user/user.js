@@ -22,7 +22,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-06T21:00:00.000Z',
+    date: '2018-05-09T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -40,7 +40,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-07T21:00:00.000Z',
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -58,7 +58,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-08T21:00:00.000Z',
+    date: '2018-05-11T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -358,7 +358,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -407,10 +407,9 @@ export default class UsersScreen {
 
     propsForCards.forEach((props) => {
       const cardContainer = document.createElement('div');
-
       target.querySelector('.menus-cards-container').appendChild(cardContainer);
+
       const card = new Card(cardContainer, props);
-      console.log(card.props);
       card.render(cardContainer, props);
 
       this.cards.push(card);
