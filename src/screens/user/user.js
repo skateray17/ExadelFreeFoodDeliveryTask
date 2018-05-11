@@ -2,9 +2,6 @@ import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
-<<<<<<< HEAD
-import { logout } from '../../common/login.service';
-=======
 import Card from '../../components/userContent/cardTemplate/card';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
@@ -341,13 +338,15 @@ function createPropsForCards() {
       days.push(currentDate);
     }
     // const date = new Date(currentDate);
-    currentDate = new Date(currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() + 1);
+    currentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1,
+    );
   }
 
   const propsForCards = days.map(day =>
     cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime())
-    || createInactiveCard(day));
+        || createInactiveCard(day));
 
   return propsForCards;
 }
@@ -357,7 +356,6 @@ function clearHours(date) {
   date.setHours(0, 0, 0, 0);
   return date.getTime();
 }
->>>>>>> master
 
 export default class UsersScreen {
   constructor() {
@@ -365,10 +363,6 @@ export default class UsersScreen {
   }
 
   render(target, props) {
-    props = {
-      page: 'user',
-      router: this.router,
-    };
     const header = new Header();
     header.render(target, props);
 
@@ -390,13 +384,13 @@ export default class UsersScreen {
     return screen;
   }
   /*
-    update(cardUpdates) {
-      const date = new Date(cardUpdates.header.date);
-      for (const card of this.cards) {
-        if (new Date(card.header.date) === date) {
-          card.render(cardUpdates);
+      update(cardUpdates) {
+        const date = new Date(cardUpdates.header.date);
+        for (const card of this.cards) {
+          if (new Date(card.header.date) === date) {
+            card.render(cardUpdates);
+          }
         }
       }
-    }
-    */
+      */
 }

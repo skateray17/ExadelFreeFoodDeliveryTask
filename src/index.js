@@ -1,28 +1,21 @@
 import './index.css';
-<<<<<<< HEAD
-import Router from './router';
-import { routes } from './config';
-
-const router = new Router(routes, document.getElementById('screen'));
-=======
 import UsersScreen from './screens/user/user';
 import ManagersScreen from './screens/manager/manager';
 import Router from './router';
 import { routes } from './config';
 
-const usersScreen = new UsersScreen();
-const managersScreen = new ManagersScreen();
+// const usersScreen = new UsersScreen();
+// const managersScreen = new ManagersScreen();
+//
+// const props = {
+//   page: 'manager',
+//   userRole: 'manager',
+//   nickname: 'И. Фамилия',
+//   balance: '-30',
+// };
+//
+// const target = document.querySelector('#screen');
+//
+// usersScreen.render(target, props);
 
-const props = {
-  page: 'manager',
-  userRole: 'manager',
-  nickname: 'И. Фамилия',
-  balance: '-30',
-};
-
-const target = document.querySelector('#screen');
-
-usersScreen.render(target, props);
-
-//const router = new Router(routes, document.getElementById('screen'));
->>>>>>> master
+ const router = new Router(routes, document.getElementById('screen'));

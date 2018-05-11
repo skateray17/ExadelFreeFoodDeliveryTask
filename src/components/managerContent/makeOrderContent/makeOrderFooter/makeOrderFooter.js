@@ -1,6 +1,7 @@
 import './makeOrderFooter.css';
 import template from './makeOrderFooter.hbs';
-import { createElementsFromString } from '../../../../common/utils';
+import { createElementsFromString, getCookie } from '../../../../common/utils';
+import { put } from '../../../../common/requests';
 
 export default class makeOrderFooter {
   render(target, props) {
@@ -18,12 +19,13 @@ export default class makeOrderFooter {
       screen.style.display = '';
     });
     element.querySelector('.make-order_submit-button').addEventListener('click', () => {
-      fetch('https://fooddel123.herokuapp.com/api/adminOrder/', {
-        method: 'put',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => { console.log(`status: ${res.status}`); });
+      put('adminOrder/', { 'Content-Type': 'application/json', Authorization: getCookie('token') }).then((res) => { console.log(`status: ${res.status}`); });;
+      // fetch('https://fooddel123.herokuapp.com/api/adminOrder/', {
+      //   method: 'put',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // }).then((res) => { console.log(`status: ${res.status}`); });
     });
     return element;
   }
