@@ -19,12 +19,6 @@ export default class LoginScreen {
     }
     const context = { email: props.email, show: showProp };
     target.innerHTML = loginContent(context);
-
-    // toast component (for testing)
-    target.querySelector('.app-name').addEventListener('click', () => Toast.show({
-      title: 'some text text text text text text text text text text', type: 'info', canDismiss: true, timeout: 5000,
-    }));
-
     target.querySelector('.login__content').addEventListener('submit', (event) => { this.logIn(event, target); });
     return loginContent(context);
   }
@@ -46,7 +40,7 @@ export default class LoginScreen {
         setCookie('username', data.username, 365);
         setCookie('type', data.type, 365);
         this.router.navigate(checkType(getUserInfo().type));
-      }).catch((err) => {
+      }).catch(() => {
         this.render(target, { displayError: true, email });
       });
   }
