@@ -83,6 +83,7 @@ const userOrders = [
   },
 
 ];
+/*
 const menuFromServer = {
   date: '07.05.2018-14.05.2018',
   menu: {
@@ -287,6 +288,8 @@ const menuFromServer = {
   __v: 0,
 };
 
+*/
+
 function createHeaderForCard(date) {
   const today = new Date();
 
@@ -321,10 +324,10 @@ function addOrderItem(order, dishes, cardProps) {
   }
 }
 
-function addOrderItemsToProps(cardProps, day) {
+function addOrderItemsToProps(cardProps, day, menu) {
   day.dishList.forEach((item) => {
     const dayOfTheWeek = engDays[new Date(day.date).getDay()];
-    const dishes = menuFromServer.menu[dayOfTheWeek].menu;
+    const dishes = menu.menu[dayOfTheWeek].menu;
 
     addOrderItem(item, dishes, cardProps);
   });
@@ -337,13 +340,13 @@ function createInactiveCard(date) {
   };
 }
 
-function createPropsForCards() {
+function createPropsForCards(menu) {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
     if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
-      addOrderItemsToProps(cardProps, day);
+      addOrderItemsToProps(cardProps, day, menu);
       cardsWithOrders.push(cardProps);
     }
   }
@@ -386,26 +389,28 @@ export default class UsersScreen {
       router: this.router,
     };
 
-    getMenu().then(res => res.json()).then(menu => console.log(menu));
     const header = new Header();
     header.render(target, props);
 
     const screen = createElementsFromString(template());
     target.appendChild(screen);
 
-    const propsForCards = createPropsForCards(userOrders);
 
-    propsForCards.forEach((props) => {
-      const cardContainer = document.createElement('div');
-      target.querySelector('.menus-cards-container').appendChild(cardContainer);
+    getMenu().then(menu => {
+      const propsForCards = createPropsForCards(userOrders, menu);
+      propsForCards.forEach((props) => {
+        const cardContainer = document.createElement('div');
+        target.querySelector('.menus-cards-container').appendChild(cardContainer);
 
-      const card = new Card(cardContainer, props);
-      card.render(cardContainer, props);
+        const card = new Card(cardContainer, props);
+        card.render(cardContainer, props);
 
-      this.cards.push(card);
+        this.cards.push(card);
+      });
+
+      return screen;
     });
 
-    return screen;
   }
 
   updateCard(newCardProps) {
