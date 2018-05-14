@@ -26,7 +26,14 @@ export default class MenuTable {
 
   rendermenuItems(target, menuObj) {
     const items = createElementsFromString(menuItem(menuObj));
+    // add if-statement to menuItem.hbs with published field
+    items.querySelector('.publish-button').addEventListener('click', this.publishMenu);
     target.appendChild(items);
+  }
+
+  publishMenu() {
+    // put req
+    getMenu();
   }
 
   renderWeek(target, menuObj, current) {
@@ -102,11 +109,13 @@ export default class MenuTable {
       document.querySelector('.upload-menu__message').innerText = 'Please select file.';
     }
   }
+
   showWeek(target, menu, isCurrent) {
     setWeekMenu(menu, isCurrent);
     const menuIndex = (isCurrent) ? 0 : 1;
     this.renderWeek(target, getMenu()[menuIndex], isCurrent);
   }
+
   getMenu() {
     return get('menu/', {})
       .then(res => res.json())
