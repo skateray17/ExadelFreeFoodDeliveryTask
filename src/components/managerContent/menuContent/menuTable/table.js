@@ -5,7 +5,6 @@ import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString, getCookie } from '../../../../common/utils';
 import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
-import menuObject from '../../../../common/menuObject';
 import { get, post } from '../../../../common/requests';
 
 export default class MenuTable {
@@ -94,11 +93,7 @@ export default class MenuTable {
           return res.json();
         })
         .then((res) => {
-          if (current) {
-            this.showWeek(target, res, true);
-          } else {
-            this.showWeek(target, res, false);
-          }
+          this.showWeek(target, res, current);
         })
         .catch(() => {
           document.querySelector('.upload-menu__message').innerText = 'Cannot load file. Please try again.';
