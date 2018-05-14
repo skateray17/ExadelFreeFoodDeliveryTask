@@ -15,9 +15,10 @@ const props = {
 };
 
 const target = document.querySelector('#screen');
-
+/*
 usersScreen.render(target, props);
 usersScreen.update({
+  id: 1525986000000,
   header: {
     active: 'true',
     date: 'Fri May 11 2018',
@@ -27,5 +28,7 @@ usersScreen.update({
   ],
   orderPrice: 6.4,
 });
+*/
 
-//const router = new Router(routes, document.getElementById('screen'));
+console.log(process.env.DB_HOST);
+const router = new Router(routes, document.getElementById('screen'));

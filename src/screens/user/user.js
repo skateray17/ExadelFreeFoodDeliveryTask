@@ -3,6 +3,7 @@ import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
+import { getMenu } from '../../common/userscreen.service';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -43,24 +44,6 @@ const userOrders = [
     date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-11T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
   },
 
   {
@@ -373,7 +356,7 @@ function createPropsForCards() {
     if (currentDate.getDay() !== 0) {
       days.push(currentDate);
     }
-    // const date = new Date(currentDate);
+
     currentDate = new Date(currentDate.getFullYear(),
       currentDate.getMonth(), currentDate.getDate() + 1);
   }
@@ -392,11 +375,18 @@ function clearHours(date) {
 }
 
 export default class UsersScreen {
-  constructor() {
+  constructor(router) {
+    this.router = router;
     this.cards = [];
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
+
+    getMenu().then(res => res.json()).then(menu => console.log(menu));
     const header = new Header();
     header.render(target, props);
 
@@ -418,11 +408,10 @@ export default class UsersScreen {
     return screen;
   }
 
-  update(cardUpdates) {
-    const date = new Date(cardUpdates.header.date);
+  updateCard(newCardProps) {
     for (const card of this.cards) {
-      if (new Date(card.props.header.date).getTime() === date.getTime()) {
-        card.render(card.target, cardUpdates);
+      if (card.id === newCardProps.id) {
+        card.render(card.target, newCardProps);
       }
     }
   }

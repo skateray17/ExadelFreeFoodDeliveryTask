@@ -16,6 +16,7 @@ export default class Card {
   constructor(target, props) {
     this.target = target;
     this.props = props;
+    this.id = new Date(props.header.date).getTime();
   }
 
   render(target, props) {

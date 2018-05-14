@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry:
@@ -23,6 +24,7 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new Dotenv(),
   ],
   module: {
     rules: [
