@@ -88,13 +88,13 @@
     width: 65px;
     height: 65px;
     position: fixed;
-    right: 30px;
-    bottom: 30px;
     z-index: 1;
     background-color: #008AFF;
     border-radius: 50%;
     cursor: pointer;
     transition: .4s;
+    right: 30px;
+    bottom: 30px;
 }
 @media (max-width: 600px) {
     .print{
