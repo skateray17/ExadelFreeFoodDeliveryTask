@@ -356,11 +356,16 @@ function clearHours(date) {
 }
 
 export default class UsersScreen {
-  constructor() {
+  constructor(router) {
+    this.router = router;
     this.cards = [];
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
 
