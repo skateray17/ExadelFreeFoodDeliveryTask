@@ -21,7 +21,9 @@ export default class EditCard {
     const editCardHTML = createElementsFromString(cardTemplate);
     target.appendChild(editCardHTML);
     this.target = target;
-    this.state.totalCost = props.data.totalCost;
+    if (props.data.totalCost) {
+      this.state.totalCost = props.data.totalCost;
+    }
     this.state.header = props.data.header;
     this.updateTotal();
     const header = new Header();
