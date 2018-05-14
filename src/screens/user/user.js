@@ -2,7 +2,9 @@ import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
-import Card from '../../components/userContent/cardTemplate/card';
+import Card from '../../components/userContent/cardTemplate/card/card';
+import Popup from '../../components/popup/popup';
+import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -22,7 +24,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-06T21:00:00.000Z',
+    date: '2018-05-09T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -40,7 +42,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-07T21:00:00.000Z',
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -58,7 +60,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-08T21:00:00.000Z',
+    date: '2018-05-11T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -322,7 +324,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -358,9 +360,16 @@ function clearHours(date) {
 export default class UsersScreen {
   constructor() {
     this.cards = [];
+    this.makePopup = this.makePopup.bind(this);
+    this.update = this.update.bind(this);
+    this.editCardCallback = this.editCardCallback.bind(this);
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
 
@@ -370,25 +379,69 @@ export default class UsersScreen {
     const propsForCards = createPropsForCards(userOrders);
 
     propsForCards.forEach((props) => {
-      const card = new Card(target.querySelector('.menus-cards-container'), props);
-      const containerForCard = document.createElement('div');
+      const cardContainer = document.createElement('div');
 
-      target.querySelector('.menus-cards-container').appendChild(containerForCard);
-      card.render(containerForCard, props);
+      target.querySelector('.menus-cards-container').appendChild(cardContainer);
+      const card = new Card(cardContainer, props);
+      card.render(cardContainer, Object.assign(props, { callback: this.makePopup }));
 
       this.cards.push(card);
     });
-
     return screen;
   }
-  /*
-    update(cardUpdates) {
-      const date = new Date(cardUpdates.header.date);
-      for (const card of this.cards) {
-        if (new Date(card.header.date) === date) {
-          card.render(cardUpdates);
+  makePopup(props) {
+    const cardProps = props;
+    const { menu } = menuFromServer.menu[`${engDays[days.indexOf(cardProps.header.weekday)]}`];
+    cardProps.orders.forEach((order) => {
+      menu.find((el, i) => {
+        if (el.name === order.name) {
+          menu[i].quantity = order.quantity;
+          return true;
         }
+        return false;
+      });
+    });
+    const propsEdit = {
+      header: cardProps.header,
+      menu,
+      totalCost: cardProps.orderPrice,
+    };
+    const propsPopup = {
+      data: propsEdit,
+      elem: EditCard,
+      callback: this.editCardCallback,
+    };
+    this.closePopup = Popup.show(propsPopup);
+  }
+  editCardCallback(res) {
+    if (res.status === 'Cancel') {
+      this.closePopup();
+    } else {
+      const orders = [];
+      res.order.forEach((el) => {
+        if (el.quantity !== 0) {
+          const temp = {};
+          temp.mass = el.weight;
+          temp.name = el.name;
+          temp.price = el.cost;
+          temp.quantity = el.quantity;
+          orders.push(temp);
+        }
+      });
+      this.update({
+        orders,
+        header: res.header,
+      });
+      this.closePopup();
+    }
+  }
+  update(cardUpdates) {
+    ///server work
+    const date = new Date(cardUpdates.header.date);
+    for (const card of this.cards) {
+      if (new Date(card.props.header.date).getTime() === date.getTime()) {
+        card.render(card.target, Object.assign(cardUpdates, { callback: this.makePopup }));
       }
     }
-    */
+  }
 }

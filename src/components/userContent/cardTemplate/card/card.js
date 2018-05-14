@@ -1,9 +1,9 @@
 import './card.css';
 import card from './card.hbs';
-import Header from './cardHeader/header';
-import OrderItem from './orderItem/orderItem';
-import ShowMore from './showMore/showMore';
-import { createElementsFromString } from '../../../common/utils';
+import Header from '../cardHeader/header';
+import OrderItem from '../orderItem/orderItem';
+import ShowMore from '../showMore/showMore';
+import { createElementsFromString } from '../../../../common/utils';
 
 const TIME_TO_STOP_ORDERS = 10 * 60 * 60;
 const MAX_VISIBLE_ITEMS = 3;
@@ -13,7 +13,7 @@ function getHours(date) {
 }
 
 export default class Card {
-  constructor(props, target) {
+  constructor(target, props) {
     this.target = target;
     this.props = props;
   }
@@ -21,11 +21,14 @@ export default class Card {
   render(target, props) {
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
-
     target.innerHTML = '';
     const cardItem = target.appendChild(createElementsFromString(cardTemplate));
     this.insertCardContent(cardItem, props, target);
-
+    target.addEventListener('click', (event) => {
+      if (event.target === target.querySelector('.edit-button')) {
+        props.callback(props);
+      }
+    });
     return cardItem;
   }
 
