@@ -10,7 +10,7 @@ import { get, post } from '../../../../common/requests';
 
 export default class MenuTable {
   render(target) {
-    this.sendGetRequest()
+    this.getMenu()
       .then(() => {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
@@ -44,7 +44,7 @@ export default class MenuTable {
     } else {
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
-        this.sendFile(target, current);
+        this.uploadMenu(target, current);
       });
     }
     return target;
@@ -80,7 +80,7 @@ export default class MenuTable {
     }
   }
 
-  sendFile(target, current) {
+  uploadMenu(target, current) {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
       post('menu/', {
@@ -95,11 +95,9 @@ export default class MenuTable {
         })
         .then((res) => {
           if (current) {
-            setWeekMenu(res, true);
-            this.renderWeek(target, getMenu()[0], true);
+            this.showWeek(target, res, true);
           } else {
-            setWeekMenu(res, false);
-            this.renderWeek(target, getMenu()[1], false);
+            this.showWeek(target, res, false);
           }
         })
         .catch(() => {
@@ -110,7 +108,12 @@ export default class MenuTable {
       document.querySelector('.upload-menu__message').innerText = 'Please select file.';
     }
   }
-  sendGetRequest() {
+  showWeek(target, menu, isCurrent) {
+    setWeekMenu(menu, isCurrent);
+    const menuIndex = (isCurrent) ? 0 : 1;
+    this.renderWeek(target, getMenu()[menuIndex], isCurrent);
+  }
+  getMenu() {
     return get('menu/', {
       authorization: getCookie('token'),
     })
