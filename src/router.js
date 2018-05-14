@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 import { getUrlParams } from './common/utils';
 
 export default class Router {
@@ -45,6 +46,10 @@ export default class Router {
 
       this.cleanContainer();
 
+      const hash = temp.substring(0, 1);
+      if (hash !== '#') {
+        this.navigate('error');
+      }
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
         this.checkGuards(this.routes[field].guards, field);
