@@ -3,7 +3,7 @@ import tableTemplate from './table.hbs';
 import menuTableTemplate from './menuTable.hbs';
 import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
-import { createElementsFromString, getCookie } from '../../../../common/utils';
+import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
 import { get, post } from '../../../../common/requests';
 
@@ -83,7 +83,6 @@ export default class MenuTable {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
       post('menu/', {
-        authorization: getCookie('token'),
         'content-type': 'text/plain',
       }, {}, file)
         .then((res) => {
@@ -109,9 +108,7 @@ export default class MenuTable {
     this.renderWeek(target, getMenu()[menuIndex], isCurrent);
   }
   getMenu() {
-    return get('menu/', {
-      authorization: getCookie('token'),
-    })
+    return get('menu/', {})
       .then(res => res.json())
       .then((data) => {
         setMenu(data);

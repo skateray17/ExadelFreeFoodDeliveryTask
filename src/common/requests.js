@@ -1,3 +1,5 @@
+import { getCookie } from './utils';
+
 const BASE_URL = 'https://fooddel123.herokuapp.com/';
 
 function request(method, url, headers, urlParams = {}, body) {
@@ -7,7 +9,9 @@ function request(method, url, headers, urlParams = {}, body) {
       : ''
   }`, {
     method,
-    headers: new Headers(headers),
+    headers: new Headers(Object.assign(headers, {
+      authorization: getCookie('token'),
+    })),
     body,
   });
 }
