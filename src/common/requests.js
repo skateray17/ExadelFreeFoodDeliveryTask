@@ -1,4 +1,4 @@
-const BASE_URL = 'https://fooddel123.herokuapp.com/';
+const BASE_URL = process.env.DB_HOST;
 
 function request(method, url, headers, urlParams = {}, body) {
   return fetch(`${BASE_URL}api/${url}?${

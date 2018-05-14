@@ -2,3 +2,7 @@
 
 After cloning project from repository run the following commands:
     npm install
+
+Create .env file with DB_HOST = host_name
+    where host_name = https://fooddel123.herokuapp.com/
+    of host_name = 127.0.0.1
