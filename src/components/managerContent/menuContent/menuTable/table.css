@@ -41,7 +41,7 @@
     font-size: 20px;
     font-weight: 300;
 }
-.menu-content{
+.menu-table-content, .menu-table-component__content{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -74,9 +74,12 @@
     color: #000000d1;
     font-weight: 300;
 }
-.dish-weight,.dish-price{
-    margin-left: 10px;
+.dish-props{
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
 }
+
 .upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg{
     font-size: 20px;
     font-weight: 300;

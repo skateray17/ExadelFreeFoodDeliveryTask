@@ -3,7 +3,7 @@ import { daysOfWeek } from './constants';
 let currentMenu;
 let nextMenu;
 let menu = [];
-function setWeekMenu(obj, isCurrentWeek) {
+export function setWeekMenu(obj, isCurrentWeek) {
   const days = [];
   Object.keys(obj).forEach((key) => {
     if (key !== 'date') {
@@ -19,13 +19,13 @@ function setWeekMenu(obj, isCurrentWeek) {
       date: obj.date,
       days,
     };
-    menu.push(currentMenu);
+    menu[0] = currentMenu;
   } else {
     nextMenu = {
       date: obj.date,
       days,
     };
-    menu.push(nextMenu);
+    menu[1] = nextMenu;
   }
 }
 
