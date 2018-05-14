@@ -22,7 +22,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-06T21:00:00.000Z',
+    date: '2018-05-09T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -40,7 +40,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-07T21:00:00.000Z',
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -58,7 +58,43 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-08T21:00:00.000Z',
+    date: '2018-05-11T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-09T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -202,7 +238,7 @@ const menuFromServer = {
           cost: 3.2,
         },
         {
-          name: 'торт',
+          name: 'мясцо',
           weight: 156,
           cost: 1.8,
         },
@@ -322,7 +358,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -370,25 +406,25 @@ export default class UsersScreen {
     const propsForCards = createPropsForCards(userOrders);
 
     propsForCards.forEach((props) => {
-      const card = new Card(target.querySelector('.menus-cards-container'), props);
-      const containerForCard = document.createElement('div');
+      const cardContainer = document.createElement('div');
+      target.querySelector('.menus-cards-container').appendChild(cardContainer);
 
-      target.querySelector('.menus-cards-container').appendChild(containerForCard);
-      card.render(containerForCard, props);
+      const card = new Card(cardContainer, props);
+      card.render(cardContainer, props);
 
       this.cards.push(card);
     });
 
     return screen;
   }
-  /*
-    update(cardUpdates) {
-      const date = new Date(cardUpdates.header.date);
-      for (const card of this.cards) {
-        if (new Date(card.header.date) === date) {
-          card.render(cardUpdates);
-        }
+
+  update(cardUpdates) {
+    const date = new Date(cardUpdates.header.date);
+    for (const card of this.cards) {
+      if (new Date(card.props.header.date).getTime() === date.getTime()) {
+        card.render(card.target, cardUpdates);
       }
     }
-    */
+  }
+
 }
