@@ -1,4 +1,3 @@
-/* eslint-disable no-trailing-spaces */
 import { getUrlParams } from './common/utils';
 
 export default class Router {

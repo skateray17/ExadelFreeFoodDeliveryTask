@@ -1,6 +1,6 @@
 import './login.css';
 import loginContent from './login.hbs';
-import Toast from '../../components/toast/toast';
+import Spinner from '../../components/spinner/spinner';
 import { getUserInfo } from '../../common/user.service';
 import { checkType, removeCookie, setCookie } from '../../common/utils';
 import { login } from '../../common/login.service';
@@ -29,20 +29,20 @@ export default class LoginScreen {
     const email = formData.get('email');
     const password = formData.get('password');
 
+    Spinner.show(target.querySelector('.login__content'));
     login(email, password).then((res) => {
       if (!res.ok) {
         return Promise.reject();
       }
       return res.json();
-    })
-      .then((data) => {
-        setCookie('token', data.token, 365);
-        setCookie('username', data.username, 365);
-        setCookie('type', data.type, 365);
-        this.router.navigate(checkType(getUserInfo().type));
-      }).catch(() => {
-        this.render(target, { displayError: true, email });
-      });
+    }).then((data) => {
+      setCookie('token', data.token, 365);
+      setCookie('username', data.username, 365);
+      setCookie('type', data.type, 365);
+      this.router.navigate(checkType(getUserInfo().type));
+    }).catch(() => {
+      this.render(target, { displayError: true, email });
+    });
   }
 
   static logOut() {
