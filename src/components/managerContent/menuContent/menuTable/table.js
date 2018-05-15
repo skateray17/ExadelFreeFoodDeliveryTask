@@ -14,6 +14,9 @@ export default class MenuTable {
       .then(() => {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
+      })
+      .catch(() => {
+        this.showError('Failed to load menu. Please reload page.');
       });
     return target;
   }
@@ -120,12 +123,13 @@ export default class MenuTable {
 
   getMenu() {
     return get('menu/', {})
-      .then(res => res.json())
+      .then((res) => {
+        if (res.status !== 200) {
+          return Promise.reject();
+        } return res.json();
+      })
       .then((data) => {
         setMenu(data);
-      })
-      .catch(() => {
-        console.error();
       });
   }
   showError(errorMsg) {
@@ -133,7 +137,8 @@ export default class MenuTable {
       message: errorMsg,
     };
     const error = createElementsFromString(errorTemplate(props));
-    const parent = document.querySelector('.upload-menu__message');
+    const parent = document.querySelector('.upload-menu__message')
+      || document.querySelector('.manager-content');
     if (parent.childNodes[0]) {
       parent.replaceChild(error, parent.childNodes[0]);
     } else {
