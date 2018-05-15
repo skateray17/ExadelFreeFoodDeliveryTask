@@ -23,7 +23,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-09T21:00:00.000Z',
+    date: '2018-05-15T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -41,7 +41,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-10T21:00:00.000Z',
+    date: '2018-05-16T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -59,7 +59,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-09T21:00:00.000Z',
+    date: '2018-05-17T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -77,218 +77,12 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-10T21:00:00.000Z',
+    date: '2018-05-18T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
 
 ];
-/*
-const menuFromServer = {
-  date: '07.05.2018-14.05.2018',
-  menu: {
-    date: '07.05.2018-07.05.2018',
-    mon: {
-      day: '2018-05-06T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    tue: {
-      day: '2018-05-07T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    wed: {
-      day: '2018-05-08T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'компот',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    thu: {
-      day: '2018-05-09T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    fri: {
-      day: '2018-05-10T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'мясцо',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    sat: {
-      day: '2018-05-11T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    common: {
-      menu: [
-        {
-          name: 'тарелка для супа',
-          cost: 0.18,
-        },
-        {
-          name: 'контейнер 250мл',
-          cost: 0.1,
-        },
-        {
-          name: 'контейнер 500мл',
-          cost: 0.17,
-        },
-      ],
-    },
-  },
-  __v: 0,
-};
-
-*/
 
 function createHeaderForCard(date) {
   const today = new Date();
@@ -327,7 +121,7 @@ function addOrderItem(order, dishes, cardProps) {
 function addOrderItemsToProps(cardProps, day, menu) {
   day.dishList.forEach((item) => {
     const dayOfTheWeek = engDays[new Date(day.date).getDay()];
-    const dishes = menu.menu[dayOfTheWeek].menu;
+    const dishes = menu[dayOfTheWeek].menu;
 
     addOrderItem(item, dishes, cardProps);
   });
@@ -342,6 +136,8 @@ function createInactiveCard(date) {
 
 function createPropsForCards(menu) {
   const cardsWithOrders = [];
+  console.log("inside create props");
+  console.log(menu);
 
   for (const day of userOrders) {
     if (new Date(day.date).getTime() >= clearHours(new Date())) {
@@ -397,7 +193,9 @@ export default class UsersScreen {
 
 
     getMenu().then(menu => {
-      const propsForCards = createPropsForCards(userOrders, menu);
+      console.log("Menu from server ");
+      console.log(menu);
+      const propsForCards = createPropsForCards(menu);
       propsForCards.forEach((props) => {
         const cardContainer = document.createElement('div');
         target.querySelector('.menus-cards-container').appendChild(cardContainer);
