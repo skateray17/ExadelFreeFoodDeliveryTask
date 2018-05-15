@@ -6,7 +6,7 @@ let menu = [];
 export function setWeekMenu(obj, isCurrentWeek) {
   const days = [];
   Object.keys(obj).forEach((key) => {
-    if (key !== 'date') {
+    if (key !== 'date' && key !== 'published') {
       days.push({
         day: daysOfWeek[key] || 'Extra',
         menuExists: obj[key].menu.length,
@@ -16,12 +16,14 @@ export function setWeekMenu(obj, isCurrentWeek) {
   });
   if (isCurrentWeek) {
     currentMenu = {
+      published: obj.published,
       date: obj.date,
       days,
     };
     menu[0] = currentMenu;
   } else {
     nextMenu = {
+      published: obj.published,
       date: obj.date,
       days,
     };

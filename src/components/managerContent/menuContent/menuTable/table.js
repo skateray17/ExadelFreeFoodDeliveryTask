@@ -5,7 +5,7 @@ import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
-import { get, post } from '../../../../common/requests';
+import { get, post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 
 export default class MenuTable {
@@ -20,6 +20,7 @@ export default class MenuTable {
       });
     return target;
   }
+
   renderContent(target, weeksMenu) {
     const content = createElementsFromString(menuTableTemplate());
     this.renderWeektab(content, weeksMenu);
@@ -30,14 +31,30 @@ export default class MenuTable {
 
   rendermenuItems(target, menuObj) {
     const items = createElementsFromString(menuItem(menuObj));
-    // add if-statement to menuItem.hbs with published field
-    items.querySelector('.publish-button').addEventListener('click', this.publishMenu);
-    target.appendChild(items);
+    if (!menuObj.published) {
+      items.querySelector('.publish-button').addEventListener('click', () => {
+        this.publishMenu(menuObj.date);
+      });
+      target.appendChild(items);
+    }
   }
 
-  publishMenu() {
-    // put req
-    getMenu();
+  publishMenu(date) {
+    put('menu/', {
+      'content-type': 'text/plain',
+    }, {}, {
+      date,
+      published: true,
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          return Promise.reject();
+        } return res;
+      })
+      .then(getMenu())
+      .catch(() => {
+        console.error();
+      });
   }
 
   renderWeek(target, menuObj, current) {
