@@ -23,3 +23,10 @@
     padding-left: 60px;
     color: #212121;
 }
+.make-order__empty-list{
+    display: block;
+    font-size: 20px;
+    color: #6E6E6E;
+    margin: 20px 30px;
+    text-align: center;
+}

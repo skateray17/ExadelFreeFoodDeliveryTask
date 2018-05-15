@@ -1,43 +1,46 @@
 import './makeOrder.css';
 import template from './makeOrder.hbs';
-// import UserBalanceItems from './userBalanceItems/userBalanceItems';
 import MakeOrderHeader from './makeOrderHeader/makeOrderHeader';
 import MakeOrderFooter from './makeOrderFooter/makeOrderFooter';
 import MakeOrderTable from './makeOrderTable/makeOrderTable';
 import MakeOrderTableFooter from './makeOrderTableFooter/makeOrderTableFooter';
-/* import UserBalanceFooter from './userBalanceFooter/userBalanceFooter'; */
-import { createElementsFromString } from '../../../common/utils';
+import { createElementsFromString, getCookie } from '../../../common/utils';
+import { get } from '../../../common/requests';
 
 
 export default class UserBalanceTable {
   render(target, props) {
-    // const userBalanceItems = new UserBalanceItems();
     const makeOrderHeader = new MakeOrderHeader();
     const makeOrderFooter = new MakeOrderFooter();
     const makeOrderTable = new MakeOrderTable();
     const makeOrderTableFooter = new MakeOrderTableFooter();
-    // const userBalanceFooter = new UserBalanceFooter();
-    const userBalanceTableElement = target.appendChild(createElementsFromString(template()));
-    fetch('/api/order/', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        username: 'karpovich', dishList: [{ dishTitle: 'тарелка для супа', amount: 323 }, { dishTitle: 'голубцы ленивые', amount: 1 }], totalPrice: 61.35, date: '2018-05-06T21:00:00.000Z',
-      },
-    }).then();
+    const makeOrderTableElement = target.appendChild(createElementsFromString(template()));
 
-    // if (!data.users.length) {
-    //   data.users = false;
-    // }
-    const arr = { items: [{ dishTitle: 'тарелка для супа', amount: 323 }, { dishTitle: 'супец', amount: 23 }] };
-    makeOrderHeader.render(userBalanceTableElement, props);
-    makeOrderTable.render(userBalanceTableElement, arr);
-    makeOrderTableFooter.render(userBalanceTableElement, props);
-    makeOrderFooter.render(userBalanceTableElement, props);
-    // const userBalanceItemsElement = userBalanceItems.render(userBalanceTableElement, data);
-    // const userBalanceFooterElement = userBalanceFooter.render(userBalanceTableElement, data);
-    return userBalanceTableElement;
+    makeOrderHeader.render(makeOrderTableElement, props);
+
+    get('order/', { 'Content-Type': 'application/json', Authorization: getCookie('token') })
+      .then(response => response.json())
+      .then((res) => {
+        const array = [];
+        let totalPrice = 0;
+        res.result.forEach((item) => {
+          item.dishList.forEach((dish) => {
+            if (array.includes(a => dish.dishTitle === a.dishTitle)) {
+              const index = array.find(a => dish.dishTitle === a.dishTitle);
+              array[index].amount += dish.amount;
+            } else {
+              array.push(dish);
+            }
+          });
+          totalPrice += item.totalPrice;
+        });
+
+
+        makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
+        makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
+        makeOrderFooter.render(makeOrderTableElement, props);
+      });
+
+    return makeOrderTableElement;
   }
 }

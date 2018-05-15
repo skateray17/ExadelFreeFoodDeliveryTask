@@ -1,7 +1,9 @@
 import './makeOrderFooter.css';
 import template from './makeOrderFooter.hbs';
 import { createElementsFromString, getCookie } from '../../../../common/utils';
-import { put } from '../../../../common/requests';
+import { put, get } from '../../../../common/requests';
+import { getMenu, setMenu } from '../../../../common/menuService';
+
 
 export default class makeOrderFooter {
   render(target, props) {
@@ -18,16 +20,35 @@ export default class makeOrderFooter {
       document.body.removeChild(newLi);
       screen.style.display = '';
     });
-    element.querySelector('.make-order_submit-button').addEventListener('click', () => {
-      put('adminOrder/', { 'Content-Type': 'application/json', Authorization: getCookie('token') }).then((res) => { console.log(`status: ${res.status}`); });;
-      // fetch('https://fooddel123.herokuapp.com/api/adminOrder/', {
-      //   method: 'put',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // }).then((res) => { console.log(`status: ${res.status}`); });
+    get('menu/?date=true', { 'Content-Type': 'application/json', Authorization: getCookie('token') }).then((res) => {
+      console.log(res.body.awailable);
+      if (res.body.awailable === true) {
+        element.querySelector('.make-order_submit-button').addEventListener('click', () => {
+          put('adminOrder/', { 'Content-Type': 'application/json', Authorization: getCookie('token') })
+            .then((response) => {
+              if (response.status === 200) {
+                element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+                response.json().then(body => setMenu(body));
+              }
+            });
+        });
+      } else {
+        element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+      }
     });
+
+
+    // fetch('https://fooddel123.herokuapp.com/api/adminOrder/', {
+    //   method: 'put',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // }).then((res) => { console.log(`status: ${res.status}`); });
+
     return element;
   }
 }
+function isMenuForTodayAwailable() {
+  const menu = getMenu();
 
+}
