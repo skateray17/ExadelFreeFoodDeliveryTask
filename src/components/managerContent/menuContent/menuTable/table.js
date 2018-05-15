@@ -6,6 +6,7 @@ import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
 import { get, post } from '../../../../common/requests';
+import errorTemplate from './error.hbs';
 
 export default class MenuTable {
   render(target) {
@@ -52,6 +53,7 @@ export default class MenuTable {
         e.preventDefault();
         this.uploadMenu(target, current);
       });
+      this.showError('There is no menu loaded.');
     }
     return target;
   }
@@ -102,11 +104,11 @@ export default class MenuTable {
           this.showWeek(target, res, current);
         })
         .catch(() => {
-          document.querySelector('.upload-menu__message').innerText = 'Cannot load file. Please try again.';
+          this.showError('Cannot upload file. Please try again.');
           document.querySelector('.choose-file').value = '';
         });
     } else {
-      document.querySelector('.upload-menu__message').innerText = 'Please select file.';
+      this.showError('Please select file.');
     }
   }
 
@@ -125,5 +127,17 @@ export default class MenuTable {
       .catch(() => {
         console.error();
       });
+  }
+  showError(errorMsg) {
+    const props = {
+      message: errorMsg,
+    };
+    const error = createElementsFromString(errorTemplate(props));
+    const parent = document.querySelector('.upload-menu__message');
+    if (parent.childNodes[0]) {
+      parent.replaceChild(error, parent.childNodes[0]);
+    } else {
+      parent.appendChild(error);
+    }
   }
 }
