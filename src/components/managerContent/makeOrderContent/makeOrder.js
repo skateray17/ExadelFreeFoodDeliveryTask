@@ -8,7 +8,20 @@ import { createElementsFromString, getCookie } from '../../../common/utils';
 import { get } from '../../../common/requests';
 
 
-export default class UserBalanceTable {
+export default class MakeOrderPage {
+  printTable() {
+    const printContents = document.getElementById('make-order__printableArea-table').innerHTML;
+    const screen = document.getElementById('screen');
+    screen.style.display = 'none';
+    const newLi = document.createElement('div');
+    newLi.innerHTML = printContents + document.querySelector('.make-order__table-footer').outerHTML;
+    document.body.insertBefore(newLi, null);
+
+    window.print();
+    document.body.removeChild(newLi);
+    screen.style.display = '';
+  }
+
   render(target, props) {
     const makeOrderHeader = new MakeOrderHeader();
     const makeOrderFooter = new MakeOrderFooter();
@@ -18,7 +31,7 @@ export default class UserBalanceTable {
 
     makeOrderHeader.render(makeOrderTableElement, props);
 
-    get('order/', { 'Content-Type': 'application/json', Authorization: getCookie('token') })
+    get('order/', { Authorization: getCookie('token') }, { currentDate: new Date() })
       .then(response => response.json())
       .then((res) => {
         const array = [];

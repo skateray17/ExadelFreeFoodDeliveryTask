@@ -1,12 +1,14 @@
 import { daysOfWeek } from './constants';
+import { get } from './requests';
+import { getCookie } from './utils';
 
 let currentMenu;
 let nextMenu;
 let menu = [];
-function setWeekMenu(obj, isCurrentWeek) {
+export function setWeekMenu(obj, isCurrentWeek) {
   const days = [];
   Object.keys(obj).forEach((key) => {
-    if (key !== 'date') {
+    if (key !== 'date' && key !== 'published') {
       days.push({
         day: daysOfWeek[key] || 'Extra',
         menuExists: obj[key].menu.length,
@@ -16,16 +18,18 @@ function setWeekMenu(obj, isCurrentWeek) {
   });
   if (isCurrentWeek) {
     currentMenu = {
+      published: obj.published,
       date: obj.date,
       days,
     };
-    menu.push(currentMenu);
+    menu[0] = currentMenu;
   } else {
     nextMenu = {
+      published: obj.published,
       date: obj.date,
       days,
     };
-    menu.push(nextMenu);
+    menu[1] = nextMenu;
   }
 }
 
@@ -38,4 +42,16 @@ export function setMenu(obj) {
   if (obj[1]) {
     setWeekMenu(obj[1], false);
   }
+}
+export function fetchMenu() {
+  return get('menu/', { Authorization: getCookie('token') })
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject();
+      } return res.json();
+    })
+    .then((data) => {
+      setMenu(data);
+      return data;
+    });
 }
