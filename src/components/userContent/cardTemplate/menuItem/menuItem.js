@@ -8,25 +8,23 @@ export default class MenuItem {
       quantity: 0,
       index: 0,
     };
-    this.contentListener = this.contentListener.bind(this);
+    this.plusDish = this.plusDish.bind(this);
+    this.minDish = this.minDish.bind(this);
   }
-  updateHTML(el) {
-    const quantity = el.querySelector('.quantity');
+  updateHTML() {
+    const quantity = this.target.querySelector('.quantity');
     quantity.innerHTML = this.state.quantity;
   }
-  contentListener(event) {
-    if (event.target.className.includes('incr') || event.target.className.includes('decr')) {
-      let C = true;
-      if (event.target.className.includes('decr')) {
-        C = false;
-      }
-      if (C) {
-        this.state.quantity++;
-      } else if (this.state.quantity !== 0) {
-        this.state.quantity--;
-      }
-      this.updateHTML(event.currentTarget);
+  plusDish(event) {
+    this.state.quantity++;
+    this.updateHTML(event.currentTarget);
+    this.callback(this.state);
+  }
+  minDish(event) {
+    if (this.state.quantity > 0) {
+      this.state.quantity--;
     }
+    this.updateHTML(event.currentTarget);
     this.callback(this.state);
   }
   render(target, props) {
@@ -36,7 +34,9 @@ export default class MenuItem {
     const menuItemTemplate = menuItem(props);
     const elemDOM = createElementsFromString(menuItemTemplate);
     target.appendChild(elemDOM);
-    elemDOM.addEventListener('click', this.contentListener);
+    this.target = elemDOM;
+    elemDOM.querySelector('.incr').addEventListener('click', this.plusDish);
+    elemDOM.querySelector('.decr').addEventListener('click', this.minDish);
     return elemDOM;
   }
 }

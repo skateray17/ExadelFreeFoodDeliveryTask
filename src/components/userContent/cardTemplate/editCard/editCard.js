@@ -82,9 +82,10 @@ export default class EditCard {
   }
 
   createHeaderProps(props) {
+    const date = new Date(props.date);
     return {
       weekday: props.weekday,
-      date: props.date,
+      date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
       headerStyle: 'active-card',
     };
   }
