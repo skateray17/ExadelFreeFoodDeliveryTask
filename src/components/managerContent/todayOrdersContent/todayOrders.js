@@ -20,7 +20,7 @@ export default class {
   }
 
   getProps() {
-    return get('order/', { Authorization: getCookie('token') }, { currentDate: new Date() })
+    return get('order/', { authorization: getCookie('token') }, { currentDate: new Date() })
       .then((res) => {
         if (res.ok) {
           return res.json();

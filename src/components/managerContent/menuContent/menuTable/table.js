@@ -7,11 +7,17 @@ import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, fetchMenu } from '../../../../common/menuService';
 import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
+import Spinner from '../../../spinner/spinner';
 
 export default class MenuTable {
   render(target) {
+    const spinner = new Spinner();
+    spinner.render(target);
+    const content = createElementsFromString(menuTableTemplate());
+    target.appendChild(content);
     fetchMenu()
       .then(() => {
+        spinner.destroy();
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
       })
@@ -19,15 +25,13 @@ export default class MenuTable {
         // add toast because we need uploading menu functional on page
         console.log(error);
       });
-    return target;
+    return content;
   }
 
-  renderContent(target, weeksMenu) {
-    const content = createElementsFromString(menuTableTemplate());
+  renderContent(content, weeksMenu) {
     this.renderWeektab(content, weeksMenu);
     this.renderWeek(content.querySelector('.menu-table-component__content'), weeksMenu[0], true);
-    target.appendChild(content);
-    return target;
+    return content;
   }
 
   rendermenuItems(target, menuObj, isCurrent) {
@@ -116,6 +120,8 @@ export default class MenuTable {
   uploadMenu(target, current) {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
+      const spinner = new Spinner();
+      spinner.render(target);
       post('menu/', {
         'content-type': 'text/plain',
       }, {}, file)
@@ -126,6 +132,7 @@ export default class MenuTable {
           return res.json();
         })
         .then(() => {
+          spinner.destroy();
           this.showWeek(current);
         })
         .catch(() => {
@@ -140,8 +147,9 @@ export default class MenuTable {
   showWeek(isCurrent) {
     fetchMenu()
       .then(() => {
-        const menu = (isCurrent) ? getMenu()[0] : getMenu()[1];
-        this.renderWeek(document.querySelector('.menu-table-component__content'), menu, isCurrent);
+        const menu = getMenu();
+        const weekMenu = (isCurrent) ? menu[0] : menu[1];
+        this.renderWeek(document.querySelector('.menu-table-component__content'), weekMenu, isCurrent);
       });
   }
 
