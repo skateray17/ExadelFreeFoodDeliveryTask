@@ -4,7 +4,7 @@ import menuTableTemplate from './menuTable.hbs';
 import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
-import { getMenu, setWeekMenu, fetchMenu } from '../../../../common/menuService';
+import { getMenu, fetchMenu } from '../../../../common/menuService';
 import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 
