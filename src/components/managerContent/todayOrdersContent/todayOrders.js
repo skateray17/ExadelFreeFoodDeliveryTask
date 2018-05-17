@@ -3,12 +3,18 @@ import orders from './todayOrders.hbs';
 import { createElementsFromString, getCookie } from '../../../common/utils';
 import { get } from '../../../common/requests';
 import OrdersInner from './todayOrdersInner/todayOrdersInner';
+import Spinner from '../../spinner/spinner';
 
 export default class {
   render(target) {
     const elem = createElementsFromString(orders(this.props));
+    const spinner = new Spinner();
+    spinner.render(elem);
     this.getProps()
-      .then(res => (new OrdersInner()).render(elem, res));
+      .then((res) => {
+        spinner.destroy();
+        (new OrdersInner()).render(elem, res);
+      });
     target.appendChild(elem);
     return elem;
   }
