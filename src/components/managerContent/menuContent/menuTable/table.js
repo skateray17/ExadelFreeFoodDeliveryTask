@@ -6,6 +6,7 @@ import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString, getCookie } from '../../../../common/utils';
 import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
 import { get, post } from '../../../../common/requests';
+import Spinner from '../../../spinner/spinner';
 
 export default class MenuTable {
   render(target) {
