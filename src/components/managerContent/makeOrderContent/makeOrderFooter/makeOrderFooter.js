@@ -21,7 +21,7 @@ export default class makeOrderFooter {
     isMenuForTodayAvailable().then((res) => {
       if (res) {
         element.querySelector('.make-order_submit-button').addEventListener('click', () => {
-          put('menu/', { 'Content-Type': 'application/json', Authorization: getCookie('token') }, {}, { body: { mark: true } })
+          put('adminOrder/', { 'Content-Type': 'application/json', Authorization: getCookie('token') })
             .then((response) => {
               if (response.ok) {
                 element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
