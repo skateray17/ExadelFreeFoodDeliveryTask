@@ -78,3 +78,6 @@
 .today-orders__text{
   font-size: 18px;
 }
+.today-orders__empty{
+  margin: auto;
+}
