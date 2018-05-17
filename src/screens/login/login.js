@@ -29,7 +29,8 @@ export default class LoginScreen {
     const email = formData.get('email');
     const password = formData.get('password');
 
-    Spinner.show(target.querySelector('.login__content'));
+    const spinner = new Spinner();
+    spinner.render(target.querySelector('.login__content'));
     login(email, password).then((res) => {
       if (!res.ok) {
         return Promise.reject();
@@ -42,7 +43,10 @@ export default class LoginScreen {
       this.router.navigate(checkType(getUserInfo().type));
     }).catch(() => {
       this.render(target, { displayError: true, email });
-    });
+    })
+      .finally(() => {
+        spinner.destroy();
+      });
   }
 
   static logOut() {
