@@ -1,10 +1,11 @@
 import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
-import { createElementsFromString } from '../../common/utils';
+import { createElementsFromString, getCookie } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card/card';
 import Popup from '../../components/popup/popup';
 import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
+import { put } from '../../common/requests';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -435,13 +436,30 @@ export default class UsersScreen {
       this.closePopup();
     }
   }
+  serverSendOrder(cardUpdates) {
+    const date = new Date();
+    const dishList = [];
+    cardUpdates.orders.forEach((el) => {
+      dishList.push({
+        dishTitle: el.name,
+        amount: el.quantity,
+      });
+    });
+    return put('order/', {
+      Authorization: getCookie('token'),
+      'content-type': 'application/json',
+    }, {}, JSON.stringify({ username: 'aaa', dishList, date }))
+      .then(res => res.json());
+  }
   update(cardUpdates) {
-    ///server work
-    const date = new Date(cardUpdates.header.date);
-    for (const card of this.cards) {
-      if (new Date(card.props.header.date).getTime() === date.getTime()) {
-        card.render(card.target, Object.assign(cardUpdates, { callback: this.makePopup }));
-      }
-    }
+    this.serverSendOrder(cardUpdates)
+      .then((res) => {
+        console.log(res);
+        for (const card of this.cards) {
+          if (new Date(card.props.header.date).getTime() === date.getTime()) {
+            card.render(card.target, Object.assign(cardUpdates, { callback: this.makePopup }));
+          }
+        }
+      });
   }
 }
