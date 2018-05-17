@@ -2,3 +2,7 @@
 
 After cloning project from repository run the following commands:
     npm install
+
+Set NODE_ENV before npm start to
+    "production" if you want to use .env.production file
+    "development" if you want to use .env.development file
