@@ -4,7 +4,7 @@
   "description": "ТЗ: https://docs.google.com/document/d/1QEBhDP-gYN7BMlMHtRNao6CD8cdxf83f_JSsG4vh8hY/edit?usp=sharing",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack-dev-server --open --progress",
+    "start": "cross-env NODE_ENV=production webpack-dev-server --open --progress",
     "start:dev": "cross-env NODE_ENV=development webpack-dev-server --open --progress",
     "start:test": "webpack-dev-server --config webpack.test.config.js --open --progress",
     "build": "webpack --config webpack.config.js --progress",
