@@ -4,19 +4,20 @@ import menuTableTemplate from './menuTable.hbs';
 import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
-import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
-import { get, post, put } from '../../../../common/requests';
+import { getMenu, setWeekMenu, fetchMenu } from '../../../../common/menuService';
+import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 
 export default class MenuTable {
   render(target) {
-    this.getMenu()
+    fetchMenu()
       .then(() => {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
       })
-      .catch(() => {
-        this.showError('Failed to load menu. Please reload page.');
+      .catch((error) => {
+        // add toast because we need uploading menu functional on page
+        console.log(error);
       });
     return target;
   }
@@ -29,31 +30,38 @@ export default class MenuTable {
     return target;
   }
 
-  rendermenuItems(target, menuObj) {
+  rendermenuItems(target, menuObj, isCurrent) {
     const items = createElementsFromString(menuItem(menuObj));
     if (!menuObj.published) {
       items.querySelector('.publish-button').addEventListener('click', () => {
-        this.publishMenu(menuObj.date);
+        this.publishMenu(menuObj.date, isCurrent);
       });
-      target.appendChild(items);
     }
+    target.appendChild(items);
   }
 
-  publishMenu(date) {
-    put('menu/', {
-      'content-type': 'text/plain',
-    }, {}, {
-      date,
+  publishMenu(menuDate, isCurrent) {
+    const body = {
+      date: menuDate,
       published: true,
-    })
+    };
+    put('menu/', {
+      'content-type': 'application/json',
+    }, {}, JSON.stringify(body))
       .then((res) => {
-        if (res.status !== 200) {
+        if (!res.ok) {
           return Promise.reject();
         } return res;
       })
-      .then(getMenu())
-      .catch(() => {
-        console.error();
+      .then(() => {
+        fetchMenu()
+          .then(() => {
+            const menu = (isCurrent) ? getMenu()[0] : getMenu()[1];
+            this.renderWeek(document.querySelector('.menu-table-component__content'), menu, isCurrent);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 
@@ -65,15 +73,13 @@ export default class MenuTable {
     };
     const menu = createElementsFromString(tableTemplate(props));
     target.appendChild(menu);
-
     if (props.menu) {
-      this.rendermenuItems(target, menuObj);
+      this.rendermenuItems(target, menuObj, current);
     } else {
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, current);
       });
-      this.showError('There is no menu loaded.');
     }
     return target;
   }
@@ -138,17 +144,6 @@ export default class MenuTable {
     this.renderWeek(target, getMenu()[menuIndex], isCurrent);
   }
 
-  getMenu() {
-    return get('menu/', {})
-      .then((res) => {
-        if (res.status !== 200) {
-          return Promise.reject();
-        } return res.json();
-      })
-      .then((data) => {
-        setMenu(data);
-      });
-  }
   showError(errorMsg) {
     const props = {
       message: errorMsg,

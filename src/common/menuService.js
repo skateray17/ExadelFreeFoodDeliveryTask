@@ -1,4 +1,5 @@
 import { daysOfWeek } from './constants';
+import { get } from './requests';
 
 let currentMenu;
 let nextMenu;
@@ -36,8 +37,22 @@ export function getMenu() {
 }
 export function setMenu(obj) {
   menu = [];
-  setWeekMenu(obj[0], true);
+  if (obj[0]) {
+    setWeekMenu(obj[0], true);
+  }
   if (obj[1]) {
     setWeekMenu(obj[1], false);
   }
+}
+export function fetchMenu() {
+  return get('menu/', {})
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject();
+      } return res.json();
+    })
+    .then((data) => {
+      setMenu(data);
+      return data;
+    });
 }
