@@ -6,6 +6,8 @@ import Card from '../../components/userContent/cardTemplate/card/card';
 import Popup from '../../components/popup/popup';
 import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 import { put } from '../../common/requests';
+import Toast from '../../components/toast/toast';
+import { typeOfToast } from '../../common/constants';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -62,6 +64,42 @@ const userOrders = [
       },
     ],
     date: '2018-05-11T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-09T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-10T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 60.34,
   },
@@ -205,7 +243,7 @@ const menuFromServer = {
           cost: 3.2,
         },
         {
-          name: 'торт',
+          name: 'мясцо',
           weight: 156,
           cost: 1.8,
         },
@@ -340,7 +378,7 @@ function createPropsForCards() {
     if (currentDate.getDay() !== 0) {
       days.push(currentDate);
     }
-    // const date = new Date(currentDate);
+
     currentDate = new Date(currentDate.getFullYear(),
       currentDate.getMonth(), currentDate.getDate() + 1);
   }
@@ -359,7 +397,8 @@ function clearHours(date) {
 }
 
 export default class UsersScreen {
-  constructor() {
+  constructor(router) {
+    this.router = router;
     this.cards = [];
     this.makePopup = this.makePopup.bind(this);
     this.update = this.update.bind(this);
@@ -449,9 +488,21 @@ export default class UsersScreen {
       Authorization: getCookie('token'),
       'content-type': 'application/json',
     }, {}, JSON.stringify({ username: 'aaa', dishList, date }))
-      .then(res => res.json());
+      .then(res => res.json())
+      .catch((err) => {
+        Toast.show({
+          title: 'Server error',
+          type: 'error',
+          canDismiss: true,
+        });
+      });
   }
   update(cardUpdates) {
+    for (const card of this.cards) {
+      if (new Date(card.props.header.date).getTime() === date.getTime()) {
+        s
+      }
+    }
     this.serverSendOrder(cardUpdates)
       .then((res) => {
         console.log(res);

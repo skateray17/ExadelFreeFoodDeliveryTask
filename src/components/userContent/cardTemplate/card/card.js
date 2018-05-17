@@ -16,6 +16,7 @@ export default class Card {
   constructor(target, props) {
     this.target = target;
     this.props = props;
+    this.id = new Date(props.header.date).getTime();
   }
 
   render(target, props) {
@@ -62,6 +63,7 @@ export default class Card {
       emptyMenu: props.orders.length === 0,
       showButton: new Date(props.header.date).getDate() === new Date().getDate() ?
         (getHours(new Date()) < TIME_TO_STOP_ORDERS) : true,
+      imageUrl: require('../../../../images/spottyDog.jpg'),
     };
   }
 

@@ -79,3 +79,7 @@
 .card p {
     font-size: 19px;
 }
+
+.dog {
+    max-width: 200px;
+}

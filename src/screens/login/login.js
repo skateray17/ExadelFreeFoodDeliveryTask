@@ -1,5 +1,6 @@
 import './login.css';
 import loginContent from './login.hbs';
+import Toast from '../../components/toast/toast';
 import { getUserInfo } from '../../common/user.service';
 import { checkType, removeCookie, setCookie } from '../../common/utils';
 import { login } from '../../common/login.service';
