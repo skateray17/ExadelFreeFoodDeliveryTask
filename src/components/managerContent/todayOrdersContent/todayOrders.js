@@ -2,17 +2,15 @@ import './todayOrders.css';
 import orders from './todayOrders.hbs';
 import { createElementsFromString, getCookie } from '../../../common/utils';
 import { get } from '../../../common/requests';
+import OrdersInner from './todayOrdersInner/todayOrdersInner';
 
 export default class {
-  async render(target) {
-    try {
-      this.props = await this.getProps();
-    } catch (e) {
-      return target;
-    }
-    const cardTemplate = orders(this.props);
-    target.appendChild(createElementsFromString(cardTemplate));
-    return target.lastElementChild;
+  render(target) {
+    const elem = createElementsFromString(orders(this.props));
+    this.getProps()
+      .then(res => (new OrdersInner()).render(elem, res));
+    target.appendChild(elem);
+    return elem;
   }
 
   getProps() {
@@ -21,7 +19,7 @@ export default class {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject();
+        return { result: [] };
       })
       .then(res => res.result);
   }
