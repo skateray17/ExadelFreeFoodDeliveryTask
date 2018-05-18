@@ -6,6 +6,7 @@ import UserBalanceFooter from './userBalanceFooter/userBalanceFooter';
 import { createElementsFromString } from '../../../common/utils';
 import { get } from '../../../common/requests';
 import Spinner from '../../spinner/spinner';
+import Toast from '../../toast/toast';
 
 function createDelayedInputEvent(target, delay, callback) {
   let inputTimeout;
@@ -40,6 +41,9 @@ export default class UserBalanceTable {
       this.userBalanceFooter.render(userBalanceTableElement, data);
       this.createHeaderEvents();
       this.createFooterEvents();
+    }).catch(() => {
+      this.spinner.destroy();
+      Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true });
     });
     return userBalanceTableElement;
   }
