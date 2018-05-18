@@ -1,6 +1,6 @@
 import './todayOrders.css';
 import orders from './todayOrders.hbs';
-import { createElementsFromString, getCookie } from '../../../common/utils';
+import { createElementsFromString } from '../../../common/utils';
 import { get } from '../../../common/requests';
 import OrdersInner from './todayOrdersInner/todayOrdersInner';
 import Spinner from '../../spinner/spinner';
@@ -20,7 +20,7 @@ export default class {
   }
 
   getProps() {
-    return get('order/', { authorization: getCookie('token') }, { currentDate: new Date() })
+    return get('order/', { }, { currentDate: new Date() })
       .then((res) => {
         if (res.ok) {
           return res.json();

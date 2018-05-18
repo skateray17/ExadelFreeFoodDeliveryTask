@@ -53,7 +53,6 @@ export function fetchMenu() {
     })
     .then((data) => {
       setMenu(data);
-      console.log(menu);
       return data;
     });
 }

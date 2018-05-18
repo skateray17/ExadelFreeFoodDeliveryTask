@@ -2,16 +2,19 @@ import { getCookie } from './utils';
 
 const BASE_URL = 'https://fooddel123.herokuapp.com/';
 
-function request(method, url, headers, urlParams = {}, body) {
+function request(method, url, headers, urlParams = {}, body, secure) {
+  if (secure === undefined) {
+    secure = true;
+  }
   return fetch(`${BASE_URL}api/${url}?${
     typeof urlParams === 'object' && urlParams !== null ?
       Object.entries(urlParams).map(([key, value]) => `${key}=${value}`).join('&')
       : ''
   }`, {
     method,
-    headers: new Headers(Object.assign(headers, {
+    headers: (secure) ? new Headers(Object.assign(headers, {
       authorization: getCookie('token'),
-    })),
+    })) : headers,
     body,
   });
 }
@@ -24,8 +27,8 @@ export function head(url, headers, urlParams) {
   return request('HEAD', url, headers, urlParams);
 }
 
-export function post(url, headers, urlParams, body) {
-  return request('POST', url, headers, urlParams, body);
+export function post(url, headers, urlParams, body, secure) {
+  return request('POST', url, headers, urlParams, body, secure);
 }
 
 export function put(url, headers, urlParams, body) {

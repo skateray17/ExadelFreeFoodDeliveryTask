@@ -1,6 +1,6 @@
 import './table.css';
-import tableTemplate from './table.hbs';
-import menuTableTemplate from './menuTable.hbs';
+import tableTemplate from './menuTable.hbs';
+import menuTableTemplate from './table.hbs';
 import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
@@ -22,6 +22,7 @@ export default class MenuTable {
         this.renderContent(target, weeksMenu);
       })
       .catch((error) => {
+        spinner.destroy();
         // add toast because we need uploading menu functional on page
         console.log(error);
       });
@@ -136,6 +137,7 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
+          spinner.destroy();
           this.showError('Cannot upload file. Please try again.');
           document.querySelector('.choose-file').value = '';
         });
