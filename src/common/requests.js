@@ -3,7 +3,7 @@ import { getCookie } from './utils';
 const BASE_URL = process.env.DB_HOST;
 
 function request(method, url, headers, urlParams = {}, body, secure) {
-  secure = (secure !== false);  
+  secure = (secure !== false);
   return fetch(`${BASE_URL}api/${url}?${
     typeof urlParams === 'object' && urlParams !== null ?
       Object.entries(urlParams).map(([key, value]) => `${key}=${value}`).join('&')

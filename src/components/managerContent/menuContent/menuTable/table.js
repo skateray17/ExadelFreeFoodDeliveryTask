@@ -17,14 +17,15 @@ export default class MenuTable {
     target.appendChild(content);
     fetchMenu()
       .then(() => {
-        spinner.destroy();
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
       })
       .catch((error) => {
-        spinner.destroy();
         // add toast because we need uploading menu functional on page
         console.log(error);
+      })
+      .finally(() => {
+        spinner.destroy();
       });
     return content;
   }
@@ -133,13 +134,14 @@ export default class MenuTable {
           return res.json();
         })
         .then(() => {
-          spinner.destroy();
           this.showWeek(current);
         })
         .catch(() => {
-          spinner.destroy();
           this.showError('Cannot upload file. Please try again.');
           document.querySelector('.choose-file').value = '';
+        })
+        .finally(() => {
+          spinner.destroy();
         });
     } else {
       this.showError('Please select file.');
