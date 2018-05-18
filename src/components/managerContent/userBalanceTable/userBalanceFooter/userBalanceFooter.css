@@ -2,13 +2,13 @@
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  min-height: 40px; 
+  min-height: 40px;
   padding: 0 34px;
 }
 
 .user-balance__select-quantity-container{
   margin-right: 34px;
-} 
+}
 
 .user-balance__select-quantity-title, .user-balance__selected-quantity{
   color: #6E6E6E;

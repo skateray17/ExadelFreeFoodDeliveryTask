@@ -1,8 +1,7 @@
 {{#each days}}
 <div class="menu-item">
     <div class="menu-item__day">{{day}}</div>
-    {{#if menuExists}}
-    {{#each dish}}
+    {{#if menuExists}} {{#each dish}}
     <div class="menu-item__dish">
         <div class="dish-name">{{name}}</div>
         <div class="dish-props">
@@ -10,9 +9,14 @@
             <div class="dish-price">{{cost}} BYN</div>
         </div>
     </div>
-    {{/each}}
-    {{else}}
+    {{/each}} {{else}}
     <div class="menu-item__no-menu-msg">There is no menu on this day.</div>
     {{/if}}
 </div>
 {{/each}}
+{{#if published}}
+{{else}}
+<button class="publish-button shadow">
+    Publish menu
+</button>
+{{/if}}

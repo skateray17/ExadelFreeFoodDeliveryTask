@@ -1,0 +1,14 @@
+.make-order_print-button-container {
+    padding: 10px 20%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.make-order_submit-button,.make-order_print-button {
+    height: 40px;
+    width: 35%;
+    background-color: #5aad3c;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}

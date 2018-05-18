@@ -380,7 +380,7 @@ function createPropsForCards() {
 
   const propsForCards = days.map(day =>
     cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime())
-    || createInactiveCard(day));
+        || createInactiveCard(day));
 
   return propsForCards;
 }
@@ -432,3 +432,4 @@ export default class UsersScreen {
   }
 
 }
+
