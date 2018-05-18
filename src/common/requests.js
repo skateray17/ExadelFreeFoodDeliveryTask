@@ -1,6 +1,6 @@
 import { getCookie } from './utils';
 
-const BASE_URL = 'https://fooddel123.herokuapp.com/';
+const BASE_URL = process.env.DB_HOST;
 
 function request(method, url, headers, urlParams = {}, body, secure) {
   if (secure === undefined) {
