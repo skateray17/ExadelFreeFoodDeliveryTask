@@ -45,7 +45,7 @@ export default class UserBalanceTable {
   }
 
   createHeaderEvents() {
-    createDelayedInputEvent(this.userBalanceHeader, 500, (e) => {
+    createDelayedInputEvent(this.userBalanceHeader, 300, (e) => {
       this.name = e.target.value;
       this.page = 1;
       this.rerender();
@@ -65,7 +65,7 @@ export default class UserBalanceTable {
         this.rerender();
       }
     };
-    createDelayedInputEvent(this.userBalanceFooter, 500, (e) => {
+    createDelayedInputEvent(this.userBalanceFooter, 300, (e) => {
       this.perPage = Number.parseInt(e.target.value, 10) || 15;
       this.page = 1;
       this.rerender();
