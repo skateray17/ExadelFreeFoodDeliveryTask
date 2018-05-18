@@ -1,33 +1,73 @@
 import './table.css';
-import tableTemplate from './table.hbs';
-import menuTableTemplate from './menuTable.hbs';
+import tableTemplate from './menuTable.hbs';
+import menuTableTemplate from './table.hbs';
 import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
-import { createElementsFromString, getCookie } from '../../../../common/utils';
-import { getMenu, setMenu, setWeekMenu } from '../../../../common/menuService';
-import { get, post } from '../../../../common/requests';
+import { createElementsFromString } from '../../../../common/utils';
+import { getMenu, fetchMenu } from '../../../../common/menuService';
+import { post, put } from '../../../../common/requests';
+import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 
 export default class MenuTable {
   render(target) {
-    this.getMenu()
+    const spinner = new Spinner();
+    spinner.render(target);
+    const content = createElementsFromString(menuTableTemplate());
+    target.appendChild(content);
+    fetchMenu()
       .then(() => {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
+      })
+      .catch((error) => {
+        // add toast because we need uploading menu functional on page
+        console.log(error);
+      })
+      .finally(() => {
+        spinner.destroy();
       });
-    return target;
-  }
-  renderContent(target, weeksMenu) {
-    const content = createElementsFromString(menuTableTemplate());
-    this.renderWeektab(content, weeksMenu);
-    this.renderWeek(content.querySelector('.menu-table-component__content'), weeksMenu[0], true);
-    target.appendChild(content);
-    return target;
+    return content;
   }
 
-  rendermenuItems(target, menuObj) {
+  renderContent(content, weeksMenu) {
+    this.renderWeektab(content, weeksMenu);
+    this.renderWeek(content.querySelector('.menu-table-component__content'), weeksMenu[0], true);
+    return content;
+  }
+
+  rendermenuItems(target, menuObj, isCurrent) {
     const items = createElementsFromString(menuItem(menuObj));
+    if (!menuObj.published) {
+      items.querySelector('.publish-button').addEventListener('click', () => {
+        this.publishMenu(menuObj.date, isCurrent);
+      });
+    }
     target.appendChild(items);
+  }
+
+  publishMenu(menuDate, isCurrent) {
+    const body = {
+      date: menuDate,
+      published: true,
+    };
+    put('menu/', {
+      'content-type': 'application/json',
+    }, {}, JSON.stringify(body))
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject();
+        } return res;
+      })
+      .then(() => {
+        fetchMenu()
+          .then(() => {
+            this.showWeek(isCurrent);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   renderWeek(target, menuObj, current) {
@@ -38,9 +78,8 @@ export default class MenuTable {
     };
     const menu = createElementsFromString(tableTemplate(props));
     target.appendChild(menu);
-
     if (props.menu) {
-      this.rendermenuItems(target, menuObj);
+      this.rendermenuItems(target, menuObj, current);
     } else {
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
@@ -50,17 +89,17 @@ export default class MenuTable {
     return target;
   }
 
-  renderWeektab(content, weeksMenu) {
+  renderWeektab(content) {
     const target = content.querySelector('.menu-table-component__tabs');
     const weektab = createElementsFromString(weekTabTemplate());
     target.appendChild(weektab);
     this.selectWeek(target, true);
     target.querySelector('.week-tab__current').addEventListener('click', () => {
-      this.renderWeek(content.querySelector('.menu-table-component__content'), weeksMenu[0], true);
+      this.renderWeek(content.querySelector('.menu-table-component__content'), getMenu()[0], true);
       this.selectWeek(target, true);
     });
     target.querySelector('.week-tab__next').addEventListener('click', () => {
-      this.renderWeek(content.querySelector('.menu-table-component__content'), weeksMenu[1], false);
+      this.renderWeek(content.querySelector('.menu-table-component__content'), getMenu()[1], false);
       this.selectWeek(target);
     });
     return content;
@@ -83,8 +122,9 @@ export default class MenuTable {
   uploadMenu(target, current) {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
+      const spinner = new Spinner();
+      spinner.render(target);
       post('menu/', {
-        authorization: getCookie('token'),
         'content-type': 'text/plain',
       }, {}, file)
         .then((res) => {
@@ -93,32 +133,41 @@ export default class MenuTable {
           }
           return res.json();
         })
-        .then((res) => {
-          this.showWeek(target, res, current);
+        .then(() => {
+          this.showWeek(current);
         })
         .catch(() => {
-          document.querySelector('.upload-menu__message').innerText = 'Cannot load file. Please try again.';
+          this.showError('Cannot upload file. Please try again.');
           document.querySelector('.choose-file').value = '';
+        })
+        .finally(() => {
+          spinner.destroy();
         });
     } else {
-      document.querySelector('.upload-menu__message').innerText = 'Please select file.';
+      this.showError('Please select file.');
     }
   }
-  showWeek(target, menu, isCurrent) {
-    setWeekMenu(menu, isCurrent);
-    const menuIndex = (isCurrent) ? 0 : 1;
-    this.renderWeek(target, getMenu()[menuIndex], isCurrent);
-  }
-  getMenu() {
-    return get('menu/', {
-      authorization: getCookie('token'),
-    })
-      .then(res => res.json())
-      .then((data) => {
-        setMenu(data);
-      })
-      .catch(() => {
-        console.error();
+
+  showWeek(isCurrent) {
+    fetchMenu()
+      .then(() => {
+        const menu = getMenu();
+        const weekMenu = (isCurrent) ? menu[0] : menu[1];
+        this.renderWeek(document.querySelector('.menu-table-component__content'), weekMenu, isCurrent);
       });
+  }
+
+  showError(errorMsg) {
+    const props = {
+      message: errorMsg,
+    };
+    const error = createElementsFromString(errorTemplate(props));
+    const parent = document.querySelector('.upload-menu__message')
+      || document.querySelector('.manager-content');
+    if (parent.childNodes[0]) {
+      parent.replaceChild(error, parent.childNodes[0]);
+    } else {
+      parent.appendChild(error);
+    }
   }
 }

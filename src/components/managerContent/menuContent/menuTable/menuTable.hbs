@@ -1,4 +1,13 @@
-<div class="menu-table-component">
-  <div class="menu-table-component__tabs"></div>
-  <div class="menu-table-component__content"></div>
+<div class="menu-table-content">
+    <div class="menu-table__date">{{date}}</div>
+    {{#if menu}}
+    {{else}}
+    <div class="upload-menu">
+        <div class="upload-menu__message"></div>
+        <form class="send-menu">
+            <input name="fileInput" type="file" accept=".xlsx, .xls" size="1e6" class="choose-file"></input>
+            <button name="sendFile" type="submit" class="upload-menu__button">Send file</button>
+        </form>
+    </div>
+    {{/if}}
 </div>
