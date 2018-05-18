@@ -6,6 +6,7 @@ export const daysOfWeek = {
   fri: 'Friday',
   sat: 'Saturday',
 };
+
 export const daysByNumbers = {
   1: 'mon',
   2: 'tue',
@@ -13,4 +14,10 @@ export const daysByNumbers = {
   4: 'thu',
   5: 'fri',
   6: 'sat',
+};
+
+export const typeOfToast = {
+  error: '#FFA9A9',
+  info: '#ABE1FF',
+  success: '#8FE8A4',
 };

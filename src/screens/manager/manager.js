@@ -6,6 +6,8 @@ import UserBalanceTable from '../../components/managerContent/userBalanceTable/u
 import { createElementsFromString } from '../../common/utils';
 import EmptyComponent from '../../components/emptyComponent/empty';
 import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder';
+import TodayOrders from '../../components/managerContent/todayOrdersContent/todayOrders';
+
 
 const tabs = [
   {
@@ -14,7 +16,7 @@ const tabs = [
     icon: '&#xE561;',
   },
   {
-    component: new EmptyComponent(),
+    component: new TodayOrders(),
     title: 'Today\'s orders',
     icon: '&#xE8DF;',
   },

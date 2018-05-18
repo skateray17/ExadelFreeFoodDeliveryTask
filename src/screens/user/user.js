@@ -63,6 +63,42 @@ const userOrders = [
     totalPrice: 60.34,
   },
 
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-09T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
+  {
+    dishList: [
+      {
+        _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'тарелка для супа',
+        amount: 32,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'голубцы ленивые',
+        amount: 1,
+      },
+    ],
+    date: '2018-05-10T21:00:00.000Z',
+    _id: '5adee2bd192937063c8345b9',
+    totalPrice: 60.34,
+  },
+
 ];
 const menuFromServer = {
   date: '07.05.2018-14.05.2018',
@@ -202,7 +238,7 @@ const menuFromServer = {
           cost: 3.2,
         },
         {
-          name: 'торт',
+          name: 'мясцо',
           weight: 156,
           cost: 1.8,
         },
@@ -322,7 +358,7 @@ function createPropsForCards() {
   const cardsWithOrders = [];
 
   for (const day of userOrders) {
-    if (new Date(day.date) > new Date()) {
+    if (new Date(day.date).getTime() >= clearHours(new Date())) {
       const cardProps = createCardPropsWithEmptyOrders(day);
       addOrderItemsToProps(cardProps, day);
       cardsWithOrders.push(cardProps);
@@ -337,11 +373,9 @@ function createPropsForCards() {
     if (currentDate.getDay() !== 0) {
       days.push(currentDate);
     }
-    // const date = new Date(currentDate);
-    currentDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() + 1,
-    );
+
+    currentDate = new Date(currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1);
   }
 
   const propsForCards = days.map(day =>
@@ -358,11 +392,16 @@ function clearHours(date) {
 }
 
 export default class UsersScreen {
-  constructor() {
+  constructor(router) {
+    this.router = router;
     this.cards = [];
   }
 
   render(target, props) {
+    props = {
+      page: 'user',
+      router: this.router,
+    };
     const header = new Header();
     header.render(target, props);
 
@@ -372,25 +411,25 @@ export default class UsersScreen {
     const propsForCards = createPropsForCards(userOrders);
 
     propsForCards.forEach((props) => {
-      const card = new Card(target.querySelector('.menus-cards-container'), props);
-      const containerForCard = document.createElement('div');
+      const cardContainer = document.createElement('div');
 
-      target.querySelector('.menus-cards-container').appendChild(containerForCard);
-      card.render(containerForCard, props);
+      target.querySelector('.menus-cards-container').appendChild(cardContainer);
+      const card = new Card(cardContainer, props);
+      card.render(cardContainer, props);
 
       this.cards.push(card);
     });
 
     return screen;
   }
-  /*
-      update(cardUpdates) {
-        const date = new Date(cardUpdates.header.date);
-        for (const card of this.cards) {
-          if (new Date(card.header.date) === date) {
-            card.render(cardUpdates);
-          }
-        }
+
+  updateCard(newCardProps) {
+    for (const card of this.cards) {
+      if (card.id === newCardProps.id) {
+        card.render(card.target, newCardProps);
       }
-      */
+    }
+  }
+
 }
+
