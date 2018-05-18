@@ -1,3 +1,7 @@
 <div class="menu-table-content">
     <div class="menu-table__date">{{date}}</div>
+    {{#if menu}}
+    {{else}}
+    <div class="msg" style="font-size: 18px;">no menu</div>
+    {{/if}}
 </div>

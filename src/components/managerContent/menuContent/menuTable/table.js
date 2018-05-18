@@ -39,7 +39,7 @@ export default class MenuTable {
 
   rendermenuItems(target, menuObj, isCurrent) {
     const items = createElementsFromString(menuItem(menuObj));
-    if (!menuObj.published) {
+    if (menuObj && !menuObj.published) {
       items.querySelector('.publish-button').addEventListener('click', () => {
         this.publishMenu(menuObj.date, isCurrent);
       });
@@ -53,7 +53,6 @@ export default class MenuTable {
       target.appendChild(items);
     }
   }
-
   publishMenu(menuDate, isCurrent) {
     const body = {
       date: menuDate,
@@ -86,8 +85,16 @@ export default class MenuTable {
     this.reloadContent(target);
     const props = {
       date: (menuObj) ? menuObj.date : null,
+      menu: menuObj,
     };
     const menu = createElementsFromString(tableTemplate(props));
+    if (!props.menu) {
+      new UploadMenuForm().render(target);
+      target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
+        e.preventDefault();
+        this.uploadMenu(target, current);
+      });
+    }
     target.appendChild(menu);
     this.rendermenuItems(target, menuObj, current);
     return target;
