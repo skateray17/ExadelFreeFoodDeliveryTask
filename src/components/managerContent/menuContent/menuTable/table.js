@@ -8,6 +8,7 @@ import { getMenu, fetchMenu } from '../../../../common/menuService';
 import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
+import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
 
 export default class MenuTable {
   render(target) {
@@ -42,8 +43,15 @@ export default class MenuTable {
       items.querySelector('.publish-button').addEventListener('click', () => {
         this.publishMenu(menuObj.date, isCurrent);
       });
+      target.appendChild(items);
+      new UploadMenuForm().render(target);
+      target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
+        e.preventDefault();
+        this.uploadMenu(target, isCurrent);
+      });
+    } else {
+      target.appendChild(items);
     }
-    target.appendChild(items);
   }
 
   publishMenu(menuDate, isCurrent) {
@@ -51,6 +59,8 @@ export default class MenuTable {
       date: menuDate,
       published: true,
     };
+    const spinner = new Spinner();
+    spinner.render(document.querySelector('.content'));
     put('menu/', {
       'content-type': 'application/json',
     }, {}, JSON.stringify(body))
@@ -63,9 +73,11 @@ export default class MenuTable {
         fetchMenu()
           .then(() => {
             this.showWeek(isCurrent);
+            spinner.destroy();
           });
       })
       .catch((error) => {
+        spinner.destroy();
         console.log(error);
       });
   }
@@ -74,18 +86,10 @@ export default class MenuTable {
     this.reloadContent(target);
     const props = {
       date: (menuObj) ? menuObj.date : null,
-      menu: menuObj,
     };
     const menu = createElementsFromString(tableTemplate(props));
     target.appendChild(menu);
-    if (props.menu) {
-      this.rendermenuItems(target, menuObj, current);
-    } else {
-      target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
-        e.preventDefault();
-        this.uploadMenu(target, current);
-      });
-    }
+    this.rendermenuItems(target, menuObj, current);
     return target;
   }
 
