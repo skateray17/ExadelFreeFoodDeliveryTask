@@ -3,7 +3,7 @@ import template from './userBalanceTable.hbs';
 import UserBalanceItems from './userBalanceItems/userBalanceItems';
 import UserBalanceHeader from './userBalanceHeader/userBalanceHeader';
 import UserBalanceFooter from './userBalanceFooter/userBalanceFooter';
-import { createElementsFromString, getCookie } from '../../../common/utils';
+import { createElementsFromString } from '../../../common/utils';
 import { get } from '../../../common/requests';
 import Spinner from '../../spinner/spinner';
 
@@ -86,7 +86,7 @@ export default class UserBalanceTable {
   }
 
   getData() {
-    return get('balance/', { Authorization: getCookie('token') }, {
+    return get('balance/', {}, {
       perPage: this.perPage, name: this.name, page: this.page,
     })
       .then((res) => {
