@@ -31,7 +31,7 @@ export default class MakeOrderPage {
 
     makeOrderHeader.render(makeOrderTableElement, props);
 
-    get('order/', { Authorization: getCookie('token') }, { currentDate: new Date() })
+    get('order/', {}, { currentDate: new Date() })
       .then(response => response.json())
       .then((res) => {
         const array = [];
