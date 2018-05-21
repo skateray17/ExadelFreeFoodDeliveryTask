@@ -1,6 +1,7 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
+import EventBus from '../../common/eventBus';
 import { createElementsFromString, roles } from '../../common/utils';
 import { getUserInfo } from '../../common/user.service';
 import { logout } from '../../common/login.service';
@@ -29,9 +30,25 @@ export default class Header {
         switchMode(props);
       });
     }
-    target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
+    target.querySelector('.exit-ico').addEventListener('click', () => {
+      logout(props.router);
+    });
+
+    // to remove
+    if (type === roles.user) {
+      target.querySelector('.history-ico').addEventListener('click', () => {
+        EventBus.publish('onBalanceChange', 20);
+      });
+    }
+    //
+
+    EventBus.subscribe('onBalanceChange', this.updateBalance);
 
     return screenWithHeader;
+  }
+
+  updateBalance(balance) {
+    console.log(balance);
   }
 }
 

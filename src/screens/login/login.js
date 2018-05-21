@@ -37,9 +37,12 @@ export default class LoginScreen {
       }
       return res.json();
     }).then((data) => {
-      setCookie('token', data.token, 365);
-      setCookie('username', data.username, 365);
-      setCookie('type', data.type, 365);
+      const {
+        token, type, firstName, lastName,
+      } = data;
+      setCookie('token', token, 365);
+      setCookie('username', `${firstName} ${lastName}`, 365);
+      setCookie('type', type, 365);
       this.router.navigate(checkType(getUserInfo().type));
     }).catch(() => {
       this.render(target, { displayError: true, email });
