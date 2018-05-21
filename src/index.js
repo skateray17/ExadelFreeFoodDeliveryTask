@@ -28,7 +28,7 @@ usersScreen.update({
   ],
   orderPrice: 6.4,
 });
-*/
 
+*/
 console.log(process.env.DB_HOST);
 const router = new Router(routes, document.getElementById('screen'));

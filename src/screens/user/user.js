@@ -3,6 +3,7 @@ import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
+import { getMenu } from '../../common/userscreen.service';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -49,18 +50,28 @@ const userOrders = [
     dishList: [
       {
         _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
+        dishTitle: 'суп из чечевицы с овощами',
+        amount: 1,
       },
       {
         _id: '5adee2bd192937063c8345b7',
         dishTitle: 'голубцы ленивые',
         amount: 1,
       },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'торт',
+        amount: 1,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'блинчики',
+        amount: 1,
+      },
     ],
     date: '2018-05-17T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
+    totalPrice: 6.30,
   },
 
   {
@@ -75,10 +86,15 @@ const userOrders = [
         dishTitle: 'голубцы ленивые',
         amount: 1,
       },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'блинчики',
+        amount: 2,
+      },
     ],
     date: '2018-05-18T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
+    totalPrice: 7.20,
   },
 
 ];
