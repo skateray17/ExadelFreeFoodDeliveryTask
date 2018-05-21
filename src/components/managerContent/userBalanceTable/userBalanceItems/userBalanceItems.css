@@ -116,7 +116,7 @@
 
   .user-balance__submit-button, .user-balance__balance-input{
     grid-column: span 2;
-  }  
+  }
 
   .user-balance__table-header{
     padding-right: 34px;

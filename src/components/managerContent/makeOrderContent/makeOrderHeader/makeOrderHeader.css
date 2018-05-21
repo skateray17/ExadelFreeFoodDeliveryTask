@@ -1,0 +1,12 @@
+.make-order__header {
+    min-height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.make-order__header-title {
+    font-size: 18px;
+    text-align: center;
+    padding: 8px 0;
+}

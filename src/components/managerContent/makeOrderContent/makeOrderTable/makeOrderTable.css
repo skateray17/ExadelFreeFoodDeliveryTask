@@ -1,0 +1,32 @@
+.make-order__table-header, .make-order_order-item {
+    min-height: 42px;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 0 34px 0 34px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.make-order__dish-header-title, .make-order__dish-amount {
+    font-size: 18px;
+    color: #6E6E6E;
+}
+
+.make-order__dish-title {
+    font-size: 18px;
+    color: #212121;
+}
+
+.make-order__amount {
+    font-size: 18px;
+    padding-left: 60px;
+    color: #212121;
+}
+.make-order__empty-list{
+    display: block;
+    font-size: 20px;
+    color: #6E6E6E;
+    margin: 20px 30px;
+    text-align: center;
+}
