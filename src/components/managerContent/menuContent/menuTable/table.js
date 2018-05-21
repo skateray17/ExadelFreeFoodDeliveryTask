@@ -9,6 +9,7 @@ import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
+import Toast from '../../../toast/toast';
 
 export default class MenuTable {
   render(target) {
@@ -21,9 +22,9 @@ export default class MenuTable {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
       })
-      .catch((error) => {
-        // add toast because we need uploading menu functional on page
-        console.log(error);
+      .catch(() => {
+        Toast.show({ title: 'some problems' });
+        this.showError('Something get wrong. Please reload page.');
       })
       .finally(() => {
         spinner.destroy();
@@ -76,9 +77,11 @@ export default class MenuTable {
             spinner.destroy();
           });
       })
-      .catch((error) => {
+      .catch(() => {
+        Toast.show({ title: 'some problems' });
+      })
+      .finally(() => {
         spinner.destroy();
-        console.log(error);
       });
   }
 
@@ -150,6 +153,7 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
+          Toast.show({ title: 'some problems' });
           this.showError('Cannot upload file. Please try again.');
           document.querySelector('.choose-file').value = '';
         })
