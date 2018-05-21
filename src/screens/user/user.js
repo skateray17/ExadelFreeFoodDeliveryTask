@@ -479,7 +479,8 @@ export default class UsersScreen {
     }
   }
   serverSendOrder(cardUpdates, spin) {
-    const date = new Date();
+    let date = new Date(cardUpdates.header.date);
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours() + 4);
     const dishList = [];
     cardUpdates.orders.forEach((el) => {
       dishList.push({
@@ -509,11 +510,11 @@ export default class UsersScreen {
     spin.render(cardUpdates.target);
     this.serverSendOrder(cardUpdates, spin)
       .then((res) => {
-          for (const card of this.cards) {
-            if (new Date(card.props.header.date).getTime() === date.getTime()) {
-              card.render(card.target, Object.assign({ callback: this.makePopup,orderPrice:res.totalPrice },cardUpdates ));
-            }
-          
+        for (const card of this.cards) {
+          if (new Date(card.props.header.date).getTime() === date.getTime()) {
+            card.render(card.target, Object.assign({ callback: this.makePopup, orderPrice: res.totalPrice }, cardUpdates));
+          }
+
         }
       });
   }
