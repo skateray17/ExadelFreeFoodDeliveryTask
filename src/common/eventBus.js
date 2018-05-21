@@ -1,19 +1,30 @@
-let topics = {};
-
-export default class EventBus {
-  static subscribe(topic, listener) {
-    if (!topics[topic]) {
-      topics[topic] = [];
+class EventBus {
+  constructor() {
+    if (!EventBus.instance) {
+      this.topics = {};
+      EventBus.instance = this;
     }
-    topics[topic].push(listener);
+    return EventBus.instance;
   }
 
-  static publish(topic, data) {
-    if (!topics[topic] || topics[topic].length < 1) {
+  subscribe(topic, listener) {
+    if (!this.topics[topic]) {
+      this.topics[topic] = [];
+    }
+    this.topics[topic].push(listener);
+  }
+
+  publish(topic, data) {
+    if (!this.topics[topic] || this.topics[topic].length < 1) {
       return;
     }
-    topics[topic].forEach((listener) => {
+    this.topics[topic].forEach((listener) => {
       listener(data || {});
     });
   }
 }
+
+const eventBus = new EventBus();
+Object.freeze(eventBus);
+
+export default eventBus;
