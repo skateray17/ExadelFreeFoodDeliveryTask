@@ -5,6 +5,10 @@ import { put } from '../../../../common/requests';
 
 export default class UserBalanceItems {
   render(target, props) {
+    if (this.elem && (!target || target === this.elem.parentNode)) {
+      this.rerender(props);
+      return this.elem;
+    }
     this.props = props;
     this.elem = createElementsFromString(template(props));
     this.setEvent();

@@ -4,7 +4,10 @@ import { createElementsFromString } from '../../../../common/utils';
 
 export default class UserBalanceFooter {
   render(target, props) {
-    props.perPage = props.perPage || 15;
+    if (this.elem && (!target || target === this.elem.parentNode)) {
+      this.rerender(props);
+      return this.elem;
+    }
     props.showedInterval = `${((props.currentPage - 1) * props.perPage) + 1}-${
       Math.min(props.totalAmount, props.currentPage * props.perPage)}`;
     this.elem = createElementsFromString(template(props));
@@ -15,7 +18,7 @@ export default class UserBalanceFooter {
     props.perPage = props.perPage || 15;
     this.elem.querySelector('.user-balance__showed-interval').innerHTML =
       `${Math.min(((props.currentPage - 1) * props.perPage) + 1, props.totalAmount)}-${
-        Math.min(props.totalAmount, props.currentPage * props.perPage)}`;
+      Math.min(props.totalAmount, props.currentPage * props.perPage)}`;
     this.elem.querySelector('.user-balance__total-quantity').innerHTML = props.totalAmount;
     return this.elem;
   }

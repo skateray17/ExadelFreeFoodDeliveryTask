@@ -20,14 +20,11 @@ function createDelayedInputEvent(target, delay, callback) {
 }
 
 export default class UserBalanceTable {
-  constructor() {
+  render(target, props) {
     this.perPage = 10;
     this.name = '';
     this.page = 1;
     this.mayClickRight = false;
-  }
-
-  render(target, props) {
     this.userBalanceItems = new UserBalanceItems();
     this.userBalanceHeader = new UserBalanceHeader();
     this.userBalanceFooter = new UserBalanceFooter();
@@ -83,8 +80,8 @@ export default class UserBalanceTable {
 
   rerender() {
     this.getData().then((data) => {
-      this.userBalanceItems.rerender(data);
-      this.userBalanceFooter.rerender(data);
+      this.userBalanceItems.render(null, data);
+      this.userBalanceFooter.render(null, data);
       this.checkRight(data);
     });
   }
