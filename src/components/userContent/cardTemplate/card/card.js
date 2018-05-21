@@ -17,6 +17,7 @@ export default class Card {
     this.target = target;
     this.props = props;
     this.id = new Date(props.header.date).getTime();
+    this.onEdit = this.onEdit.bind(this);
   }
 
   render(target, props) {
@@ -25,14 +26,17 @@ export default class Card {
     target.innerHTML = '';
     const cardItem = target.appendChild(createElementsFromString(cardTemplate));
     this.insertCardContent(cardItem, props, target);
-    target.addEventListener('click', (event) => {
-      if (event.target === target.querySelector('.edit-button')) {
-        props.callback(props);
-      }
-    });
+    const cardContent = target.querySelector('.card-content');
+    this.cardContent = cardContent;
+    this.target.addEventListener('click', this.onEdit);
     return cardItem;
   }
-
+  onEdit(event) {
+    if (event.target === this.target.querySelector('.edit-button')) {
+      this.props.callback(Object.assign({ target: this.cardContent }, this.props));
+      this.target.removeEventListener('click', this.onEdit);
+    }
+  }
   createOrderItem(cardItem, order) {
     const orderItem = new OrderItem();
     orderItem.render(cardItem.querySelector('.card-content'), order);

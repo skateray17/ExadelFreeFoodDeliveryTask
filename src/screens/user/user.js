@@ -8,6 +8,7 @@ import EditCard from '../../components/userContent/cardTemplate/editCard/editCar
 import { put } from '../../common/requests';
 import Toast from '../../components/toast/toast';
 import { typeOfToast } from '../../common/constants';
+import Spinner from '../../components/spinner/spinner';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -445,6 +446,7 @@ export default class UsersScreen {
       header: cardProps.header,
       menu,
       totalCost: cardProps.orderPrice,
+      target: cardProps.target,
     };
     const propsPopup = {
       data: propsEdit,
@@ -468,14 +470,15 @@ export default class UsersScreen {
           orders.push(temp);
         }
       });
+      this.closePopup();
       this.update({
         orders,
         header: res.header,
+        target: res.target,
       });
-      this.closePopup();
     }
   }
-  serverSendOrder(cardUpdates) {
+  serverSendOrder(cardUpdates, spin) {
     const date = new Date();
     const dishList = [];
     cardUpdates.orders.forEach((el) => {
@@ -495,21 +498,22 @@ export default class UsersScreen {
           type: 'error',
           canDismiss: true,
         });
+      })
+      .finally(() => {
+        spin.destroy();
       });
   }
   update(cardUpdates) {
-    for (const card of this.cards) {
-      if (new Date(card.props.header.date).getTime() === date.getTime()) {
-        s
-      }
-    }
-    this.serverSendOrder(cardUpdates)
+    const date = new Date(cardUpdates.header.date);
+    const spin = new Spinner();
+    spin.render(cardUpdates.target);
+    this.serverSendOrder(cardUpdates, spin)
       .then((res) => {
-        console.log(res);
-        for (const card of this.cards) {
-          if (new Date(card.props.header.date).getTime() === date.getTime()) {
-            card.render(card.target, Object.assign(cardUpdates, { callback: this.makePopup }));
-          }
+          for (const card of this.cards) {
+            if (new Date(card.props.header.date).getTime() === date.getTime()) {
+              card.render(card.target, Object.assign({ callback: this.makePopup,orderPrice:res.totalPrice },cardUpdates ));
+            }
+          
         }
       });
   }

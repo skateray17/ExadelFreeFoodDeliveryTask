@@ -83,3 +83,6 @@
 .dog {
     max-width: 200px;
 }
+.card-content{
+  position: relative;
+}

@@ -16,6 +16,7 @@ export default class EditCard {
     this.cancel = this.cancel.bind(this);
   }
   render(target, props) {
+    this.onScreenTarget = props.data.target;
     this.callback = props.callback;
     const cardTemplate = card(this.createCardProps(props.data));
     const editCardHTML = createElementsFromString(cardTemplate);
@@ -73,6 +74,7 @@ export default class EditCard {
       status: 'Ok',
       order: this.state.order,
       header: this.state.header,
+      target: this.onScreenTarget,
     });
   }
 
