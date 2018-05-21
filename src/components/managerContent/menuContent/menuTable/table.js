@@ -13,7 +13,7 @@ import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
 export default class MenuTable {
   render(target) {
     const spinner = new Spinner();
-    spinner.render(target);
+    spinner.render(document.querySelector('.manager-home-screen'));
     const content = createElementsFromString(menuTableTemplate());
     target.appendChild(content);
     fetchMenu()
@@ -45,11 +45,12 @@ export default class MenuTable {
       });
       target.appendChild(items);
       new UploadMenuForm().render(target);
+      this.showError('You can change menu by uploading new file.');
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, isCurrent);
       });
-    } else {
+    } else if (menuObj) {
       target.appendChild(items);
     }
   }
@@ -59,7 +60,7 @@ export default class MenuTable {
       published: true,
     };
     const spinner = new Spinner();
-    spinner.render(document.querySelector('.content'));
+    spinner.render(document.querySelector('.manager-home-screen'));
     put('menu/', {
       'content-type': 'application/json',
     }, {}, JSON.stringify(body))
@@ -90,6 +91,7 @@ export default class MenuTable {
     const menu = createElementsFromString(tableTemplate(props));
     if (!props.menu) {
       new UploadMenuForm().render(target);
+      this.showError('There is no menu on this week.');
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, current);
@@ -134,7 +136,7 @@ export default class MenuTable {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
       const spinner = new Spinner();
-      spinner.render(target);
+      spinner.render(document.querySelector('.manager-home-screen'));
       post('menu/', {
         'content-type': 'text/plain',
       }, {}, file)

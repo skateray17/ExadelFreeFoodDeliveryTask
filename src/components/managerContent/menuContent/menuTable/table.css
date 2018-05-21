@@ -14,7 +14,6 @@
 }
 .send-menu{
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 .week-tab{
@@ -88,7 +87,7 @@
     background-color: white;
     padding: 15px 50px 15px 50px;
     margin: 20px;
-    border: 1px solid #008AFF;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 .upload-menu__button{
