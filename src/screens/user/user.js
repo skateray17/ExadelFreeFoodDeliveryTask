@@ -3,7 +3,6 @@ import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
-import { getMenu } from '../../common/userscreen.service';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -41,7 +40,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-16T21:00:00.000Z',
+    date: '2018-05-07T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -220,3 +219,4 @@ export default class UsersScreen {
   }
 
 }
+

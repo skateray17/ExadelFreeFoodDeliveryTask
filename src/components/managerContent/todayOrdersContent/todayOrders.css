@@ -1,0 +1,83 @@
+@media (min-width: 576px){
+  .today-orders__container {
+      max-width: 540px;
+  }}
+@media (min-width: 768px){
+  .today-orders__container {
+    max-width: 720px;
+}}
+@media (min-width: 992px){
+  .today-orders__container {
+      max-width: 960px;
+  }}
+@media (min-width: 1200px){
+  .today-orders__container {
+    max-width: 1140px;
+  }}
+.today-orders__row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.today-orders__card{
+  height: 100%;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.today-orders__card-outside {
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 576px){
+.today-orders__card-outside {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}}
+@media (min-width: 768px){
+.today-orders__card-outside {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.333333%;
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}}
+@media (min-width: 992px){
+.today-orders__card-outside {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
+}}
+.today-orders__container {
+  margin-top: 20px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.today-orders__card-item{
+  display: flex;
+  border-top: 1px solid grey;
+  padding: 5px;
+}
+.today-orders__header{
+  color: #008AFF;
+  text-align: center;
+}
+.today-orders__card-item-count{
+  margin-left: auto;
+}
+.today-orders__text{
+  font-size: 18px;
+}
+.today-orders__empty{
+  margin: auto;
+}

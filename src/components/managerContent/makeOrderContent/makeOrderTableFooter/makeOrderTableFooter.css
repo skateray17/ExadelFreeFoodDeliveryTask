@@ -1,0 +1,12 @@
+.make-order__table-footer {
+    min-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 34px;
+}
+
+.make-order__footer-price {
+    font-size: 18px;
+    color: #008AFF;
+}

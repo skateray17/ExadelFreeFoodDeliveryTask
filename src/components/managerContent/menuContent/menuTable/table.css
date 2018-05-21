@@ -41,7 +41,7 @@
     font-size: 20px;
     font-weight: 300;
 }
-.menu-content{
+.menu-table-content, .menu-table-component__content{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -74,14 +74,17 @@
     color: #000000d1;
     font-weight: 300;
 }
-.dish-weight,.dish-price{
-    margin-left: 10px;
+.dish-props{
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
 }
-.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg{
+
+.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg,.menu-table__error{
     font-size: 20px;
     font-weight: 300;
 }
-.upload-menu__button,.choose-file{
+.choose-file{
     background-color: white;
     padding: 15px 50px 15px 50px;
     margin: 20px;
@@ -89,7 +92,6 @@
     cursor: pointer;
 }
 .upload-menu__button{
-    width: 200px;
     align-self: center;
 }
 .choose-file{
@@ -101,4 +103,20 @@
     font-size: 15px;
     margin: 20px;
     align-self: flex-start;
+}
+.publish-button,.upload-menu__button{
+    margin: 10px;
+    font-size: 15px; 
+    height: 40px;
+    width: 200px;
+    background-color: #5aad3c;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+    align-self: center;
+    cursor: pointer;
+}
+.menu-table__error{
+    align-self: center;
+    margin-top: 10px;
 }

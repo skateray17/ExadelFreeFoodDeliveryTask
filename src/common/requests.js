@@ -1,3 +1,9 @@
+import { getCookie } from './utils';
+
+const BASE_URL = process.env.DB_HOST;
+
+function request(method, url, headers, urlParams = {}, body, secure) {
+  secure = (secure !== false);
 const BASE_URL = process.env.DB_HOST;
 
 function request(method, url, headers, urlParams = {}, body) {
@@ -7,7 +13,6 @@ function request(method, url, headers, urlParams = {}, body) {
       : ''
   }`, {
     method,
-    headers: new Headers(headers),
     body,
   });
 }

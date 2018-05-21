@@ -24,7 +24,9 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
-    new Dotenv(),
+    new Dotenv({
+      path: './.env.' + process.env.NODE_ENV,
+    }),
   ],
   module: {
     rules: [
