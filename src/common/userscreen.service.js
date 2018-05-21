@@ -1,11 +1,12 @@
 import { get } from './requests';
+import { fetchMenu } from './menuService';
 import { getCookie } from './utils';
+import { daysOfWeek } from './constants';
 
 export function getMenu() {
-  return get('menu/', { 'Content-Type': 'application/json', Authorization: getCookie('token') }, null).then((res) => {
-    return res.json();
-  }).then((menu) => {
-    console.log(menu);
-    return menu[0];
+  fetchMenu().then(menu => {
+    console.log(menu[0]);
+    console.log(menu[1]);
+    return menu;
   });
 }

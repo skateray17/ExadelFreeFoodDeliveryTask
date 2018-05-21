@@ -3,7 +3,7 @@ import template from './user.hbs';
 import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
-import { getMenu } from '../../common/userscreen.service';
+import { fetchMenu } from '../../common/menuService';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -32,6 +32,11 @@ const userOrders = [
     dishList: [
       {
         _id: '5adee2bd192937063c8345b8',
+        dishTitle: 'суп из чечевицы с овощами',
+        amount: 1,
+      },
+      {
+        _id: '5adee2bd192937063c8345b8',
         dishTitle: 'тарелка для супа',
         amount: 323,
       },
@@ -40,8 +45,18 @@ const userOrders = [
         dishTitle: 'голубцы ленивые',
         amount: 1,
       },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'торт',
+        amount: 1,
+      },
+      {
+        _id: '5adee2bd192937063c8345b7',
+        dishTitle: 'блинчики',
+        amount: 1,
+      },
     ],
-    date: '2018-05-07T21:00:00.000Z',
+    date: '2018-05-20T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -69,7 +84,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-17T21:00:00.000Z',
+    date: '2018-05-21T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 6.30,
   },
@@ -92,7 +107,7 @@ const userOrders = [
         amount: 2,
       },
     ],
-    date: '2018-05-18T21:00:00.000Z',
+    date: '2018-05-22T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 7.20,
   },
@@ -151,8 +166,6 @@ function createInactiveCard(date) {
 
 function createPropsForCards(menu) {
   const cardsWithOrders = [];
-  console.log("inside create props");
-  console.log(menu);
 
   for (const day of userOrders) {
     if (new Date(day.date).getTime() >= clearHours(new Date())) {
@@ -206,11 +219,11 @@ export default class UsersScreen {
     const screen = createElementsFromString(template());
     target.appendChild(screen);
 
-
-    getMenu().then(menu => {
-      console.log("Menu from server ");
-      console.log(menu);
-      const propsForCards = createPropsForCards(menu);
+    fetchMenu().then(menu => {
+      console.log('Menu from server ');
+      console.log(menu[0]);
+      console.log(menu[1]);
+      const propsForCards = createPropsForCards(menu[0]);
       propsForCards.forEach((props) => {
         const cardContainer = document.createElement('div');
         target.querySelector('.menus-cards-container').appendChild(cardContainer);
