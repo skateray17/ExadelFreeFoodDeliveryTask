@@ -1,4 +1,4 @@
-import { getCookie } from './utils';
+import { getCookie } from './cookieService';
 
 const BASE_URL = process.env.DB_HOST;
 

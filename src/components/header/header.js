@@ -2,11 +2,17 @@ import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
 import { eventBus } from '../../common/eventBus';
-import {createElementsFromString, replaceFirstChild, roles, setCookie} from '../../common/utils';
-import { getUserInfo } from '../../common/user.service';
-import { logout } from '../../common/login.service';
+import { createElementsFromString, replaceFirstChild, roles } from '../../common/utils';
+import { getUserInfo } from '../../common/userService';
+import { logout } from '../../common/loginService';
+import { onBalanceChange } from '../../common/balanceService';
+import { onCookieUpdate } from '../../common/cookieService';
 
 export default class Header {
+  constructor() {
+    this.unsubscribers = [];
+  }
+
   render(target, props) {
     let header;
     const type = getUserInfo().type;
@@ -24,11 +30,7 @@ export default class Header {
       }
       header = createElementsFromString(usersHeader(headersProps));
     }
-    if (target.firstChild) {
-      replaceFirstChild(target, header);
-    } else {
-      target.appendChild(header);
-    }
+    replaceFirstChild(target, header);
     if (type === roles.manager) {
       header.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
         switchMode(props);
@@ -46,18 +48,14 @@ export default class Header {
     }
     //
 
-    this.unsubscribe = eventBus.subscribe('onBalanceChange', this.onBalanceChange.bind(this, target, props));
+    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this, target, props)));
+    this.unsubscribers.push(eventBus.subscribe('onCookieUpdate', onCookieUpdate));
 
     return header;
   }
 
-  onBalanceChange(target, props, balance) {
-    setCookie('balance', balance, 365);
-    this.render(target, props);
-  }
-
   destroy() {
-    this.unsubscribe();
+    this.unsubscribers.forEach(unsubscribe => unsubscribe());
   }
 }
 

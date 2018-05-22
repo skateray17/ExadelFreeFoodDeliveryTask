@@ -1,4 +1,4 @@
-import { removeCookie } from './utils';
+import { removeCookie } from './cookieService';
 import { post } from './requests';
 
 export function login(email, password) {
@@ -11,5 +11,6 @@ export function logout(router) {
   removeCookie('token');
   removeCookie('username');
   removeCookie('type');
+  removeCookie('balance');
   router.navigate('login');
 }

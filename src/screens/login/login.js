@@ -1,9 +1,10 @@
 import './login.css';
 import loginContent from './login.hbs';
 import Spinner from '../../components/spinner/spinner';
-import { getUserInfo } from '../../common/user.service';
-import { checkType, removeCookie, setCookie } from '../../common/utils';
-import { login } from '../../common/login.service';
+import { getUserInfo } from '../../common/userService';
+import { checkType } from '../../common/utils';
+import { removeCookie, setCookie } from '../../common/cookieService';
+import { login } from '../../common/loginService';
 
 export default class LoginScreen {
   constructor(router) {
@@ -51,13 +52,5 @@ export default class LoginScreen {
       .finally(() => {
         spinner.destroy();
       });
-  }
-
-  static logOut() {
-    removeCookie('token');
-    removeCookie('username');
-    removeCookie('type');
-    removeCookie('balance');
-    this.router.navigate('login');
   }
 }

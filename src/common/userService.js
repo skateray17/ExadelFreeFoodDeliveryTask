@@ -1,4 +1,4 @@
-import { getCookie } from './utils';
+import { getCookie } from './cookieService';
 
 export function getUserInfo() {
   return {
