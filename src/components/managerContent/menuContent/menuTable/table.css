@@ -14,7 +14,8 @@
 }
 .send-menu{
     display: flex;
-    justify-content: center;
+    margin: 20px;
+    justify-content: space-between;
 }
 .week-tab{
     display: flex;
@@ -79,24 +80,29 @@
     width: 120px;
 }
 
-.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg,.menu-table__error{
+.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg,.menu-table__error,.fake-button,.file-msg,.publish-button{
     font-size: 20px;
     font-weight: 300;
 }
 .choose-file{
+   display: none;
+}
+.fake-input{
     background-color: white;
-    padding: 15px 50px 15px 50px;
-    margin: 20px;
-    border: 1px solid transparent;
+}
+.fake-button{
+    padding: 5px;
+    background-color: rgba(0,0,0,0);
+    color: #212121;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+    border: 1px solid #5aad3c;
+}
+.file-msg{
+    margin: 10px;
 }
 .upload-menu__button{
     align-self: center;
-}
-.choose-file{
-    width: 300px;
-    font-size: 15px;
-    padding: 15px;
 }
 .menu-item__no-menu-msg{
     font-size: 15px;
@@ -104,18 +110,19 @@
     align-self: flex-start;
 }
 .publish-button,.upload-menu__button{
-    margin: 10px;
-    font-size: 15px; 
-    height: 40px;
-    width: 200px;
     background-color: #5aad3c;
-    font-size: 16px;
+    width: auto;
+    padding: 8px;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
     align-self: center;
     cursor: pointer;
 }
+.publish-button{
+    margin: 10px;
+}
+
 .menu-table__error{
     align-self: center;
-    margin-top: 10px;
+    margin: 10px;
 }
