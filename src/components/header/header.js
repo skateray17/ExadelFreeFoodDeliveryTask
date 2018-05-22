@@ -1,8 +1,8 @@
 import './header.css';
 import usersHeader from './usersHeader.hbs';
 import managersHeader from './managersHeader.hbs';
-import eventBus from '../../common/eventBus';
-import { createElementsFromString, roles } from '../../common/utils';
+import { eventBus } from '../../common/eventBus';
+import {createElementsFromString, replaceFirstChild, roles, setCookie} from '../../common/utils';
 import { getUserInfo } from '../../common/user.service';
 import { logout } from '../../common/login.service';
 
@@ -24,31 +24,40 @@ export default class Header {
       }
       header = createElementsFromString(usersHeader(headersProps));
     }
-    const screenWithHeader = target.appendChild(header);
+    if (target.firstChild) {
+      replaceFirstChild(target, header);
+    } else {
+      target.appendChild(header);
+    }
     if (type === roles.manager) {
-      target.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
+      header.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
         switchMode(props);
       });
     }
-    target.querySelector('.exit-ico').addEventListener('click', () => {
+    header.querySelector('.exit-ico').addEventListener('click', () => {
       logout(props.router);
     });
 
     // to remove
-    if (type === roles.user) {
-      target.querySelector('.history-ico').addEventListener('click', () => {
-        eventBus.publish('onBalanceChange', 20);
+    if (props.page === 'user') {
+      header.querySelector('.history-ico').addEventListener('click', () => {
+        eventBus.publish('onBalanceChange', 260);
       });
     }
     //
 
-    eventBus.subscribe('onBalanceChange', this.updateBalance);
+    this.unsubscribe = eventBus.subscribe('onBalanceChange', this.onBalanceChange.bind(this, target, props));
 
-    return screenWithHeader;
+    return header;
   }
 
-  updateBalance(balance) {
-    console.log(balance);
+  onBalanceChange(target, props, balance) {
+    setCookie('balance', balance, 365);
+    this.render(target, props);
+  }
+
+  destroy() {
+    this.unsubscribe();
   }
 }
 

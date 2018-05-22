@@ -374,8 +374,10 @@ function createPropsForCards() {
       days.push(currentDate);
     }
 
-    currentDate = new Date(currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() + 1);
+    currentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1,
+    );
   }
 
   const propsForCards = days.map(day =>
@@ -402,8 +404,8 @@ export default class UsersScreen {
       page: 'user',
       router: this.router,
     };
-    const header = new Header();
-    header.render(target, props);
+    this.header = new Header();
+    this.header.render(target, props);
 
     const screen = createElementsFromString(template());
     target.appendChild(screen);
@@ -431,5 +433,8 @@ export default class UsersScreen {
     }
   }
 
+  destroy() {
+    this.header.destroy();
+  }
 }
 

@@ -17,6 +17,9 @@ export default class Router {
   }
 
   cleanContainer() {
+    if (this.component && typeof this.component.destroy === 'function') {
+      this.component.destroy();
+    }
     while (this.rootElement.hasChildNodes()) {
       this.rootElement.removeChild(this.rootElement.childNodes[0]);
     }
@@ -53,8 +56,8 @@ export default class Router {
       if (this.routes.hasOwnProperty(field)) {
         this.checkGuards(this.routes[field].guards, field);
         const ComponentConstructor = this.routes[field].component;
-        const component = new ComponentConstructor(this);
-        component.render(this.rootElement, props);
+        this.component = new ComponentConstructor(this);
+        this.component.render(this.rootElement, props);
       } else {
         this.navigate('error');
       }

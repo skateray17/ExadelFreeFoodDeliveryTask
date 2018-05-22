@@ -12,6 +12,16 @@ class EventBus {
       this.topics[topic] = [];
     }
     this.topics[topic].push(listener);
+    return this.unsubscribe.bind(this, topic, listener);
+  }
+
+  unsubscribe(topic, listener) {
+    if (this.topics[topic]) {
+      const index = this.topics[topic].indexOf(listener);
+      if (index > -1) {
+        this.topics[topic].splice(index, 1);
+      }
+    }
   }
 
   publish(topic, data) {
@@ -27,4 +37,4 @@ class EventBus {
 const eventBus = new EventBus();
 Object.freeze(eventBus);
 
-export default eventBus;
+export { eventBus };

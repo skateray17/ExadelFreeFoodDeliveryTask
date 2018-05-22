@@ -4,7 +4,6 @@ import Header from '../../components/header/header';
 import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 import { createElementsFromString } from '../../common/utils';
-import EmptyComponent from '../../components/emptyComponent/empty';
 import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder';
 import TodayOrders from '../../components/managerContent/todayOrdersContent/todayOrders';
 
@@ -37,20 +36,25 @@ export default class ManagerHomeScreen {
     this.router = router;
   }
 
-  render(screenTarget, props) {
+  render(target, props) {
     props = {
       page: 'manager',
       router: this.router,
     };
-    const header = new Header();
-    header.render(screenTarget, props);
+    this.header = new Header();
+    this.header.render(target, props);
+
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
-    screenTarget.appendChild(screen);
-    const contentTarget = screenTarget.querySelector('.manager-content');
-    const navBar = screenTarget.querySelector('.nav-bar');
+    target.appendChild(screen);
+    const contentTarget = target.querySelector('.manager-content');
+    const navBar = target.querySelector('.nav-bar');
     renderTab(contentTarget, 0, navBar);
     managerListeners(contentTarget, navBar);
-    return screenTarget;
+    return target;
+  }
+
+  destroy() {
+    this.header.destroy();
   }
 }
 

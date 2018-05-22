@@ -43,6 +43,7 @@ export default class LoginScreen {
       setCookie('token', token, 365);
       setCookie('username', `${firstName} ${lastName}`, 365);
       setCookie('type', type, 365);
+      setCookie('balance', 0, 365);
       this.router.navigate(checkType(getUserInfo().type));
     }).catch(() => {
       this.render(target, { displayError: true, email });
@@ -56,6 +57,7 @@ export default class LoginScreen {
     removeCookie('token');
     removeCookie('username');
     removeCookie('type');
+    removeCookie('balance');
     this.router.navigate('login');
   }
 }

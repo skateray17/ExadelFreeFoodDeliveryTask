@@ -12,6 +12,20 @@ export function createElementsFromString(str) {
   return result;
 }
 
+export function replaceFirstChild(target, newChild) {
+  if (target.firstChild) {
+    target.removeChild(target.firstChild);
+
+    if (target.firstChild) {
+      target.insertBefore(newChild, target.firstChild);
+    } else {
+      target.appendChild(newChild);
+    }
+    return true;
+  }
+  return false;
+}
+
 export const roles = {
   user: '1',
   manager: '10',
