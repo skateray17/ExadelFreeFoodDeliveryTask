@@ -4,11 +4,19 @@ import Header from '../../components/header/header';
 import { createElementsFromString } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
 import { fetchMenu } from '../../common/menuService';
+import moment from 'moment';
+// import { engDays } from '../../common/constants';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const engDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
+const engDays = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+];
 const userOrders = [
   {
     dishList: [
@@ -23,7 +31,7 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-15T21:00:00.000Z',
+    date: '2018-05-22T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
@@ -56,11 +64,11 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-20T21:00:00.000Z',
+    date: '2018-05-27T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
-
+/*
   {
     dishList: [
       {
@@ -110,27 +118,16 @@ const userOrders = [
     date: '2018-05-22T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b9',
     totalPrice: 7.20,
-  },
+  },]
+  */
 
 ];
 
-function createHeaderForCard(date) {
-  const today = new Date();
-
+function createHeaderForCard(day) {
   return {
-    weekday: days[date.getDay()],
-    date: date.toDateString(),
-    active: (date.getDay() >= today.getDay()) && (date.getDate() - today.getDate() < 7),
-  };
-}
-
-
-function createCardPropsWithEmptyOrders(day) {
-  const date = new Date(day.date);
-  return {
-    header: createHeaderForCard(date),
-    orderPrice: day.totalPrice,
-    orders: [],
+    weekday: days[new Date(day.unixDay * 24000 * 3600).getDay()],
+    date: new Date(day.unixDay * 24000 * 3600).toDateString(),
+    active: day.menu && true,
   };
 }
 
@@ -157,40 +154,105 @@ function addOrderItemsToProps(cardProps, day, menu) {
   });
 }
 
-function createInactiveCard(date) {
+
+function emptyCardProps(day) {
   return {
-    header: createHeaderForCard(date),
-    orders: [],
+    // header: createHeaderForCard(day),
+    unixDay: day.unixDay,
+    menu: day.menu,
   };
 }
 
-function createPropsForCards(menu) {
-  const cardsWithOrders = [];
 
-  for (const day of userOrders) {
-    if (new Date(day.date).getTime() >= clearHours(new Date())) {
-      const cardProps = createCardPropsWithEmptyOrders(day);
-      addOrderItemsToProps(cardProps, day, menu);
-      cardsWithOrders.push(cardProps);
+function createPropsForCards(menuFromServer) {
+  console.log(menuFromServer);
+
+  /*
+    * types of days
+    *   -null -> Menu is not available
+    *   -menu and order -> Card with order (checkout today card)
+    *   -menu -> not ordered card
+    *
+  */
+
+  const menuWithOrders = [];
+
+  for (const week of menuFromServer) {
+    const today = new Date().getTime() / 24000 / 3600;
+
+    /**
+    * inserting days just with menu
+    */
+
+    for (const weekDay of engDays) {
+      const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
+      if (week[weekDay] && dayOfTheYear - moment().dayOfYear() <= 8 && dayOfTheYear >= moment().dayOfYear()) {
+        menuWithOrders.push({
+          unixDay: new Date(week[weekDay].day).getTime() / 24000 / 3600,
+          menu: week[weekDay],
+        });
+      }
+    }
+
+    /**
+     * inserting null where is no menu
+     */
+
+    if (menuWithOrders[0].unixDay > Math.floor(today)) {
+      for (let i = today; i <= menuWithOrders[0].date; i++) {
+        menuWithOrders.unshift({
+          date: i,
+          menu: null,
+        });
+      }
     }
   }
 
-  const days = [];
+  /**
+   * inserting orders
+   */
+
+  if (userOrders) {
+    for (const order of userOrders) {
+      const day = menuWithOrders.find(day => day.unixDay === Math.round(new Date(order.date).getTime() / 24000 / 3600));
+      if (day) {
+        day.order = order;
+      }
+    }
+  }
+
+  const datesToDisplay = [];
+
   let currentDate = new Date();
   clearHours(currentDate);
 
-  for (let i = 0; i < 9; i++) {
-    if (currentDate.getDay() !== 0) {
-      days.push(currentDate);
-    }
+  // case when it is sunday today
 
-    currentDate = new Date(currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() + 1);
+  let howManyDaysToCheck;
+  if (currentDate.getDay() === 0) {
+    howManyDaysToCheck = 10;
+  } else {
+    howManyDaysToCheck = 9;
   }
 
-  const propsForCards = days.map(day =>
-    cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime())
-    || createInactiveCard(day));
+  for (let i = 0; i < howManyDaysToCheck; i++) {
+    if (currentDate.getDay() !== 0) {
+      datesToDisplay.push(currentDate);
+    }
+
+    currentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1,
+    );
+  }
+
+  const propsForCards = datesToDisplay.map(day =>
+    menuWithOrders.find(c => c.unixDay === Math.round(day.getTime() / 24000 / 3600))
+    || emptyCardProps({
+      unixDay: Math.floor(day.getTime() / 24000 / 3600),
+    }));
+
+  console.log(propsForCards);
 
   return propsForCards;
 }
@@ -219,11 +281,13 @@ export default class UsersScreen {
     const screen = createElementsFromString(template());
     target.appendChild(screen);
 
-    fetchMenu().then(menu => {
-      console.log('Menu from server ');
-      console.log(menu[0]);
-      console.log(menu[1]);
-      const propsForCards = createPropsForCards(menu[0]);
+    fetchMenu().then((menu) => {
+      const propsForCards = createPropsForCards(menu);
+
+      /*
+        * Forming cards with created props
+      */
+
       propsForCards.forEach((props) => {
         const cardContainer = document.createElement('div');
         target.querySelector('.menus-cards-container').appendChild(cardContainer);
@@ -236,7 +300,6 @@ export default class UsersScreen {
 
       return screen;
     });
-
   }
 
   updateCard(newCardProps) {
@@ -246,6 +309,5 @@ export default class UsersScreen {
       }
     }
   }
-
 }
 

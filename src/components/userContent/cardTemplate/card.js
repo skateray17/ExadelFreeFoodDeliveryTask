@@ -57,7 +57,7 @@ export default class Card {
       active: props.header.active,
       button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
       sumPrice: props.orders.length > 0,
-      emptyMenu: props.orders.length === 0,
+      emptyMenu: props.menu,
       showButton: new Date(props.header.date).getDate() === new Date().getDate() ?
         (getHours(new Date()) < TIME_TO_STOP_ORDERS) : true,
       imageUrl: require('../../../images/spottyDog.jpg'),

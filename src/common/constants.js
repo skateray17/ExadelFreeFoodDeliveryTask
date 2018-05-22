@@ -17,6 +17,15 @@ export const daysByNumbers = {
   6: 'sat',
 };
 
+export const engDays = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+];
+
 export const typeOfToast = {
   error: '#FFA9A9',
   info: '#ABE1FF',
