@@ -1,14 +1,13 @@
 import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
-import { createElementsFromString } from '../../common/utils';
+import {createElementsFromString} from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
-import { fetchMenu } from '../../common/menuService';
+import {fetchMenu} from '../../common/menuService';
 import moment from 'moment';
 // import { engDays } from '../../common/constants';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
-const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const engDays = [
   'mon',
   'tue',
@@ -64,77 +63,69 @@ const userOrders = [
         amount: 1,
       },
     ],
-    date: '2018-05-27T21:00:00.000Z',
+    date: '2018-05-23T21:00:00.000Z',
     _id: '5adee2bd192937063c8345b7',
     totalPrice: 61.34,
   },
-/*
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'суп из чечевицы с овощами',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'торт',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'блинчики',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-21T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 6.30,
-  },
+  /*
+    {
+      dishList: [
+        {
+          _id: '5adee2bd192937063c8345b8',
+          dishTitle: 'суп из чечевицы с овощами',
+          amount: 1,
+        },
+        {
+          _id: '5adee2bd192937063c8345b7',
+          dishTitle: 'голубцы ленивые',
+          amount: 1,
+        },
+        {
+          _id: '5adee2bd192937063c8345b7',
+          dishTitle: 'торт',
+          amount: 1,
+        },
+        {
+          _id: '5adee2bd192937063c8345b7',
+          dishTitle: 'блинчики',
+          amount: 1,
+        },
+      ],
+      date: '2018-05-21T21:00:00.000Z',
+      _id: '5adee2bd192937063c8345b9',
+      totalPrice: 6.30,
+    },
 
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'блинчики',
-        amount: 2,
-      },
-    ],
-    date: '2018-05-22T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 7.20,
-  },]
-  */
+    {
+      dishList: [
+        {
+          _id: '5adee2bd192937063c8345b8',
+          dishTitle: 'тарелка для супа',
+          amount: 32,
+        },
+        {
+          _id: '5adee2bd192937063c8345b7',
+          dishTitle: 'голубцы ленивые',
+          amount: 1,
+        },
+        {
+          _id: '5adee2bd192937063c8345b7',
+          dishTitle: 'блинчики',
+          amount: 2,
+        },
+      ],
+      date: '2018-05-22T21:00:00.000Z',
+      _id: '5adee2bd192937063c8345b9',
+      totalPrice: 7.20,
+    },]
+    */
 
 ];
 
-function createHeaderForCard(day) {
-  return {
-    weekday: days[new Date(day.unixDay * 24000 * 3600).getDay()],
-    date: new Date(day.unixDay * 24000 * 3600).toDateString(),
-    active: day.menu && true,
-  };
-}
-
-function addOrderItem(order, dishes, cardProps) {
+function addOrderItem(order, dishes, day) {
   for (const dish of dishes) {
     if (dish.name === order.dishTitle) {
-      cardProps.orders.push({
+      day.order.push({
         name: dish.name,
         mass: dish.weight,
         quantity: order.amount,
@@ -181,8 +172,8 @@ function createPropsForCards(menuFromServer) {
     const today = new Date().getTime() / 24000 / 3600;
 
     /**
-    * inserting days just with menu
-    */
+     * inserting days just with menu
+     */
 
     for (const weekDay of engDays) {
       const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
@@ -190,19 +181,6 @@ function createPropsForCards(menuFromServer) {
         menuWithOrders.push({
           unixDay: new Date(week[weekDay].day).getTime() / 24000 / 3600,
           menu: week[weekDay],
-        });
-      }
-    }
-
-    /**
-     * inserting null where is no menu
-     */
-
-    if (menuWithOrders[0].unixDay > Math.floor(today)) {
-      for (let i = today; i <= menuWithOrders[0].date; i++) {
-        menuWithOrders.unshift({
-          date: i,
-          menu: null,
         });
       }
     }
@@ -216,7 +194,11 @@ function createPropsForCards(menuFromServer) {
     for (const order of userOrders) {
       const day = menuWithOrders.find(day => day.unixDay === Math.round(new Date(order.date).getTime() / 24000 / 3600));
       if (day) {
-        day.order = order;
+        day.order = [];
+        order.dishList.forEach((item) => {
+          addOrderItem(item, day.menu.menu, day);
+        });
+        day.order.totalPrice = order.totalPrice;
       }
     }
   }

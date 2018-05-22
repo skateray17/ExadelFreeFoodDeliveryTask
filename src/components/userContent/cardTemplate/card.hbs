@@ -2,11 +2,11 @@
     <div class="header"></div>
     <div class="card-inside">
         <div class="card-content {{#if emptyMenu}} center-text {{/if}}">
-            {{#unless active}}
-                <div class="not-available-menu">Меню еще недоступно</div>
-            {{/unless}}
-
             {{#if emptyMenu}}
+                <div class="not-available-menu">Меню еще недоступно</div>
+            {{/if}}
+
+            {{#if emptyOrder}}
                 {{#if active}}
                 <div class="not-chosen-menu">
                     <p>Меню не выбрано</p>
@@ -19,7 +19,7 @@
         {{#if active}}
             <div class="card-footer">
                 {{#if sumPrice}}
-                    <div class="order-price">Сумма заказа: {{orderPrice}} р</div>
+                    <div class="order-price">Сумма заказа: {{totalPrice}} р</div>
                 {{/if}}
                 {{#if showButton }}
                     <button class="edit-button">{{button}}</button>
