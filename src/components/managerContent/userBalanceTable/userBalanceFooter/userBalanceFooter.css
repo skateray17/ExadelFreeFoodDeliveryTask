@@ -80,3 +80,8 @@
   }
 
 }
+.user-balance__selected-quantity::-webkit-inner-spin-button, 
+.user-balance__selected-quantity::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
