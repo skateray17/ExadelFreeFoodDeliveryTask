@@ -4,10 +4,9 @@ import Header from './cardHeader/header';
 import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
 import { createElementsFromString } from '../../../common/utils';
+import { rusDays } from '../../../common/constants';
 
 const MAX_VISIBLE_ITEMS = 3;
-const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-
 
 export default class Card {
   constructor(target, props) {
@@ -42,7 +41,7 @@ export default class Card {
   createHeaderProps(props) {
     const date = new Date(props.unixDay * 24000 * 3600);
     return {
-      weekday: days[new Date(props.unixDay * 24000 * 3600).getDay()],
+      weekday: rusDays[new Date(props.unixDay * 24000 * 3600).getDay()],
       date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
       headerStyle: props.menu && true ? 'active-card' : 'inactive-card',
     };

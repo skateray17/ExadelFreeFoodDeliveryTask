@@ -26,6 +26,10 @@ export const engDays = [
   'sat',
 ];
 
+export const rusDays = [
+  'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
+];
+
 export const typeOfToast = {
   error: '#FFA9A9',
   info: '#ABE1FF',
