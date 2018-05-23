@@ -10,7 +10,6 @@ import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
 import Toast from '../../../toast/toast';
-import { typeOfToast } from '../../../../common/constants';
 
 export default class MenuTable {
   render(target) {
@@ -24,7 +23,7 @@ export default class MenuTable {
         this.renderContent(target, weeksMenu);
       })
       .catch(() => {
-        Toast.show({ title: 'some problems', type: typeOfToast.error });
+        Toast.show({ title: 'some problems', type: 'error' });
         this.showError('Something get wrong. Please reload page.');
       })
       .finally(() => {
@@ -79,7 +78,7 @@ export default class MenuTable {
           });
       })
       .catch(() => {
-        Toast.show({ title: 'some problems', type: typeOfToast.error });
+        Toast.show({ title: 'some problems', type: 'error' });
       })
       .finally(() => {
         spinner.destroy();
@@ -155,7 +154,7 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
-          Toast.show({ title: 'some problems', type: typeOfToast.error });
+          Toast.show({ title: 'some problems', type: 'error' });
           this.showError('Cannot upload file. Please try again.');
           document.querySelector('.file-msg').value = 'no file selected';
         })
