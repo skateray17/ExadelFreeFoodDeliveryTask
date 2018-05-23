@@ -23,7 +23,7 @@ export default class MenuTable {
         this.renderContent(target, weeksMenu);
       })
       .catch(() => {
-        Toast.show({ title: 'some problems', type: 'error' });
+        Toast.show({ title: 'Network error', type: 'error' });
         this.showError('Something get wrong. Please reload page.');
       })
       .finally(() => {
@@ -78,7 +78,7 @@ export default class MenuTable {
           });
       })
       .catch(() => {
-        Toast.show({ title: 'some problems', type: 'error' });
+        Toast.show({ title: 'Network error', type: 'error' });
       })
       .finally(() => {
         spinner.destroy();
@@ -154,7 +154,7 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
-          Toast.show({ title: 'some problems', type: 'error' });
+          Toast.show({ title: 'Network error', type: 'error' });
           this.showError('Cannot upload file. Please try again.');
           document.querySelector('.file-msg').value = 'no file selected';
         })
