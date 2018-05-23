@@ -4,6 +4,11 @@ import { createElementsFromString } from '../../../../common/utils';
 
 export default class UserBalanceHeader {
   render(target, props) {
-    return target.appendChild(createElementsFromString(template(props)));
+    this.elem = createElementsFromString(template(props));
+    return target.appendChild(this.elem);
+  }
+
+  set oninput(callback) {
+    this.elem.querySelector('.user-balance__header-input').oninput = callback;
   }
 }

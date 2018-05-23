@@ -127,3 +127,9 @@
   }
 
 }
+
+.user-balance__balance-input::-webkit-inner-spin-button, 
+.user-balance__balance-input::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
