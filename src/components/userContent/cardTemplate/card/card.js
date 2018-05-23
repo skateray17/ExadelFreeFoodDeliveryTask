@@ -15,12 +15,14 @@ function getHours(date) {
 export default class Card {
   constructor(target, props) {
     this.target = target;
+    this.onEdit = this.onEdit.bind(this);
+    this.target.addEventListener('click', this.onEdit);
     this.props = props;
     this.id = new Date(props.header.date).getTime();
-    this.onEdit = this.onEdit.bind(this);
   }
 
   render(target, props) {
+    this.props = props;
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
     target.innerHTML = '';
@@ -28,13 +30,11 @@ export default class Card {
     this.insertCardContent(cardItem, props, target);
     const cardContent = target.querySelector('.card-content');
     this.cardContent = cardContent;
-    this.target.addEventListener('click', this.onEdit);
     return cardItem;
   }
   onEdit(event) {
     if (event.target === this.target.querySelector('.edit-button')) {
       this.props.callback(Object.assign({ target: this.cardContent }, this.props));
-      this.target.removeEventListener('click', this.onEdit);
     }
   }
   createOrderItem(cardItem, order) {

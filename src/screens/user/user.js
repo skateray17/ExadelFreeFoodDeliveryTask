@@ -1,11 +1,11 @@
 import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
-import { createElementsFromString, getCookie } from '../../common/utils';
+import { createElementsFromString, getCookie, makeNormalDate } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card/card';
 import Popup from '../../components/popup/popup';
 import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
-import { put } from '../../common/requests';
+import { put, get } from '../../common/requests';
 import Toast from '../../components/toast/toast';
 import { typeOfToast } from '../../common/constants';
 import Spinner from '../../components/spinner/spinner';
@@ -397,6 +397,51 @@ function clearHours(date) {
   return date.getTime();
 }
 
+function serverSendOrder(cardUpdates, spin) {
+  const date = makeNormalDate(new Date(cardUpdates.header.date));
+  const dishList = [];
+  cardUpdates.orders.forEach((el) => {
+    dishList.push({
+      dishTitle: el.name,
+      amount: el.quantity,
+    });
+  });
+  return put('order/', {
+    Authorization: getCookie('token'),
+    'content-type': 'application/json',
+  }, {}, JSON.stringify({ dishList, date }))
+    .then((res) => {
+      if (res.status !== 200) {
+        return Promise.reject();
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      Toast.show({
+        title: 'Server error',
+        type: 'error',
+        canDismiss: true,
+      });
+    })
+    .finally(() => {
+      spin.destroy();
+    });
+}
+function serverUpdateBalance(res) {
+  if (res) {
+    get(`balance/?username=${'aaa'}`, {
+      Authorization: getCookie('token'),
+      'content-type': 'application/json',
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          return Promise.reject();
+        }
+        updateBalance(response.balance);
+        return Promise.resolve();
+      });
+  }
+}
 export default class UsersScreen {
   constructor(router) {
     this.router = router;
@@ -421,7 +466,6 @@ export default class UsersScreen {
 
     propsForCards.forEach((props) => {
       const cardContainer = document.createElement('div');
-
       target.querySelector('.menus-cards-container').appendChild(cardContainer);
       const card = new Card(cardContainer, props);
       card.render(cardContainer, Object.assign(props, { callback: this.makePopup }));
@@ -432,11 +476,20 @@ export default class UsersScreen {
   }
   makePopup(props) {
     const cardProps = props;
-    const { menu } = menuFromServer.menu[`${engDays[days.indexOf(cardProps.header.weekday)]}`];
+    const { menu } = menuFromServer.menu[engDays[days.indexOf(cardProps.header.weekday)]];
+    const popupOrders = [];
+    menu.forEach((el) => {
+      popupOrders.push({
+        name: el.name,
+        cost: el.cost,
+        quantity: 0,
+        weight: el.weight,
+      });
+    });
     cardProps.orders.forEach((order) => {
-      menu.find((el, i) => {
+      popupOrders.find((el, i) => {
         if (el.name === order.name) {
-          menu[i].quantity = order.quantity;
+          popupOrders[i].quantity = order.quantity;
           return true;
         }
         return false;
@@ -444,7 +497,7 @@ export default class UsersScreen {
     });
     const propsEdit = {
       header: cardProps.header,
-      menu,
+      menu: popupOrders,
       totalCost: cardProps.orderPrice,
       target: cardProps.target,
     };
@@ -478,44 +531,20 @@ export default class UsersScreen {
       });
     }
   }
-  serverSendOrder(cardUpdates, spin) {
-    let date = new Date(cardUpdates.header.date);
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours() + 4);
-    const dishList = [];
-    cardUpdates.orders.forEach((el) => {
-      dishList.push({
-        dishTitle: el.name,
-        amount: el.quantity,
-      });
-    });
-    return put('order/', {
-      Authorization: getCookie('token'),
-      'content-type': 'application/json',
-    }, {}, JSON.stringify({ username: 'aaa', dishList, date }))
-      .then(res => res.json())
-      .catch((err) => {
-        Toast.show({
-          title: 'Server error',
-          type: 'error',
-          canDismiss: true,
-        });
-      })
-      .finally(() => {
-        spin.destroy();
-      });
-  }
   update(cardUpdates) {
     const date = new Date(cardUpdates.header.date);
     const spin = new Spinner();
     spin.render(cardUpdates.target);
-    this.serverSendOrder(cardUpdates, spin)
+    serverSendOrder(cardUpdates, spin)
       .then((res) => {
-        for (const card of this.cards) {
-          if (new Date(card.props.header.date).getTime() === date.getTime()) {
-            card.render(card.target, Object.assign({ callback: this.makePopup, orderPrice: res.totalPrice }, cardUpdates));
+        if (res) {
+          for (const card of this.cards) {
+            if (new Date(card.props.header.date).getTime() === date.getTime()) {
+              card.render(card.target, Object.assign({ callback: this.makePopup, orderPrice: res.totalPrice }, cardUpdates));
+            }
           }
-
         }
+        return res;
       });
   }
 }
