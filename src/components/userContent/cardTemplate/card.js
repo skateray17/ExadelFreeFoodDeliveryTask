@@ -3,7 +3,7 @@ import card from './card.hbs';
 import Header from './cardHeader/header';
 import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
-import {createElementsFromString} from '../../../common/utils';
+import { createElementsFromString } from '../../../common/utils';
 
 const MAX_VISIBLE_ITEMS = 3;
 const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -57,7 +57,7 @@ export default class Card {
       emptyMenu: !(props.menu && true),
       emptyOrder: !(props.order && true),
       showButton: props.menu && true ? props.menu.available : false,
-      imageUrl: require('../../../images/spottyDog.jpg'),
+      imageUrl: require('../../../images/not-chosen-menu.png'),
     };
   }
 

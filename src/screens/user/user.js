@@ -1,126 +1,16 @@
+import moment from 'moment';
 import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
 import {createElementsFromString} from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card';
-import {fetchMenu} from '../../common/menuService';
-import moment from 'moment';
-// import { engDays } from '../../common/constants';
+import { fetchMenu } from '../../common/menuService';
+import { getUserOrders } from '../../common/userscreen.service';
+import { engDays } from '../../common/constants';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
-const engDays = [
-  'mon',
-  'tue',
-  'wed',
-  'thu',
-  'fri',
-  'sat',
-];
-const userOrders = [
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 323,
-      },
-      {
-        _id: '5adee2bd192937063c8345b9',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-22T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b7',
-    totalPrice: 61.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'суп из чечевицы с овощами',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 323,
-      },
-      {
-        _id: '5adee2bd192937063c8345b9',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'торт',
-        amount: 1,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'блинчики',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-23T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b7',
-    totalPrice: 61.34,
-  },
-  /*
-    {
-      dishList: [
-        {
-          _id: '5adee2bd192937063c8345b8',
-          dishTitle: 'суп из чечевицы с овощами',
-          amount: 1,
-        },
-        {
-          _id: '5adee2bd192937063c8345b7',
-          dishTitle: 'голубцы ленивые',
-          amount: 1,
-        },
-        {
-          _id: '5adee2bd192937063c8345b7',
-          dishTitle: 'торт',
-          amount: 1,
-        },
-        {
-          _id: '5adee2bd192937063c8345b7',
-          dishTitle: 'блинчики',
-          amount: 1,
-        },
-      ],
-      date: '2018-05-21T21:00:00.000Z',
-      _id: '5adee2bd192937063c8345b9',
-      totalPrice: 6.30,
-    },
-
-    {
-      dishList: [
-        {
-          _id: '5adee2bd192937063c8345b8',
-          dishTitle: 'тарелка для супа',
-          amount: 32,
-        },
-        {
-          _id: '5adee2bd192937063c8345b7',
-          dishTitle: 'голубцы ленивые',
-          amount: 1,
-        },
-        {
-          _id: '5adee2bd192937063c8345b7',
-          dishTitle: 'блинчики',
-          amount: 2,
-        },
-      ],
-      date: '2018-05-22T21:00:00.000Z',
-      _id: '5adee2bd192937063c8345b9',
-      totalPrice: 7.20,
-    },]
-    */
-
-];
+const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
+let userOrders = [];
 
 function addOrderItem(order, dishes, day) {
   for (const dish of dishes) {
@@ -136,74 +26,25 @@ function addOrderItem(order, dishes, day) {
   }
 }
 
-function addOrderItemsToProps(cardProps, day, menu) {
-  day.dishList.forEach((item) => {
-    const dayOfTheWeek = engDays[new Date(day.date).getDay()];
-    const dishes = menu[dayOfTheWeek].menu;
-
-    addOrderItem(item, dishes, cardProps);
-  });
-}
-
-
 function emptyCardProps(day) {
   return {
-    // header: createHeaderForCard(day),
     unixDay: day.unixDay,
     menu: day.menu,
   };
 }
 
 
-function createPropsForCards(menuFromServer) {
-  console.log(menuFromServer);
+function clearHours(date) {
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+}
 
-  /*
-    * types of days
-    *   -null -> Menu is not available
-    *   -menu and order -> Card with order (checkout today card)
-    *   -menu -> not ordered card
-    *
-  */
+function toUnixDay(date) {
+  return date.getTime() / 24000 / 3600;
+}
 
-  const menuWithOrders = [];
-
-  for (const week of menuFromServer) {
-    const today = new Date().getTime() / 24000 / 3600;
-
-    /**
-     * inserting days just with menu
-     */
-
-    for (const weekDay of engDays) {
-      const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
-      if (week[weekDay] && dayOfTheYear - moment().dayOfYear() <= 8 && dayOfTheYear >= moment().dayOfYear()) {
-        menuWithOrders.push({
-          unixDay: new Date(week[weekDay].day).getTime() / 24000 / 3600,
-          menu: week[weekDay],
-        });
-      }
-    }
-  }
-
-  /**
-   * inserting orders
-   */
-
-  if (userOrders) {
-    for (const order of userOrders) {
-      const day = menuWithOrders.find(day => day.unixDay === Math.round(new Date(order.date).getTime() / 24000 / 3600));
-      if (day) {
-        day.order = [];
-        order.dishList.forEach((item) => {
-          addOrderItem(item, day.menu.menu, day);
-        });
-        day.order.totalPrice = order.totalPrice;
-      }
-    }
-  }
-
-  const datesToDisplay = [];
+function getDatesToDisplay() {
+  const dates = [];
 
   let currentDate = new Date();
   clearHours(currentDate);
@@ -219,7 +60,7 @@ function createPropsForCards(menuFromServer) {
 
   for (let i = 0; i < howManyDaysToCheck; i++) {
     if (currentDate.getDay() !== 0) {
-      datesToDisplay.push(currentDate);
+      dates.push(currentDate);
     }
 
     currentDate = new Date(
@@ -227,6 +68,61 @@ function createPropsForCards(menuFromServer) {
       currentDate.getMonth(), currentDate.getDate() + 1,
     );
   }
+  return dates;
+}
+
+function createPropsForCards(menuFromServer) {
+
+  /*
+    * types of days
+    *   -null -> Menu is not available
+    *   -menu and order -> Card with order (checkout today card)
+    *   -menu -> not ordered card
+    *
+  */
+
+  const menuWithOrders = [];
+
+  for (const week of menuFromServer) {
+    if (week) {
+      /**
+       * inserting days just with menu
+       */
+
+      for (const weekDay of engDays) {
+        const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
+        if (week[weekDay] && dayOfTheYear - moment().dayOfYear() <= 8 && dayOfTheYear >= moment().dayOfYear()) {
+          menuWithOrders.push({
+            unixDay: toUnixDay(new Date(week[weekDay].day)),
+            menu: week[weekDay],
+          });
+        }
+      }
+    }
+
+  }
+
+  /**
+   * inserting orders
+   */
+
+  if (userOrders) {
+    for (const order of userOrders) {
+      const day = menuWithOrders.find((day) => {
+        return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
+      });
+
+      if (day) {
+        day.order = [];
+        order.dishList.forEach((item) => {
+          addOrderItem(item, day.menu.menu, day);
+        });
+        day.order.totalPrice = order.totalPrice;
+      }
+    }
+  }
+
+  const datesToDisplay = getDatesToDisplay();
 
   const propsForCards = datesToDisplay.map(day =>
     menuWithOrders.find(c => c.unixDay === Math.round(day.getTime() / 24000 / 3600))
@@ -234,15 +130,7 @@ function createPropsForCards(menuFromServer) {
       unixDay: Math.floor(day.getTime() / 24000 / 3600),
     }));
 
-  console.log(propsForCards);
-
   return propsForCards;
-}
-
-
-function clearHours(date) {
-  date.setHours(0, 0, 0, 0);
-  return date.getTime();
 }
 
 export default class UsersScreen {
@@ -264,23 +152,25 @@ export default class UsersScreen {
     target.appendChild(screen);
 
     fetchMenu().then((menu) => {
-      const propsForCards = createPropsForCards(menu);
+      getUserOrders(
+        new Date().toISOString().slice(0, -1),
+        new Date(new Date().getTime() + WEEK).toISOString().slice(0, -1),
+      ).then((res) => {
+        userOrders = res;
+        const propsForCards = createPropsForCards(menu);
 
-      /*
-        * Forming cards with created props
-      */
+        propsForCards.forEach((props) => {
+          const cardContainer = document.createElement('div');
+          target.querySelector('.menus-cards-container').appendChild(cardContainer);
 
-      propsForCards.forEach((props) => {
-        const cardContainer = document.createElement('div');
-        target.querySelector('.menus-cards-container').appendChild(cardContainer);
+          const card = new Card(cardContainer, props);
+          card.render(cardContainer, props);
 
-        const card = new Card(cardContainer, props);
-        card.render(cardContainer, props);
+          this.cards.push(card);
+        });
 
-        this.cards.push(card);
+        return screen;
       });
-
-      return screen;
     });
   }
 
