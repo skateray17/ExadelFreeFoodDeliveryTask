@@ -141,9 +141,10 @@ export default class MenuTable {
     if (file) {
       const spinner = new Spinner();
       spinner.render(document.querySelector('.manager-home-screen'));
-      post('menu/', {
+      const isCurrParam = current ? 'current' : 'next';
+      post('menu', {
         'content-type': 'text/plain',
-      }, {}, file)
+      }, { date: isCurrParam }, file)
         .then((res) => {
           if (res.status !== 200) {
             return Promise.reject();
@@ -156,7 +157,7 @@ export default class MenuTable {
         .catch(() => {
           Toast.show({ title: 'some problems', type: typeOfToast.error });
           this.showError('Cannot upload file. Please try again.');
-          document.querySelector('.choose-file').value = '';
+          document.querySelector('.file-msg').value = 'no file selected';
         })
         .finally(() => {
           spinner.destroy();

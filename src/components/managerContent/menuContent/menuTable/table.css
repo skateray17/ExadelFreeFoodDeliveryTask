@@ -84,6 +84,11 @@
     font-size: 20px;
     font-weight: 300;
 }
+@media(max-width: 400px){
+    .upload-menu__button,.fake-button,.file-msg{
+        font-size: 14px;
+    }
+}
 .choose-file{
    display: none;
 }
