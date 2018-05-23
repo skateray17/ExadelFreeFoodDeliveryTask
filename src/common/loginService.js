@@ -1,16 +1,28 @@
-import { removeCookie } from './cookieService';
+import { removeCookie, setCookie } from './cookieService';
 import { post } from './requests';
+import { setUserInfo } from './userService';
+import { setBalance } from './balanceService';
 
 export function login(email, password) {
   return post('account/login', {
     'Content-Type': 'application/json',
-  }, null, JSON.stringify({ email, password }), false);
+  }, null, JSON.stringify({ email, password }), false).then((res) => {
+    if (!res.ok) {
+      return Promise.reject();
+    }
+    return res.json();
+  }).then((data) => {
+    const {
+      token, type, firstName, lastName,
+    } = data;
+    setCookie('token', token, 365);
+    setUserInfo({ name: `${firstName} ${lastName}`, type });
+  });
 }
 
 export function logout(router) {
   removeCookie('token');
-  removeCookie('username');
-  removeCookie('type');
-  removeCookie('balance');
+  setUserInfo();
+  setBalance();
   router.navigate('login');
 }

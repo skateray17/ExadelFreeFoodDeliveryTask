@@ -3,7 +3,6 @@ import loginContent from './login.hbs';
 import Spinner from '../../components/spinner/spinner';
 import { getUserInfo } from '../../common/userService';
 import { checkType } from '../../common/utils';
-import { removeCookie, setCookie } from '../../common/cookieService';
 import { login } from '../../common/loginService';
 
 export default class LoginScreen {
@@ -32,19 +31,7 @@ export default class LoginScreen {
 
     const spinner = new Spinner();
     spinner.render(target.querySelector('.login__content'));
-    login(email, password).then((res) => {
-      if (!res.ok) {
-        return Promise.reject();
-      }
-      return res.json();
-    }).then((data) => {
-      const {
-        token, type, firstName, lastName,
-      } = data;
-      setCookie('token', token, 365);
-      setCookie('username', `${firstName} ${lastName}`, 365);
-      setCookie('type', type, 365);
-      setCookie('balance', 0, 365);
+    login(email, password).then(() => {
       this.router.navigate(checkType(getUserInfo().type));
     }).catch(() => {
       this.render(target, { displayError: true, email });

@@ -6,7 +6,6 @@ import { createElementsFromString, replaceFirstChild, roles } from '../../common
 import { getUserInfo } from '../../common/userService';
 import { logout } from '../../common/loginService';
 import { onBalanceChange } from '../../common/balanceService';
-import { onCookieUpdate } from '../../common/cookieService';
 
 export default class Header {
   constructor() {
@@ -49,7 +48,6 @@ export default class Header {
     //
 
     this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this, target, props)));
-    this.unsubscribers.push(eventBus.subscribe('onCookieUpdate', onCookieUpdate));
 
     return header;
   }

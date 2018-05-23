@@ -1,6 +1,14 @@
-import { eventBus } from './eventBus';
+let currentBalance;
+
+export function setBalance(balance) {
+  currentBalance = balance;
+}
+
+export function getBalance() {
+  return currentBalance;
+}
 
 export function onBalanceChange(target, props, balance) {
-  eventBus.publish('onCookieUpdate', balance);
+  setBalance(balance);
   this.render(target, props);
 }

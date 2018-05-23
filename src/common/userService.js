@@ -1,9 +1,9 @@
-import { getCookie } from './cookieService';
+let currentUser = {};
 
 export function getUserInfo() {
-  return {
-    username: getCookie('username'),
-    type: getCookie('type'),
-    balance: getCookie('balance'),
-  };
+  return currentUser;
+}
+
+export function setUserInfo(newUser) {
+  currentUser = newUser;
 }
