@@ -4,19 +4,15 @@ import Header from './cardHeader/header';
 import OrderItem from './orderItem/orderItem';
 import ShowMore from './showMore/showMore';
 import { createElementsFromString } from '../../../common/utils';
+import { rusDays } from '../../../common/constants';
 
-const TIME_TO_STOP_ORDERS = 10 * 60 * 60;
 const MAX_VISIBLE_ITEMS = 3;
-
-function getHours(date) {
-  return date.getHours() * 60 * 60 + date.getMinutes() * 60 + date.getSeconds();
-}
 
 export default class Card {
   constructor(target, props) {
     this.target = target;
     this.props = props;
-    this.id = new Date(props.header.date).getTime();
+    this.id = props.unixDay;
   }
 
   render(target, props) {
@@ -38,49 +34,51 @@ export default class Card {
   createShowMore(target, props) {
     const showMore = new ShowMore();
     showMore.render(target.querySelector('.free-space'), {
-      numberOfAdditionalOrders: props.orders.length - MAX_VISIBLE_ITEMS,
+      numberOfAdditionalOrders: props.order.length - MAX_VISIBLE_ITEMS,
     });
   }
 
   createHeaderProps(props) {
-    const date = new Date(props.date);
+    const date = new Date(props.unixDay * 24000 * 3600);
     return {
-      weekday: props.weekday,
+      weekday: rusDays[new Date(props.unixDay * 24000 * 3600).getDay()],
       date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
-      headerStyle: props.active ? 'active-card' : 'inactive-card',
+      headerStyle: props.menu && true ? 'active-card' : 'inactive-card',
     };
   }
 
   createCardProps(props) {
     return {
-      orderPrice: props.orderPrice,
-      active: props.header.active,
-      button: props.orders.length > 0 ? 'Редактировать' : 'Заказать',
-      sumPrice: props.orders.length > 0,
-      emptyMenu: props.orders.length === 0,
-      showButton: new Date(props.header.date).getDate() === new Date().getDate() ?
-        (getHours(new Date()) < TIME_TO_STOP_ORDERS) : true,
-      imageUrl: require('../../../images/spottyDog.jpg'),
+      totalPrice: props.order ? props.order.totalPrice : null,
+      active: props.menu && true,
+      button: props.order && true ? 'Редактировать' : 'Заказать',
+      sumPrice: props.order && true,
+      emptyMenu: !(props.menu && true),
+      emptyOrder: !(props.order && true),
+      showButton: props.menu && true ? props.menu.available : false,
+      imageUrl: require('../../../images/not-chosen-menu.png'),
     };
   }
 
   insertCardContent(cardItem, props, target) {
     const header = new Header();
-    header.render(cardItem.querySelector('.header'), this.createHeaderProps(props.header));
+    header.render(cardItem.querySelector('.header'), this.createHeaderProps(props));
 
-    if (props.orders.length > MAX_VISIBLE_ITEMS && props.header.active) {
-      this.createShowMore(target, props);
+    if (props.order) {
+      if (props.order.length > MAX_VISIBLE_ITEMS /* && props.header.active */) {
+        this.createShowMore(target, props);
 
-      for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
-        this.createOrderItem(target, props.orders[i]);
-      }
-    } else if (
-      props.orders.length > 0
-      && props.orders.length <= MAX_VISIBLE_ITEMS
-      && props.header.active
-    ) {
-      for (const order of props.orders) {
-        this.createOrderItem(cardItem, order);
+        for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
+          this.createOrderItem(target, props.order[i]);
+        }
+      } else if (
+        props.order.length > 0
+        && props.order.length <= MAX_VISIBLE_ITEMS
+        && props.menu
+      ) {
+        for (const order of props.order) {
+          this.createOrderItem(cardItem, order);
+        }
       }
     }
   }
