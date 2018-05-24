@@ -1,3 +1,4 @@
+
 export const daysOfWeek = {
   mon: 'Monday',
   tue: 'Tuesday',
@@ -15,6 +16,19 @@ export const daysByNumbers = {
   5: 'fri',
   6: 'sat',
 };
+
+export const engDays = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+];
+
+export const rusDays = [
+  'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
+];
 
 export const typeOfToast = {
   error: '#FFA9A9',
