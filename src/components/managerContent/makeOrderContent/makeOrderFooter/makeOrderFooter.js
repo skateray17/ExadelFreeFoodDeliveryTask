@@ -24,7 +24,7 @@ export default class makeOrderFooter {
       if (res) {
         element.querySelector('.make-order_submit-button').addEventListener('click', () => {
           const spinner = new Spinner();
-          spinner.render(document.querySelector('.manager-home-screen'));
+          spinner.render(document.querySelector('.content'));
           put('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ available: false }))
             .then((response) => {
               if (response.ok) {

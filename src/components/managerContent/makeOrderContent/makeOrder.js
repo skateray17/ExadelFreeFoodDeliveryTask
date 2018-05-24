@@ -32,7 +32,7 @@ export default class MakeOrderPage {
     makeOrderHeader.render(makeOrderTableElement, props);
 
     const spinner = new Spinner();
-    spinner.render(document.querySelector('.manager-home-screen'));
+    spinner.render(document.querySelector('.content'));
     get('order/', {}, { currentDate: new Date().toISOString().replace('Z', '') })
       .then(response => response.json())
       .then((res) => {
