@@ -8,6 +8,10 @@
     font-size: 19px;
 }
 
+.jc {
+    justify-content: space-around;
+    flex: 1 0 auto;
+}
 
 .card-inside {
     font-size: 19px;
@@ -15,6 +19,11 @@
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
@@ -71,7 +80,7 @@
 }
 
 .not-chosen-menu {
-    justify-content: center;
+    align-items: center;
     display: flex;
     flex-direction: column;
 }
@@ -80,6 +89,6 @@
     font-size: 19px;
 }
 
-.dog {
+.not-chosen-menu-image {
     max-width: 200px;
 }
