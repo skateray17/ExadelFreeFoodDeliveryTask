@@ -1,0 +1,60 @@
+{
+  "header": {
+    "switchToUserPage": "Сделать RU заказ",
+    "switchToManagerPage": "Страница RU менеджера"
+  },
+  "userPage": {
+    "unchosenMenu": "Меню RU не выбрано",
+    "unavailableMenu": "Меню ещё RU не доступно",
+    "makeAnOrder": "RU Заказать",
+    "editOrder": "RU Редактировать",
+    "cancel": "RU Отменить"
+  },
+  "managerPage": {
+    "uploadMenu": {
+      "currentWeek": "Текущая RU неделя",
+      "nextWeek": "Следующая RU неделя",
+      "publishMenu": "RU Опубликовать",
+      "selectMenu": "Выбрать RU меню"
+    },
+    "todaysOrder": {},
+    "updateBalance": {
+      "user": "RU Пользователь",
+      "balance": "RU Баланс",
+      "searchForUser": "Искать RU сотрудников",
+      "usersPerPage": "Сотрудников RU на странице",
+      "replenish": "RU зачислить",
+      "enterSum": "RUсумма",
+      "emptySearch": "RU Такого пользователя нет"
+    },
+    "makeAnOrder": {}
+  },
+  "other": {
+    "switchLanguage": "Switch to ENG",
+    "amount": "RU Сумма",
+    "print": "RU Печать",
+    "submit": "RU Подтвердить",
+    "price": "RU Цена",
+    "currency": "RU BYN",
+    "weight": "RU г",
+    "extra": "RU Дополнительно",
+    "daysOfTheWeek": {
+      "monday": "RU Понедельник",
+      "tuesday": "RU Вторник",
+      "wednesday": "RU Среда",
+      "thursday": "RU Четверг",
+      "friday": "RU Пятница",
+      "saturday": "RU Суббота",
+      "sunday": "RU Воскресенье"
+    },
+    "daysOfTheWeek_short": {
+      "monday": "RU Пн",
+      "tuesday": "RU Вт",
+      "wednesday": "RU Ср",
+      "thursday": "RU Чт",
+      "friday": "RU Пт",
+      "saturday": "RU Сб",
+      "sunday": "RU Вс"
+    }
+  }
+}
