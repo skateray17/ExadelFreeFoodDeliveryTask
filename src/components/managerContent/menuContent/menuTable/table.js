@@ -14,7 +14,7 @@ import Toast from '../../../toast/toast';
 export default class MenuTable {
   render(target) {
     const spinner = new Spinner();
-    spinner.render(document.querySelector('.manager-home-screen'));
+    spinner.render(document.querySelector('.content'));
     const content = createElementsFromString(menuTableTemplate());
     target.appendChild(content);
     fetchMenu()
@@ -61,7 +61,7 @@ export default class MenuTable {
       published: true,
     };
     const spinner = new Spinner();
-    spinner.render(document.querySelector('.manager-home-screen'));
+    spinner.render(document.querySelector('.content'));
     put('menu/', {
       'content-type': 'application/json',
     }, {}, JSON.stringify(body))
@@ -74,7 +74,6 @@ export default class MenuTable {
         fetchMenu()
           .then(() => {
             this.showWeek(isCurrent);
-            spinner.destroy();
           });
       })
       .catch(() => {
@@ -108,7 +107,9 @@ export default class MenuTable {
   renderWeektab(content) {
     const target = content.querySelector('.menu-table-component__tabs');
     const weektab = createElementsFromString(weekTabTemplate());
-    target.appendChild(weektab);
+    if (!target.querySelector('.week-tab')) {
+      target.appendChild(weektab);
+    }
     this.selectWeek(target, true);
     target.querySelector('.week-tab__current').addEventListener('click', () => {
       this.renderWeek(content.querySelector('.menu-table-component__content'), getMenu()[0], true);
@@ -139,7 +140,7 @@ export default class MenuTable {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
       const spinner = new Spinner();
-      spinner.render(document.querySelector('.manager-home-screen'));
+      spinner.render(document.querySelector('.content'));
       const isCurrParam = current ? 'current' : 'next';
       post('menu', {
         'content-type': 'text/plain',
