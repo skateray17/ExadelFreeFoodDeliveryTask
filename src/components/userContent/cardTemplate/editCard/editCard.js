@@ -3,6 +3,7 @@ import card from './editCard.hbs';
 import Header from '../cardHeader/header';
 import MenuItem from '../menuItem/menuItem';
 import { createElementsFromString } from '../../../../common/utils';
+import { rusDays } from '../../../../common/constants';
 
 export default class EditCard {
   constructor() {
@@ -25,14 +26,15 @@ export default class EditCard {
     if (props.data.totalCost) {
       this.state.totalCost = props.data.totalCost;
     }
-    this.state.header = props.data.header;
+    this.state.unixDay = props.data.unixDay;
+    this.state.menu = props.data.menu;
     this.updateTotal();
     const header = new Header();
-    header.render(target.querySelector('.header'), this.createHeaderProps(props.data.header));
+    header.render(target.querySelector('.header'), this.createHeaderProps(props.data));
 
-    if (props.data.menu) {
+    if (props.data.orders) {
       let I = 0;
-      props.data.menu.forEach((item) => {
+      props.data.orders.forEach((item) => {
         const temp = item;
         if (!temp.quantity) {
           temp.quantity = 0;
@@ -72,9 +74,10 @@ export default class EditCard {
   submit() {
     this.callback({
       status: 'Ok',
+      unixDay: this.state.unixDay,
       order: this.state.order,
-      header: this.state.header,
       target: this.onScreenTarget,
+      menu: this.state.menu,
     });
   }
 
@@ -84,11 +87,11 @@ export default class EditCard {
   }
 
   createHeaderProps(props) {
-    const date = new Date(props.date);
+    const date = new Date(props.unixDay * 24000 * 3600);
     return {
-      weekday: props.weekday,
+      weekday: rusDays[new Date(props.unixDay * 24000 * 3600).getDay()],
       date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
-      headerStyle: 'active-card',
+      headerStyle: props.menu && true ? 'active-card' : 'inactive-card',
     };
   }
 

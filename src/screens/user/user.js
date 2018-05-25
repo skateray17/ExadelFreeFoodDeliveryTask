@@ -1,339 +1,27 @@
+import moment from 'moment';
 import './user.css';
 import template from './user.hbs';
 import Header from '../../components/header/header';
-import { createElementsFromString, getCookie, makeNormalDate } from '../../common/utils';
+import { createElementsFromString, makeNormalDate } from '../../common/utils';
 import Card from '../../components/userContent/cardTemplate/card/card';
-import Popup from '../../components/popup/popup';
-import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
+import { fetchMenu } from '../../common/menuService';
+import { getUserOrders } from '../../common/userscreen.service';
+import { engDays } from '../../common/constants';
 import { put, get } from '../../common/requests';
 import Toast from '../../components/toast/toast';
-import { typeOfToast } from '../../common/constants';
+import Popup from '../../components/popup/popup';
+import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 import Spinner from '../../components/spinner/spinner';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
-const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const engDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
+let userOrders = [];
+let menuFromServer;
 
-const userOrders = [
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 323,
-      },
-      {
-        _id: '5adee2bd192937063c8345b9',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-09T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b7',
-    totalPrice: 61.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 323,
-      },
-      {
-        _id: '5adee2bd192937063c8345b9',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-10T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b7',
-    totalPrice: 61.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-11T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-09T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
-  },
-
-  {
-    dishList: [
-      {
-        _id: '5adee2bd192937063c8345b8',
-        dishTitle: 'тарелка для супа',
-        amount: 32,
-      },
-      {
-        _id: '5adee2bd192937063c8345b7',
-        dishTitle: 'голубцы ленивые',
-        amount: 1,
-      },
-    ],
-    date: '2018-05-10T21:00:00.000Z',
-    _id: '5adee2bd192937063c8345b9',
-    totalPrice: 60.34,
-  },
-
-];
-const menuFromServer = {
-  date: '07.05.2018-14.05.2018',
-  menu: {
-    date: '07.05.2018-07.05.2018',
-    mon: {
-      day: '2018-05-06T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    tue: {
-      day: '2018-05-07T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    wed: {
-      day: '2018-05-08T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'компот',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    thu: {
-      day: '2018-05-09T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    fri: {
-      day: '2018-05-10T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'мясцо',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    sat: {
-      day: '2018-05-11T21:00:00.000Z',
-      menu: [
-        {
-          name: 'суп из чечевицы с овощами',
-          weight: 350,
-          cost: 1.3,
-        },
-        {
-          name: 'голубцы ленивые',
-          weight: 150,
-          cost: 3.2,
-        },
-        {
-          name: 'торт',
-          weight: 156,
-          cost: 1.8,
-        },
-        {
-          name: 'блинчики',
-          weight: 90,
-          cost: 2,
-        },
-        {
-          name: 'хлеб',
-          weight: 9,
-          cost: 0.08,
-        },
-      ],
-    },
-    common: {
-      menu: [
-        {
-          name: 'тарелка для супа',
-          cost: 0.18,
-        },
-        {
-          name: 'контейнер 250мл',
-          cost: 0.1,
-        },
-        {
-          name: 'контейнер 500мл',
-          cost: 0.17,
-        },
-      ],
-    },
-  },
-  __v: 0,
-};
-
-function createHeaderForCard(date) {
-  const today = new Date();
-
-  return {
-    weekday: days[date.getDay()],
-    date: date.toDateString(),
-    active: (date.getDay() >= today.getDay()) && (date.getDate() - today.getDate() < 7),
-  };
-}
-
-
-function createCardPropsWithEmptyOrders(day) {
-  const date = new Date(day.date);
-  return {
-    header: createHeaderForCard(date),
-    orderPrice: day.totalPrice,
-    orders: [],
-  };
-}
-
-function addOrderItem(order, dishes, cardProps) {
+function addOrderItem(order, dishes, day) {
   for (const dish of dishes) {
     if (dish.name === order.dishTitle) {
-      cardProps.orders.push({
+      day.order.push({
         name: dish.name,
         mass: dish.weight,
         quantity: order.amount,
@@ -344,51 +32,11 @@ function addOrderItem(order, dishes, cardProps) {
   }
 }
 
-function addOrderItemsToProps(cardProps, day) {
-  day.dishList.forEach((item) => {
-    const dayOfTheWeek = engDays[new Date(day.date).getDay()];
-    const dishes = menuFromServer.menu[dayOfTheWeek].menu;
-
-    addOrderItem(item, dishes, cardProps);
-  });
-}
-
-function createInactiveCard(date) {
+function emptyCardProps(day) {
   return {
-    header: createHeaderForCard(date),
-    orders: [],
+    unixDay: day.unixDay,
+    menu: day.menu,
   };
-}
-
-function createPropsForCards() {
-  const cardsWithOrders = [];
-
-  for (const day of userOrders) {
-    if (new Date(day.date).getTime() >= clearHours(new Date())) {
-      const cardProps = createCardPropsWithEmptyOrders(day);
-      addOrderItemsToProps(cardProps, day);
-      cardsWithOrders.push(cardProps);
-    }
-  }
-
-  const days = [];
-  let currentDate = new Date();
-  clearHours(currentDate);
-
-  for (let i = 0; i < 9; i++) {
-    if (currentDate.getDay() !== 0) {
-      days.push(currentDate);
-    }
-
-    currentDate = new Date(currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() + 1);
-  }
-
-  const propsForCards = days.map(day =>
-    cardsWithOrders.find(c => new Date(c.header.date).getTime() === day.getTime())
-    || createInactiveCard(day));
-
-  return propsForCards;
 }
 
 
@@ -397,10 +45,104 @@ function clearHours(date) {
   return date.getTime();
 }
 
+function toUnixDay(date) {
+  return date.getTime() / 24000 / 3600;
+}
+
+function getDatesToDisplay() {
+  const dates = [];
+
+  let currentDate = new Date();
+  clearHours(currentDate);
+
+  // case when it is sunday today
+
+  let howManyDaysToCheck;
+  if (currentDate.getDay() === 0) {
+    howManyDaysToCheck = 10;
+  } else {
+    howManyDaysToCheck = 9;
+  }
+
+  for (let i = 0; i < howManyDaysToCheck; i++) {
+    if (currentDate.getDay() !== 0) {
+      dates.push(currentDate);
+    }
+
+    currentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() + 1,
+    );
+  }
+  return dates;
+}
+
+function createPropsForCards(menuFromServer) {
+
+  /*
+    * types of days
+    *   -null -> Menu is not available
+    *   -menu and order -> Card with order (checkout today card)
+    *   -menu -> not ordered card
+    *
+  */
+
+  const menuWithOrders = [];
+
+  for (const week of menuFromServer) {
+    if (week) {
+      /**
+       * inserting days just with menu
+       */
+
+      for (const weekDay of engDays) {
+        const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
+        if (week[weekDay] && dayOfTheYear - moment().dayOfYear() <= 8 && dayOfTheYear >= moment().dayOfYear()) {
+          menuWithOrders.push({
+            unixDay: toUnixDay(new Date(week[weekDay].day)),
+            menu: week[weekDay],
+          });
+        }
+      }
+    }
+
+  }
+
+  /**
+   * inserting orders
+   */
+
+  if (userOrders) {
+    for (const order of userOrders) {
+      const day = menuWithOrders.find((day) => {
+        return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
+      });
+
+      if (day) {
+        day.order = [];
+        order.dishList.forEach((item) => {
+          addOrderItem(item, day.menu.menu, day);
+        });
+        day.order.totalPrice = order.totalPrice;
+      }
+    }
+  }
+
+  const datesToDisplay = getDatesToDisplay();
+
+  const propsForCards = datesToDisplay.map(day =>
+    menuWithOrders.find(c => c.unixDay === Math.round(day.getTime() / 24000 / 3600))
+    || emptyCardProps({
+      unixDay: Math.floor(day.getTime() / 24000 / 3600),
+    }));
+
+  return propsForCards;
+}
+
 function serverSendOrder(cardUpdates, spin) {
-  const date = makeNormalDate(new Date(cardUpdates.header.date));
+  const date = makeNormalDate(new Date(cardUpdates.unixDay * 24000 * 3600));
   const dishList = [];
-  cardUpdates.orders.forEach((el) => {
+  cardUpdates.order.forEach((el) => {
     dishList.push({
       dishTitle: el.name,
       amount: el.quantity,
@@ -455,27 +197,38 @@ export default class UsersScreen {
       page: 'user',
       router: this.router,
     };
+
     const header = new Header();
     header.render(target, props);
 
     const screen = createElementsFromString(template());
     target.appendChild(screen);
 
-    const propsForCards = createPropsForCards(userOrders);
+    fetchMenu().then((menu) => {
+      menuFromServer = menu;
+      getUserOrders(
+        new Date().toISOString().slice(0, -1),
+        new Date(new Date().getTime() + WEEK).toISOString().slice(0, -1),
+      ).then((res) => {
+        userOrders = res;
+        const propsForCards = createPropsForCards(menu);
 
-    propsForCards.forEach((props) => {
-      const cardContainer = document.createElement('div');
-      target.querySelector('.menus-cards-container').appendChild(cardContainer);
-      const card = new Card(cardContainer, props);
-      card.render(cardContainer, Object.assign(props, { callback: this.makePopup }));
+        propsForCards.forEach((props) => {
+          const cardContainer = document.createElement('div');
+          target.querySelector('.menus-cards-container').appendChild(cardContainer);
 
-      this.cards.push(card);
+          const card = new Card(cardContainer, Object.assign({ callback: this.makePopup }, props));
+          card.render(cardContainer, Object.assign({ callback: this.makePopup }, props));
+
+          this.cards.push(card);
+        });
+
+        return screen;
+      });
     });
-    return screen;
   }
   makePopup(props) {
-    const cardProps = props;
-    const { menu } = menuFromServer.menu[engDays[days.indexOf(cardProps.header.weekday)]];
+    const { menu } = props.menu;
     const popupOrders = [];
     menu.forEach((el) => {
       popupOrders.push({
@@ -485,20 +238,23 @@ export default class UsersScreen {
         weight: el.weight,
       });
     });
-    cardProps.orders.forEach((order) => {
-      popupOrders.find((el, i) => {
-        if (el.name === order.name) {
-          popupOrders[i].quantity = order.quantity;
-          return true;
-        }
-        return false;
+    if (props.order) {
+      props.order.forEach((order) => {
+        popupOrders.find((el, i) => {
+          if (el.name === order.name) {
+            popupOrders[i].quantity = order.quantity;
+            return true;
+          }
+          return false;
+        });
       });
-    });
+    }
     const propsEdit = {
-      header: cardProps.header,
-      menu: popupOrders,
-      totalCost: cardProps.orderPrice,
-      target: cardProps.target,
+      menu: props.menu,
+      orders: popupOrders,
+      totalCost: props.order ? props.order.totalPrice : 0,
+      target: props.target,
+      unixDay: props.unixDay,
     };
     const propsPopup = {
       data: propsEdit,
@@ -511,7 +267,7 @@ export default class UsersScreen {
     if (res.status === 'Cancel') {
       this.closePopup();
     } else {
-      const orders = [];
+      const order = [];
       res.order.forEach((el) => {
         if (el.quantity !== 0) {
           const temp = {};
@@ -519,19 +275,20 @@ export default class UsersScreen {
           temp.name = el.name;
           temp.price = el.cost;
           temp.quantity = el.quantity;
-          orders.push(temp);
+          order.push(temp);
         }
       });
       this.closePopup();
       this.update({
-        orders,
-        header: res.header,
+        order,
+        unixDay: res.unixDay,
         target: res.target,
+        menu: res.menu,
       });
     }
   }
   update(cardUpdates) {
-    const date = new Date(cardUpdates.header.date);
+    const date = new Date(cardUpdates.unixDay * 24000 * 3600);
     const spin = new Spinner();
     spin.render(cardUpdates.target);
     serverSendOrder(cardUpdates, spin)
@@ -539,8 +296,13 @@ export default class UsersScreen {
       .then((res) => {
         if (res) {
           for (const card of this.cards) {
-            if (new Date(card.props.header.date).getTime() === date.getTime()) {
-              card.render(card.target, Object.assign({ callback: this.makePopup, orderPrice: res.totalPrice }, cardUpdates));
+            if (new Date(card.props.unixDay * 24000 * 3600).getTime() === date.getTime()) {
+              if (res.totalPrice === 0) {
+                cardUpdates.order = undefined;
+              } else {
+                cardUpdates.order.totalPrice = res.totalPrice;
+              }
+              card.render(card.target, Object.assign({ callback: this.makePopup }, cardUpdates));
             }
           }
         }
