@@ -279,34 +279,35 @@ export default class UsersScreen {
         }
       });
       this.closePopup();
-      this.update({
+      const cardUpdates = {
         order,
         unixDay: res.unixDay,
         target: res.target,
         menu: res.menu,
-      });
+      };
+      const spin = new Spinner();
+      spin.render(cardUpdates.target);
+      const date = new Date(res.unixDay * 24000 * 3600);
+      serverSendOrder(cardUpdates, spin)
+        .then(serverGetBalance)
+        .then((response) => {
+          if (response) {
+            if (response.totalPrice === 0) {
+              cardUpdates.order = undefined;
+            } else {
+              cardUpdates.order.totalPrice = response.totalPrice;
+            }
+            this.update(cardUpdates, date);
+          }
+        });
     }
   }
-  update(cardUpdates) {
-    const date = new Date(cardUpdates.unixDay * 24000 * 3600);
-    const spin = new Spinner();
-    spin.render(cardUpdates.target);
-    serverSendOrder(cardUpdates, spin)
-      .then(serverGetBalance)
-      .then((res) => {
-        if (res) {
-          for (const card of this.cards) {
-            if (new Date(card.props.unixDay * 24000 * 3600).getTime() === date.getTime()) {
-              if (res.totalPrice === 0) {
-                cardUpdates.order = undefined;
-              } else {
-                cardUpdates.order.totalPrice = res.totalPrice;
-              }
-              card.render(card.target, Object.assign({ callback: this.makePopup }, cardUpdates));
-            }
-          }
-        }
-        return res;
-      });
+  update(cardUpdates, date) {
+    for (const card of this.cards) {
+      if (new Date(card.props.unixDay * 24000 * 3600).getTime() === date.getTime()) {
+        card.render(card.target, Object.assign({ callback: this.makePopup }, cardUpdates));
+      }
+    }
+
   }
 }
