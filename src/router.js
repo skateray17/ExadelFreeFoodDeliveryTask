@@ -26,21 +26,19 @@ export default class Router {
   }
 
   checkGuards(guards, field) {
+    const guardsPromises = [];
     for (let i = 0; i < guards.length; i++) {
-      const guard = guards[i];
-      let isCorrect = true;
       // ?????????
-      guards[i](field).then((guardResult) => {
-        if (!guardResult.allow) {
-          isCorrect = false;
-          setTimeout(() => this.navigate(guardResult.path), 0);
-        }
-      }).then((flag) => {
-        if (!flag) {
-          i = guards.length;
-        }
-      });
+      guardsPromises.push(guards[i](field));
     }
+    Promise.all(guardsPromises)
+      .then((resolvedGuards) => {
+        resolvedGuards.forEach((resolvedGuard) => {
+          if (!resolvedGuard.allow) {
+            setTimeout(() => this.navigate(resolvedGuard.path), 0);
+          }
+        });
+      });
   }
 
   render(url) {
