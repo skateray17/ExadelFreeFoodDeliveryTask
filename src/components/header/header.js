@@ -5,7 +5,7 @@ import { eventBus } from '../../common/eventBus';
 import { createElementsFromString, replaceFirstChild, roles } from '../../common/utils';
 import { getUserInfo } from '../../common/userService';
 import { logout } from '../../common/loginService';
-import { onBalanceChange } from '../../common/balanceService';
+import { onBalanceChange, getBalance } from '../../common/balanceService';
 
 export default class Header {
   constructor() {
@@ -13,43 +13,61 @@ export default class Header {
   }
 
   render(target, props) {
-    let header;
-    const type = getUserInfo().type;
-    if (props.page === 'manager') {
-      header = createElementsFromString(managersHeader());
-    }
-    if (props.page === 'user') {
-      const headersProps = {
-        isUserManager: false,
-        nickname: getUserInfo().username,
-        balance: getUserInfo().balance,
-      };
-      if (type === roles.manager) {
-        headersProps.isUserManager = true;
-      }
-      header = createElementsFromString(usersHeader(headersProps));
-    }
-    replaceFirstChild(target, header);
-    if (type === roles.manager) {
-      header.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
-        switchMode(props);
+    let header,
+      curUser,
+      type,
+      curBalance;
+    return getUserInfo().then((user) => {
+      curUser = user;
+      type = curUser.type;
+    })
+      .then(() => {
+        getBalance()
+          .then((balance) => {
+            curBalance = balance;
+
+            if (props.page === 'manager') {
+              header = createElementsFromString(managersHeader());
+            }
+            if (props.page === 'user') {
+              const headersProps = {
+                isUserManager: false,
+                nickname: curUser.username,
+                balance: curBalance,
+              };
+              if (type === +roles.manager) {
+                headersProps.isUserManager = true;
+              }
+              header = createElementsFromString(usersHeader(headersProps));
+            }
+            if (target.firstChild.tagName === 'HEADER') {
+              replaceFirstChild(target, header);
+            } else {
+              target.insertBefore(header, target.firstChild);
+            }
+
+            if (type === +roles.manager) {
+              header.querySelector('.header-content__switch-mode-button').addEventListener('click', () => {
+                switchMode(props);
+              });
+            }
+            header.querySelector('.exit-ico').addEventListener('click', () => {
+              logout(props.router);
+            });
+
+            // to remove
+            if (props.page === 'user') {
+              header.querySelector('.history-ico').addEventListener('click', () => {
+                eventBus.publish('onBalanceChange', 260);
+              });
+            }
+            //
+
+            this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this, target, props)));
+
+            return header;
+          });
       });
-    }
-    header.querySelector('.exit-ico').addEventListener('click', () => {
-      logout(props.router);
-    });
-
-    // to remove
-    if (props.page === 'user') {
-      header.querySelector('.history-ico').addEventListener('click', () => {
-        eventBus.publish('onBalanceChange', 260);
-      });
-    }
-    //
-
-    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this, target, props)));
-
-    return header;
   }
 
   destroy() {

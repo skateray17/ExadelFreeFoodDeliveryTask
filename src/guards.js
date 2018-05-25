@@ -5,17 +5,27 @@ import { checkCookie } from './common/cookieService';
 export default class Guards {
   static authGuard(path) {
     const auth = checkCookie('token');
-    const rolePath = checkType(getUserInfo().type);
-    if (path !== 'login') {
-      return { allow: auth, path: 'login' };
+    let type;
+    if (!auth && path !== 'login') {
+      return new Promise(() => ({ allow: auth, path: 'login' }));
     }
-    return { allow: !auth, path: rolePath };
+    return getUserInfo().then((curUser) => {
+      type = curUser.type;
+      const rolePath = checkType(type);
+      if (path === 'login') {
+        return { allow: !auth, path: rolePath };
+      }
+    });
   }
 
   static roleGuard(roles) {
     return function () {
-      const isAllowed = (roles.indexOf(+getUserInfo().type) !== -1);
-      return { allow: isAllowed, path: 'error' };
+      let type;
+      return getUserInfo().then((curUser) => {
+        type = curUser.type;
+        const isAllowed = (roles.indexOf(+type) !== -1);
+        return { allow: isAllowed, path: 'error' };
+      });
     };
   }
 }

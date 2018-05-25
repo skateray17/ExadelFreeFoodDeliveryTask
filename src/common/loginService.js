@@ -16,7 +16,7 @@ export function login(email, password) {
       token, type, firstName, lastName,
     } = data;
     setCookie('token', token, 365);
-    setUserInfo({ name: `${firstName} ${lastName}`, type });
+    setUserInfo({ username: `${firstName} ${lastName}`, type });
   });
 }
 

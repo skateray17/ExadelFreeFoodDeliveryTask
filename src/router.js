@@ -28,11 +28,18 @@ export default class Router {
   checkGuards(guards, field) {
     for (let i = 0; i < guards.length; i++) {
       const guard = guards[i];
-      const guardResult = guard(field);
-      if (!guardResult.allow) {
-        setTimeout(() => this.navigate(guardResult.path), 0);
-        return;
-      }
+      let isCorrect = true;
+      // ?????????
+      guards[i](field).then((guardResult) => {
+        if (!guardResult.allow) {
+          isCorrect = false;
+          setTimeout(() => this.navigate(guardResult.path), 0);
+        }
+      }).then((flag) => {
+        if (!flag) {
+          i = guards.length;
+        }
+      });
     }
   }
 
@@ -54,6 +61,7 @@ export default class Router {
       }
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
+        // ?????????
         this.checkGuards(this.routes[field].guards, field);
         const ComponentConstructor = this.routes[field].component;
         this.component = new ComponentConstructor(this);

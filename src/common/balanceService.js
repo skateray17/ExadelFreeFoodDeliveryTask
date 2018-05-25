@@ -1,3 +1,5 @@
+import { get } from './requests';
+
 let currentBalance;
 
 export function setBalance(balance) {
@@ -5,10 +7,17 @@ export function setBalance(balance) {
 }
 
 export function getBalance() {
-  return currentBalance;
+  return get('balance/', {}).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject();
+  }).then((data) => {
+    currentBalance = data.balance;
+    return currentBalance;
+  });
 }
 
-export function onBalanceChange(target, props, balance) {
-  setBalance(balance);
+export function onBalanceChange(target, props) {
   this.render(target, props);
 }
