@@ -12,14 +12,18 @@
   },
   "managerPage": {
     "uploadMenu": {
+      "tabName": "Загрузить меню",
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
       "selectMenu": "Выбрать меню",
       "nomenu": "Меню на эту неделю отсутсвует"
     },
-    "todaysOrder": {},
+    "todaysOrder": {
+      "tabName": "Заказы на сегодня"
+    },
     "updateBalance": {
+      "tabName": "Пополнить баланс",
       "user": "Пользователь",
       "balance": "Баланс",
       "searchForUser": "Искать сотрудников",
@@ -28,7 +32,9 @@
       "enterSum": "сумма",
       "emptySearch": "Такого пользователя нет"
     },
-    "makeAnOrder": {}
+    "makeAnOrder": {
+      "tabName": "Сделать заказ"
+    }
   },
   "other": {
     "switchLanguage": "Switch to ENG",
