@@ -2,13 +2,13 @@
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  min-height: 40px; 
+  min-height: 40px;
   padding: 0 34px;
 }
 
 .user-balance__select-quantity-container{
   margin-right: 34px;
-} 
+}
 
 .user-balance__select-quantity-title, .user-balance__selected-quantity{
   color: #6E6E6E;
@@ -79,4 +79,9 @@
     margin: 0;
   }
 
+}
+.user-balance__selected-quantity::-webkit-inner-spin-button, 
+.user-balance__selected-quantity::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

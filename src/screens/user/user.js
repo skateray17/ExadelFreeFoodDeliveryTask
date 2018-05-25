@@ -407,7 +407,6 @@ function serverSendOrder(cardUpdates, spin) {
     });
   });
   return put('order/', {
-    Authorization: getCookie('token'),
     'content-type': 'application/json',
   }, {}, JSON.stringify({ dishList, date }))
     .then((res) => {
@@ -427,20 +426,20 @@ function serverSendOrder(cardUpdates, spin) {
       spin.destroy();
     });
 }
-function serverUpdateBalance(res) {
+function serverGetBalance(res) {
   if (res) {
-    get(`balance/?username=${'aaa'}`, {
-      Authorization: getCookie('token'),
-      'content-type': 'application/json',
-    })
+    get('balance', {})
       .then((response) => {
         if (response.status !== 200) {
           return Promise.reject();
         }
-        updateBalance(response.balance);
-        return Promise.resolve();
+        return response.json();
+      })
+      .then((body) => {
+        console.log(body.balance);
       });
   }
+  return res;
 }
 export default class UsersScreen {
   constructor(router) {
@@ -536,6 +535,7 @@ export default class UsersScreen {
     const spin = new Spinner();
     spin.render(cardUpdates.target);
     serverSendOrder(cardUpdates, spin)
+      .then(serverGetBalance)
       .then((res) => {
         if (res) {
           for (const card of this.cards) {

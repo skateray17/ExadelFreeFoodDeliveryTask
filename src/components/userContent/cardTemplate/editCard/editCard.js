@@ -18,7 +18,6 @@ export default class EditCard {
   render(target, props) {
     this.onScreenTarget = props.data.target;
     this.callback = props.callback;
-    console.log(props);
     const cardTemplate = card(this.createCardProps(props.data));
     const editCardHTML = createElementsFromString(cardTemplate);
     target.appendChild(editCardHTML);
