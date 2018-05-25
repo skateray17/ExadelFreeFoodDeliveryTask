@@ -7,7 +7,7 @@ export default class Guards {
     const auth = checkCookie('token');
     let type;
     if (!auth && path !== 'login') {
-      return new Promise(() => ({ allow: auth, path: 'login' }));
+      return new Promise(resolve => (resolve({ allow: auth, path: 'login' })));
     }
     return getUserInfo().then((curUser) => {
       type = curUser.type;
