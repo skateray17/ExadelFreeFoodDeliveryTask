@@ -10,6 +10,7 @@ import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
 import Toast from '../../../toast/toast';
+import i18n from './../../../../common/i18n';
 
 export default class MenuTable {
   render(target) {
@@ -93,7 +94,7 @@ export default class MenuTable {
     const menu = createElementsFromString(tableTemplate(props));
     if (!props.menu) {
       new UploadMenuForm().render(target);
-      this.showError('There is no menu on this week.');
+      this.showError(i18n.t('managerPage.uploadMenu.nomenu'));
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, current);

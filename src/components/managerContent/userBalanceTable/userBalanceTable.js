@@ -38,6 +38,7 @@ export default class UserBalanceTable {
       this.userBalanceFooter.render(userBalanceTableElement, data);
       this.createHeaderEvents();
       this.createFooterEvents();
+      this.checkRight(data);
     }).catch(() => {
       this.spinner.destroy();
       Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true });
@@ -74,7 +75,7 @@ export default class UserBalanceTable {
   }
 
   checkRight(props) {
-    props.perPage = props.perPage || 15;
+    props.perPage = props.perPage || 10;
     this.mayClickRight = props.totalAmount > props.currentPage * props.perPage;
   }
 

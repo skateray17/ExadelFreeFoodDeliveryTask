@@ -2,6 +2,7 @@ import './userBalanceItems.css';
 import template from './userBalanceItems.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { put } from '../../../../common/requests';
+import Toast from '../../../toast/toast';
 
 export default class UserBalanceItems {
   render(target, props) {
@@ -46,7 +47,8 @@ export default class UserBalanceItems {
             .then((res) => {
               this.props.result[ind].balance = res.balance;
               this.rerender(this.props);
-            });
+            })
+            .catch(() => Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true }));
         }
       }
     };
