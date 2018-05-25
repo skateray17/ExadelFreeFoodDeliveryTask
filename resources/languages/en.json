@@ -15,7 +15,8 @@
       "currentWeek": "Current week",
       "nextWeek": "Next week",
       "publishMenu": "Publish menu",
-      "selectMenu": "Select menu"
+      "selectMenu": "Select menu",
+      "nomenu": "There is no menu for the week"
     },
     "todaysOrder": {},
     "updateBalance": {

@@ -15,7 +15,8 @@
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
-      "selectMenu": "Выбрать меню"
+      "selectMenu": "Выбрать меню",
+      "nomenu": "Меню на эту неделю отсутсвует"
     },
     "todaysOrder": {},
     "updateBalance": {

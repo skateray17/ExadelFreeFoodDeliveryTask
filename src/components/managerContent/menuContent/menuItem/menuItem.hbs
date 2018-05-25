@@ -10,13 +10,13 @@
         </div>
     </div>
     {{/each}} {{else}}
-    <div class="menu-item__no-menu-msg">There is no menu on this day.</div>
+    <div class="menu-item__no-menu-msg">{{i18n 'managerPage.uploadMenu.nomenu'}}</div>
     {{/if}}
 </div>
 {{/each}}
 {{#if published}}
 {{else}}
 <button class="publish-button shadow">
-    Publish menu
+    {{i18n 'managerPage.uploadMenu.publishMenu'}}
 </button>
 {{/if}}
