@@ -1,9 +1,60 @@
 {
   "header": {
-    "switchToUserPage": "?????",
-    "switchToManagerPage": "?????"
+    "switchToUserPage": "Switch to order",
+    "switchToManagerPage": "Switch to manager"
+  },
+  "userPage": {
+    "unchosenMenu": "No menu selected",
+    "unavailableMenu": "Unavailable menu",
+    "makeAnOrder": "Make order",
+    "editOrder": "Edit order",
+    "cancel": "Cancel"
+  },
+  "managerPage": {
+    "uploadMenu": {
+      "currentWeek": "Current week",
+      "nextWeek": "Next week",
+      "publishMenu": "Publish menu",
+      "selectMenu": "Select menu"
+    },
+    "todaysOrder": {},
+    "updateBalance": {
+      "user": "User",
+      "balance": "Balance",
+      "searchForUser": "Search for user",
+      "usersPerPage": "Users per page",
+      "replenish": "Replenish",
+      "enterSum": "sum",
+      "emptySearch": "There is no such user"
+    },
+    "makeAnOrder": {}
   },
   "other": {
-    "switchLanguage": "На русском"
+    "switchLanguage": "Switch to RUS",
+    "amount": "Total price: ",
+    "print": "Print",
+    "submit": "Submit",
+    "price": "Price",
+    "currency": "BYN",
+    "weight": "g",
+    "extra": "Extra",
+    "daysOfTheWeek": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "daysOfTheWeek_short": {
+      "monday": "mon",
+      "tuesday": "tue",
+      "wednesday": "wed",
+      "thursday": "thu",
+      "friday": "fri",
+      "saturday": "sat",
+      "sunday": "sun"
+    }
   }
 }
