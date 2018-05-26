@@ -31,8 +31,12 @@ export default class LoginScreen {
 
     const spinner = new Spinner();
     spinner.render(target.querySelector('.login__content'));
-    login(email, password).then(async () => {
-      this.router.navigate(checkType((await getUserInfo()).type));
+    login(email, password).then(() => {
+      let type;
+      getUserInfo().then((curUser) => {
+        type = curUser.type;
+        this.router.navigate(checkType(type));
+      });
     }).catch(() => {
       this.render(target, { displayError: true, email });
     })

@@ -26,21 +26,24 @@ export default class Router {
   }
 
   checkGuards(guards, field) {
+    const guardsPromises = [];
     for (let i = 0; i < guards.length; i++) {
-      const guard = guards[i];
-      let isCorrect = true;
-      // ?????????
-      guards[i](field).then((guardResult) => {
-        if (!guardResult.allow) {
-          isCorrect = false;
-          setTimeout(() => this.navigate(guardResult.path), 0);
-        }
-      }).then((flag) => {
-        if (!flag) {
-          i = guards.length;
-        }
-      });
+      guardsPromises.push(guards[i](field));
     }
+    return new Promise((resolve) => {
+      Promise.all(guardsPromises)
+        .then((resolvedGuards) => {
+          resolvedGuards.forEach((resolvedGuard) => {
+            if (!resolvedGuard.allow) {
+              this.navigate(resolvedGuard.path);
+              resolve(false);
+              return;
+            }
+          });
+          resolve(true);
+          return;
+        });
+    });
   }
 
   render(url) {
@@ -61,11 +64,13 @@ export default class Router {
       }
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
-        // ?????????
-        this.checkGuards(this.routes[field].guards, field);
-        const ComponentConstructor = this.routes[field].component;
-        this.component = new ComponentConstructor(this);
-        this.component.render(this.rootElement, props);
+        this.checkGuards(this.routes[field].guards, field).then((isAllowed) => {
+          if (isAllowed) {
+            const ComponentConstructor = this.routes[field].component;
+            this.component = new ComponentConstructor(this);
+            this.component.render(this.rootElement, props);
+          }
+        });
       } else {
         this.navigate('error');
       }

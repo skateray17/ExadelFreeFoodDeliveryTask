@@ -1,8 +1,8 @@
 import { get } from './requests';
 
-let currentUser = {};
+let currentUser;
 
-export function getUserInfo() {
+function loadUserInfo() {
   return get('user/', {}).then((res) => {
     if (res.ok) {
       return res.json();
@@ -10,11 +10,18 @@ export function getUserInfo() {
     return Promise.reject();
   }).then((data) => {
     const { firstName, lastName, type } = data;
-    currentUser = { username: `${firstName} ${lastName}`, type };
-    return currentUser;
+    const user = { username: `${firstName} ${lastName}`, type };
+    return (user);
   });
 }
 
+export function getUserInfo() {
+  if (!currentUser) {
+    currentUser = loadUserInfo();
+  }
+  return currentUser;
+}
+
 export function setUserInfo(newUser) {
-  currentUser = newUser;
+  currentUser = new Promise(resolve => (resolve(newUser)));
 }

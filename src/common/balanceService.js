@@ -2,22 +2,30 @@ import { get } from './requests';
 
 let currentBalance;
 
-export function setBalance(balance) {
-  currentBalance = balance;
-}
-
-export function getBalance() {
+function loadBalance() {
   return get('balance/', {}).then((res) => {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject();
   }).then((data) => {
-    currentBalance = data.balance;
-    return currentBalance;
+    const { balance } = data;
+    return balance;
   });
+}
+
+export function getBalance() {
+  if (!currentBalance) {
+    currentBalance = loadBalance();
+  }
+  return currentBalance;
+}
+
+export function setBalance(balance) {
+  currentBalance = new Promise(resolve => (resolve(balance)));
 }
 
 export function onBalanceChange(target, props) {
   this.render(target, props);
 }
+
