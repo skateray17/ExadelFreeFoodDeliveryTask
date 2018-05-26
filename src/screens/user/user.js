@@ -52,7 +52,7 @@ function getDatesToDisplay() {
   // case when it is sunday today
 
   let howManyDaysToCheck;
-  if (currentDate.getDay() === 0) {
+  if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
     howManyDaysToCheck = 10;
   } else {
     howManyDaysToCheck = 9;
