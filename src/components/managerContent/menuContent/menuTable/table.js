@@ -8,11 +8,14 @@ import { getMenu, fetchMenu } from '../../../../common/menuService';
 import { post, put } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
+import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
+import Toast from '../../../toast/toast';
+import i18n from './../../../../common/i18n';
 
 export default class MenuTable {
   render(target) {
     const spinner = new Spinner();
-    spinner.render(target);
+    spinner.render(document.querySelector('.content'));
     const content = createElementsFromString(menuTableTemplate());
     target.appendChild(content);
     fetchMenu()
@@ -20,9 +23,9 @@ export default class MenuTable {
         const weeksMenu = getMenu();
         this.renderContent(target, weeksMenu);
       })
-      .catch((error) => {
-        // add toast because we need uploading menu functional on page
-        console.log(error);
+      .catch(() => {
+        Toast.show({ title: 'Network error', type: 'error' });
+        this.showError('Something get wrong. Please reload page.');
       })
       .finally(() => {
         spinner.destroy();
@@ -38,19 +41,28 @@ export default class MenuTable {
 
   rendermenuItems(target, menuObj, isCurrent) {
     const items = createElementsFromString(menuItem(menuObj));
-    if (!menuObj.published) {
+    if (menuObj && !menuObj.published) {
       items.querySelector('.publish-button').addEventListener('click', () => {
         this.publishMenu(menuObj.date, isCurrent);
       });
+      target.appendChild(items);
+      new UploadMenuForm().render(target);
+      this.showError('You can change menu by uploading new file.');
+      target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
+        e.preventDefault();
+        this.uploadMenu(target, isCurrent);
+      });
+    } else if (menuObj) {
+      target.appendChild(items);
     }
-    target.appendChild(items);
   }
-
   publishMenu(menuDate, isCurrent) {
     const body = {
       date: menuDate,
       published: true,
     };
+    const spinner = new Spinner();
+    spinner.render(document.querySelector('.content'));
     put('menu/', {
       'content-type': 'application/json',
     }, {}, JSON.stringify(body))
@@ -65,8 +77,11 @@ export default class MenuTable {
             this.showWeek(isCurrent);
           });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        Toast.show({ title: 'Network error', type: 'error' });
+      })
+      .finally(() => {
+        spinner.destroy();
       });
   }
 
@@ -77,22 +92,25 @@ export default class MenuTable {
       menu: menuObj,
     };
     const menu = createElementsFromString(tableTemplate(props));
-    target.appendChild(menu);
-    if (props.menu) {
-      this.rendermenuItems(target, menuObj, current);
-    } else {
+    if (!props.menu) {
+      new UploadMenuForm().render(target);
+      this.showError(i18n.t('managerPage.uploadMenu.nomenu'));
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, current);
       });
     }
+    target.appendChild(menu);
+    this.rendermenuItems(target, menuObj, current);
     return target;
   }
 
   renderWeektab(content) {
     const target = content.querySelector('.menu-table-component__tabs');
     const weektab = createElementsFromString(weekTabTemplate());
-    target.appendChild(weektab);
+    if (!target.querySelector('.week-tab')) {
+      target.appendChild(weektab);
+    }
     this.selectWeek(target, true);
     target.querySelector('.week-tab__current').addEventListener('click', () => {
       this.renderWeek(content.querySelector('.menu-table-component__content'), getMenu()[0], true);
@@ -123,10 +141,11 @@ export default class MenuTable {
     const file = document.querySelector('.choose-file').files[0];
     if (file) {
       const spinner = new Spinner();
-      spinner.render(target);
-      post('menu/', {
+      spinner.render(document.querySelector('.content'));
+      const isCurrParam = current ? 'current' : 'next';
+      post('menu', {
         'content-type': 'text/plain',
-      }, {}, file)
+      }, { date: isCurrParam }, file)
         .then((res) => {
           if (res.status !== 200) {
             return Promise.reject();
@@ -137,8 +156,8 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
+          Toast.show({ title: 'Network error', type: 'error' });
           this.showError('Cannot upload file. Please try again.');
-          document.querySelector('.choose-file').value = '';
         })
         .finally(() => {
           spinner.destroy();
@@ -169,5 +188,7 @@ export default class MenuTable {
     } else {
       parent.appendChild(error);
     }
+    const fileMsg = document.querySelector('.file-msg');
+    if (fileMsg) fileMsg.innerText = i18n.t('managerPage.uploadMenu.noFileSelected');
   }
 }

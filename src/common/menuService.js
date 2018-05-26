@@ -1,5 +1,6 @@
 import { daysOfWeek } from './constants';
 import { get } from './requests';
+import i18n from './i18n';
 
 let currentMenu;
 let nextMenu;
@@ -9,7 +10,7 @@ export function setWeekMenu(obj, isCurrentWeek) {
   Object.keys(obj).forEach((key) => {
     if (key !== 'date' && key !== 'published') {
       days.push({
-        day: daysOfWeek[key] || 'Extra',
+        day: daysOfWeek[key] || i18n.t('other.extra'),
         menuExists: obj[key].menu.length,
         dish: obj[key].menu,
       });

@@ -1,11 +1,11 @@
 <div class="user-balance__footer">
     <div class="user-balance__select-quantity-container">
-        <span class="user-balance__select-quantity-title">Сотрудников на странице:</span>
+        <span class="user-balance__select-quantity-title">{{i18n 'managerPage.updateBalance.usersPerPage'}}</span>
         <input type="number" class="user-balance__selected-quantity" placeholder="{{perPage}}"></input>
     </div>
     <div class="user-balance__page-info-container">
         <span class="user-balance__showed-interval">{{showedInterval}}</span>
-        <span class="user-balance__preposition">из</span>
+        <span class="user-balance__preposition">{{i18n 'managerPage.updateBalance.of'}}</span>
         <span class="user-balance__total-quantity">{{totalAmount}}</span>
     </div>
     <div class="user-balance__button-container">

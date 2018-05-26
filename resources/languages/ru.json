@@ -1,0 +1,75 @@
+{
+  "header": {
+    "switchToUserPage": "Сделать заказ",
+    "switchToManagerPage": "Страница менеджера"
+  },
+  "userPage": {
+    "unchosenMenu": "Меню не выбрано",
+    "unavailableMenu": "Меню ещё не доступно",
+    "makeAnOrder": "Заказать",
+    "editOrder": "Редактировать",
+    "cancel": "Отменить"
+  },
+  "managerPage": {
+    "uploadMenu": {
+      "tabName": "Загрузить меню",
+      "currentWeek": "Текущая неделя",
+      "nextWeek": "Следующая неделя",
+      "publishMenu": "Опубликовать",
+      "selectMenu": "Выбрать файл",
+      "nomenu": "Меню на эту неделю отсутсвует",
+      "noFileSelected": "Файл не выбран",
+      "sendFile": "Отправить"
+    },
+    "todaysOrder": {
+      "tabName": "Заказы на сегодня",
+      "emptyList": "Заказов на сегодня нет"
+    },
+    "updateBalance": {
+      "tabName": "Пополнить баланс",
+      "user": "Пользователь",
+      "balance": "Баланс",
+      "searchForUser": "Искать сотрудников",
+      "usersPerPage": "Сотрудников на странице",
+      "replenish": "зачислить",
+      "enterSum": "сумма",
+      "emptySearch": "Такого пользователя нет",
+      "of": "из"
+    },
+    "makeAnOrder": {
+      "tabName": "Сделать заказ",
+      "emptyList": "Заказов на сегодня нет",
+      "amount": "Колличество",
+      "dishTitle": "Наименование"
+    }
+  },
+  "other": {
+    "switchLanguage": "Switch to ENG",
+    "amount": "Сумма: ",
+    "print": "Печать",
+    "submit": "Подтвердить",
+    "price": "Цена",
+    "currency": "BYN",
+    "weight": "г",
+    "extra": "Дополнительно",
+    "more": "+ ещё ",
+    "daysOfTheWeek": {
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
+    },
+    "daysOfTheWeek_short": {
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб",
+      "sunday": "Вс"
+    }
+  }
+}

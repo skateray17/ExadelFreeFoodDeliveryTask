@@ -1,31 +1,38 @@
 import './card.css';
 import card from './card.hbs';
-import Header from './cardHeader/header';
-import OrderItem from './orderItem/orderItem';
-import ShowMore from './showMore/showMore';
-import { createElementsFromString } from '../../../common/utils';
-import { rusDays } from '../../../common/constants';
+import Header from '../cardHeader/header';
+import OrderItem from '../orderItem/orderItem';
+import ShowMore from '../showMore/showMore';
+import { createElementsFromString } from '../../../../common/utils';
+import { rusDays } from '../../../../common/constants';
+import i18n from './../../../../common/i18n';
 
 const MAX_VISIBLE_ITEMS = 3;
 
 export default class Card {
   constructor(target, props) {
     this.target = target;
+    this.onEdit = this.onEdit.bind(this);
+    this.target.addEventListener('click', this.onEdit);
     this.props = props;
     this.id = props.unixDay;
   }
 
   render(target, props) {
+    this.props = props;
     const cardProps = this.createCardProps(props);
     const cardTemplate = card(cardProps);
-
     target.innerHTML = '';
     const cardItem = target.appendChild(createElementsFromString(cardTemplate));
     this.insertCardContent(cardItem, props, target);
-
+    this.cardShadow = target.querySelector('.card.shadow');
     return cardItem;
   }
-
+  onEdit(event) {
+    if (event.target === this.target.querySelector('.edit-button')) {
+      this.props.callback(Object.assign({ target: this.cardShadow }, this.props));
+    }
+  }
   createOrderItem(cardItem, order) {
     const orderItem = new OrderItem();
     orderItem.render(cardItem.querySelector('.card-content'), order);
@@ -49,14 +56,14 @@ export default class Card {
 
   createCardProps(props) {
     return {
-      totalPrice: props.order ? props.order.totalPrice : null,
+      totalPrice: props.order ? props.order.totalPrice.toFixed(2) : null,
       active: props.menu && true,
-      button: props.order && true ? 'Редактировать' : 'Заказать',
+      button: props.order && true ? i18n.t('userPage.editOrder') : i18n.t('userPage.makeAnOrder'),
       sumPrice: props.order && true,
       emptyMenu: !(props.menu && true),
       emptyOrder: !(props.order && true),
       showButton: props.menu && true ? props.menu.available : false,
-      imageUrl: require('../../../images/not-chosen-menu.png'),
+      imageUrl: require('../../../../images/not-chosen-menu.png'),
     };
   }
 

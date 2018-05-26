@@ -6,7 +6,7 @@ import MakeOrderTable from './makeOrderTable/makeOrderTable';
 import MakeOrderTableFooter from './makeOrderTableFooter/makeOrderTableFooter';
 import { createElementsFromString, getCookie } from '../../../common/utils';
 import { get } from '../../../common/requests';
-
+import Spinner from '../../../components/spinner/spinner';
 
 export default class MakeOrderPage {
   printTable() {
@@ -31,7 +31,9 @@ export default class MakeOrderPage {
 
     makeOrderHeader.render(makeOrderTableElement, props);
 
-    get('order/', {}, { currentDate: new Date() })
+    const spinner = new Spinner();
+    spinner.render(document.querySelector('.content'));
+    get('order/', {}, { currentDate: new Date().toISOString().replace('Z', '') })
       .then(response => response.json())
       .then((res) => {
         const array = [];
@@ -47,11 +49,12 @@ export default class MakeOrderPage {
           });
           totalPrice += item.totalPrice;
         });
-
-
+        totalPrice = parseFloat((totalPrice).toFixed(2));
         makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
         makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
         makeOrderFooter.render(makeOrderTableElement, props);
+      }).finally(() => {
+        spinner.destroy();
       });
 
     return makeOrderTableElement;

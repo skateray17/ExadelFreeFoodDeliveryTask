@@ -92,3 +92,9 @@
 .not-chosen-menu-image {
     max-width: 200px;
 }
+.card-content{
+  position: relative;
+}
+.card.shadow{
+  position: relative;
+}
