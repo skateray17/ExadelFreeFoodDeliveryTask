@@ -28,7 +28,13 @@ export const engDays = [
 ];
 
 export const rusDays = [
-  'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
+  i18n.t('other.daysOfTheWeek_short.sunday'),
+  i18n.t('other.daysOfTheWeek_short.monday'),
+  i18n.t('other.daysOfTheWeek_short.tuesday'),
+  i18n.t('other.daysOfTheWeek_short.wednesday'),
+  i18n.t('other.daysOfTheWeek_short.thursday'),
+  i18n.t('other.daysOfTheWeek_short.friday'),
+  i18n.t('other.daysOfTheWeek_short.saturday'),
 ];
 
 export const typeOfToast = {

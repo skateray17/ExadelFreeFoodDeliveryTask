@@ -55,13 +55,13 @@
       "sunday": "Sunday"
     },
     "daysOfTheWeek_short": {
-      "monday": "mon",
-      "tuesday": "tue",
-      "wednesday": "wed",
-      "thursday": "thu",
-      "friday": "fri",
-      "saturday": "sat",
-      "sunday": "sun"
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun"
     }
   }
 }
