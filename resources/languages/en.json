@@ -20,7 +20,8 @@
       "nomenu": "There is no menu for the week"
     },
     "todaysOrder": {
-      "tabName": "Today's order"
+      "tabName": "Today's order",
+      "emptyList": "There aren't orders for today"
     },
     "updateBalance": {
       "tabName": "Update balance",
@@ -28,12 +29,16 @@
       "balance": "Balance",
       "searchForUser": "Search for user",
       "usersPerPage": "Users per page",
-      "replenish": "Replenish",
+      "replenish": "update",
       "enterSum": "sum",
-      "emptySearch": "There is no such user"
+      "emptySearch": "There is no such user",
+      "of": "of"
     },
     "makeAnOrder": {
-      "tabName": "Make an order"
+      "tabName": "Make an order",
+      "emptyList": "There aren't orders for today",
+      "amount": "Amount",
+      "dishTitle": "Dish"
     }
   },
   "other": {
