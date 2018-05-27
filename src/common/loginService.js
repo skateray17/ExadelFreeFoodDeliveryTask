@@ -17,6 +17,7 @@ export function login(email, password) {
     } = data;
     setCookie('token', token, 365);
     setUserInfo({ username: `${firstName} ${lastName}`, type });
+    setBalance();
   });
 }
 

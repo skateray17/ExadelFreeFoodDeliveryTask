@@ -7,6 +7,8 @@ import Card from '../../components/userContent/cardTemplate/card';
 import { fetchMenu } from '../../common/menuService';
 import { getUserOrders } from '../../common/userscreen.service';
 import { engDays } from '../../common/constants';
+import { eventBus } from '../../common/eventBus';
+import { onBalanceChange } from '../../common/balanceService';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
@@ -72,7 +74,6 @@ function getDatesToDisplay() {
 }
 
 function createPropsForCards(menuFromServer) {
-
   /*
     * types of days
     *   -null -> Menu is not available
@@ -99,7 +100,6 @@ function createPropsForCards(menuFromServer) {
         }
       }
     }
-
   }
 
   /**
@@ -108,9 +108,7 @@ function createPropsForCards(menuFromServer) {
 
   if (userOrders) {
     for (const order of userOrders) {
-      const day = menuWithOrders.find((day) => {
-        return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
-      });
+      const day = menuWithOrders.find(day => day.unixDay === Math.round(toUnixDay(new Date(order.date))));
 
       if (day) {
         day.order = [];
@@ -137,6 +135,7 @@ export default class UsersScreen {
   constructor(router) {
     this.router = router;
     this.cards = [];
+    this.unsubscribers = [];
   }
 
   render(target, props) {
@@ -147,6 +146,8 @@ export default class UsersScreen {
 
     this.header = new Header();
     this.header.render(target, props);
+
+    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this.header, target, props)));
 
     const screen = createElementsFromString(template());
     target.appendChild(screen);
@@ -183,7 +184,7 @@ export default class UsersScreen {
   }
 
   destroy() {
-    this.header.destroy();
+    this.unsubscribers.forEach(unsubscribe => unsubscribe());
   }
 }
 

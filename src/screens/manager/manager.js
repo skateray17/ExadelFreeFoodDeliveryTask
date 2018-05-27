@@ -7,7 +7,8 @@ import { createElementsFromString } from '../../common/utils';
 import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder';
 import TodayOrders from '../../components/managerContent/todayOrdersContent/todayOrders';
 import i18n from './../../common/i18n';
-
+import { eventBus } from '../../common/eventBus';
+import { onBalanceChange } from '../../common/balanceService';
 
 const tabs = [
   {
@@ -35,6 +36,7 @@ const tabs = [
 export default class ManagerHomeScreen {
   constructor(router) {
     this.router = router;
+    this.unsubscribers = [];
   }
 
   render(target, props) {
@@ -44,6 +46,7 @@ export default class ManagerHomeScreen {
     };
     this.header = new Header();
     this.header.render(target, props);
+    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this.header, target, props)));
 
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
     target.appendChild(screen);
@@ -55,7 +58,7 @@ export default class ManagerHomeScreen {
   }
 
   destroy() {
-    this.header.destroy();
+    this.unsubscribers.forEach(unsubscribe => unsubscribe());
   }
 }
 

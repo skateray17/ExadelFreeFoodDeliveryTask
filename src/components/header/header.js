@@ -5,13 +5,9 @@ import { eventBus } from '../../common/eventBus';
 import { createElementsFromString, replaceFirstChild, roles } from '../../common/utils';
 import { getUserInfo } from '../../common/userService';
 import { logout } from '../../common/loginService';
-import { onBalanceChange, getBalance } from '../../common/balanceService';
+import { getBalance } from '../../common/balanceService';
 
 export default class Header {
-  constructor() {
-    this.unsubscribers = [];
-  }
-
   render(target, props) {
     let header,
       curUser,
@@ -61,15 +57,9 @@ export default class Header {
         }
         //
 
-        this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this, target, props)));
-
         return header;
       });
     });
-  }
-
-  destroy() {
-    this.unsubscribers.forEach(unsubscribe => unsubscribe());
   }
 }
 
@@ -83,7 +73,7 @@ function switchMode(props) {
 }
 
 function switchLanguage(props) {
-  let language = localStorage.getItem('language');
+  const language = localStorage.getItem('language');
   if (language === 'ru') {
     localStorage.setItem('language', 'en');
   } else {
