@@ -1,11 +1,12 @@
+import i18n from './i18n';
 
 export const daysOfWeek = {
-  mon: 'Monday',
-  tue: 'Tuesday',
-  wed: 'Wednesday',
-  thu: 'Thursday',
-  fri: 'Friday',
-  sat: 'Saturday',
+  mon: i18n.t('other.daysOfTheWeek.monday'),
+  tue: i18n.t('other.daysOfTheWeek.tuesday'),
+  wed: i18n.t('other.daysOfTheWeek.wednesday'),
+  thu: i18n.t('other.daysOfTheWeek.thursday'),
+  fri: i18n.t('other.daysOfTheWeek.friday'),
+  sat: i18n.t('other.daysOfTheWeek.saturday'),
 };
 
 export const daysByNumbers = {
