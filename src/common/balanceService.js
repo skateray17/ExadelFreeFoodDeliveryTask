@@ -29,7 +29,8 @@ export function setBalance(balance) {
   }
 }
 
-export function onBalanceChange(target, props) {
+export function onBalanceChange(target, props, balance) {
+  currentBalance = new Promise(resolve => (resolve(balance)));
   this.render(target, props);
 }
 

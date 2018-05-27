@@ -56,7 +56,7 @@ export default class Header {
         // to remove
         if (props.page === 'user') {
           header.querySelector('.history-ico').addEventListener('click', () => {
-            eventBus.publish('onBalanceChange');
+            eventBus.publish('onBalanceChange', 200);
           });
         }
         //
