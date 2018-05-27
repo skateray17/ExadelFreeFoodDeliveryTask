@@ -2,6 +2,7 @@ import './userBalanceItems.css';
 import template from './userBalanceItems.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { put } from '../../../../common/requests';
+import Toast from '../../../toast/toast';
 
 export default class UserBalanceItems {
   render(target, props) {
@@ -36,14 +37,18 @@ export default class UserBalanceItems {
           const ind = [].indexOf.call(this.elem.children, e.target.parentNode) - 1;
           put('balance/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({
             username: this.props.result[ind].username,
-            balance: this.props.result[ind].balance + toAdd,
+            balance: toAdd,
           })).then((res) => {
             if (res.ok) {
-              this.props.result[ind].balance += toAdd;
-              this.elem.children[ind + 1].querySelector('.user-balance__balance')
-                .innerText = this.props.result[ind].balance;
+              return res.json();
             }
-          });
+            return Promise.reject();
+          })
+            .then((res) => {
+              this.props.result[ind].balance = res.balance;
+              this.rerender(this.props);
+            })
+            .catch(() => Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true }));
         }
       }
     };

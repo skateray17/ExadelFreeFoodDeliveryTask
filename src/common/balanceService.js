@@ -22,7 +22,11 @@ export function getBalance() {
 }
 
 export function setBalance(balance) {
-  currentBalance = new Promise(resolve => (resolve(balance)));
+  if (balance) {
+    currentBalance = new Promise(resolve => (resolve(balance)));
+  } else {
+    currentBalance = undefined;
+  }
 }
 
 export function onBalanceChange(target, props) {

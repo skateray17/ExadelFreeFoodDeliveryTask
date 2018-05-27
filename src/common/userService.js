@@ -23,5 +23,10 @@ export function getUserInfo() {
 }
 
 export function setUserInfo(newUser) {
-  currentUser = new Promise(resolve => (resolve(newUser)));
+  if (newUser) {
+    currentUser = new Promise(resolve => (resolve(newUser)));
+  } else {
+    currentUser = undefined;
+  }
 }
+

@@ -4,8 +4,10 @@ import { createElementsFromString, getCookie } from '../../../../common/utils';
 import { put } from '../../../../common/requests';
 import { fetchMenu } from '../../../../common/menuService';
 import { daysByNumbers } from '../../../../common/constants';
+import Spinner from '../../../../components/spinner/spinner';
 
 import MakeOrderPage from '../makeOrder';
+// import Spinner from "../../../spinner/spinner";
 
 function isMenuForTodayAvailable() {
   return fetchMenu().then((res) => {
@@ -21,15 +23,21 @@ export default class makeOrderFooter {
     isMenuForTodayAvailable().then((res) => {
       if (res) {
         element.querySelector('.make-order_submit-button').addEventListener('click', () => {
-          put('adminOrder/', { 'Content-Type': 'application/json' })
+          const spinner = new Spinner();
+          spinner.render(document.querySelector('.content'));
+          put('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ available: false }))
             .then((response) => {
               if (response.ok) {
                 element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+                element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
               }
+            }).finally(() => {
+              spinner.destroy();
             });
         });
       } else {
         element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+        element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
       }
     });
 

@@ -6,27 +6,28 @@ import UserBalanceTable from '../../components/managerContent/userBalanceTable/u
 import { createElementsFromString } from '../../common/utils';
 import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder';
 import TodayOrders from '../../components/managerContent/todayOrdersContent/todayOrders';
+import i18n from './../../common/i18n';
 
 
 const tabs = [
   {
     component: new Menu(),
-    title: 'Upload menu',
+    title: i18n.t('managerPage.uploadMenu.tabName'),
     icon: '&#xE561;',
   },
   {
     component: new TodayOrders(),
-    title: 'Today\'s orders',
+    title: i18n.t('managerPage.todaysOrder.tabName'),
     icon: '&#xE8DF;',
   },
   {
     component: new UserBalanceTable(),
-    title: 'Replenish balance',
+    title: i18n.t('managerPage.updateBalance.tabName'),
     icon: '&#xE926;',
   },
   {
     component: new MakeOrder(),
-    title: 'Make an order',
+    title: i18n.t('managerPage.makeAnOrder.tabName'),
     icon: '&#xE8CC;',
   },
 ];

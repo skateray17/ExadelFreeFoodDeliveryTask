@@ -81,3 +81,13 @@ function switchMode(props) {
     props.router.navigate('manager');
   }
 }
+
+function switchLanguage(props) {
+  let language = localStorage.getItem('language');
+  if (language === 'ru') {
+    localStorage.setItem('language', 'en');
+  } else {
+    localStorage.setItem('language', 'ru');
+  }
+  window.location.reload();
+}

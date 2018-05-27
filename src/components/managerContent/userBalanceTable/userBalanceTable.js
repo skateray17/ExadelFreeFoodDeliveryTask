@@ -19,9 +19,11 @@ function createDelayedInputEvent(target, delay, callback) {
   };
 }
 
+const DEFAULT_PER_PAGE = 10;
+
 export default class UserBalanceTable {
   render(target, props) {
-    this.perPage = 10;
+    this.perPage = DEFAULT_PER_PAGE;
     this.name = '';
     this.page = 1;
     this.mayClickRight = false;
@@ -38,6 +40,7 @@ export default class UserBalanceTable {
       this.userBalanceFooter.render(userBalanceTableElement, data);
       this.createHeaderEvents();
       this.createFooterEvents();
+      this.checkRight(data);
     }).catch(() => {
       this.spinner.destroy();
       Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true });
@@ -67,14 +70,14 @@ export default class UserBalanceTable {
       }
     };
     createDelayedInputEvent(this.userBalanceFooter, 300, (e) => {
-      this.perPage = Number.parseInt(e.target.value, 10) || 15;
+      this.perPage = Number.parseInt(e.target.value, 10) || DEFAULT_PER_PAGE;
       this.page = 1;
       this.rerender();
     });
   }
 
   checkRight(props) {
-    props.perPage = props.perPage || 15;
+    props.perPage = props.perPage || DEFAULT_PER_PAGE;
     this.mayClickRight = props.totalAmount > props.currentPage * props.perPage;
   }
 
