@@ -30,6 +30,7 @@ export default class Header {
       });
     }
     target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
+    target.querySelector('.header-content__switch-language-container').addEventListener('click', () => { switchLanguage(props) });
 
     return screenWithHeader;
   }
@@ -42,4 +43,14 @@ function switchMode(props) {
   if (props.page === 'user') {
     props.router.navigate('manager');
   }
+}
+
+function switchLanguage(props) {
+  let language = localStorage.getItem('language');
+  if (language === 'ru') {
+    localStorage.setItem('language', 'en');
+  } else {
+    localStorage.setItem('language', 'ru');
+  }
+  window.location.reload();
 }

@@ -57,6 +57,9 @@ module.exports = {
         test: /\.hbs/,
         loader: 'handlebars-loader',
         exclude: /node_modules/,
+        options: {
+          helperDirs: [__dirname + '/src/common/helpers/'],
+        },
       },
       {
         test: /\.html$/,
