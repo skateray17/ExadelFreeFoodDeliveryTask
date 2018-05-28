@@ -3,9 +3,9 @@
   <form class="send-menu">
     <label for="file-input">
       <div class="fake-input">
-        <span class="fake-button">Choose file</span>
-        <span class="file-msg">no file selected</span>
-        <button type="submit" class="upload-menu__button">Send file</button>
+        <span class="fake-button">{{i18n 'managerPage.uploadMenu.selectMenu'}}</span>
+        <span class="file-msg">{{i18n 'managerPage.uploadMenu.noFileSelected'}}</span>
+        <button type="submit" class="upload-menu__button">{{i18n 'managerPage.uploadMenu.sendFile'}}</button>
       </div>
       <input id="file-input" type="file" accept=".xlsx, .xls" size="1e6" class="choose-file"></input>
     </label>

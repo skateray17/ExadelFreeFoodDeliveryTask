@@ -16,8 +16,10 @@
       "currentWeek": "Current week",
       "nextWeek": "Next week",
       "publishMenu": "Publish menu",
-      "selectMenu": "Select menu",
-      "nomenu": "There is no menu on this week"
+      "selectMenu": "Select file",
+      "nomenu": "There is no menu on this week",
+      "noFileSelected": "No file selected",
+      "sendFile": "Send"
     },
     "todaysOrder": {
       "tabName": "Today's order",

@@ -16,8 +16,10 @@
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
-      "selectMenu": "Выбрать меню",
-      "nomenu": "Меню на эту неделю отсутсвует"
+      "selectMenu": "Выбрать файл",
+      "nomenu": "Меню на эту неделю отсутсвует",
+      "noFileSelected": "Файл не выбран",
+      "sendFile": "Отправить"
     },
     "todaysOrder": {
       "tabName": "Заказы на сегодня",
