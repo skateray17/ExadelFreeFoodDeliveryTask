@@ -1,11 +1,12 @@
+import i18n from './i18n';
 
 export const daysOfWeek = {
-  mon: 'Monday',
-  tue: 'Tuesday',
-  wed: 'Wednesday',
-  thu: 'Thursday',
-  fri: 'Friday',
-  sat: 'Saturday',
+  mon: i18n.t('other.daysOfTheWeek.monday'),
+  tue: i18n.t('other.daysOfTheWeek.tuesday'),
+  wed: i18n.t('other.daysOfTheWeek.wednesday'),
+  thu: i18n.t('other.daysOfTheWeek.thursday'),
+  fri: i18n.t('other.daysOfTheWeek.friday'),
+  sat: i18n.t('other.daysOfTheWeek.saturday'),
 };
 
 export const daysByNumbers = {
@@ -27,7 +28,13 @@ export const engDays = [
 ];
 
 export const rusDays = [
-  'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'
+  i18n.t('other.daysOfTheWeek_short.sunday'),
+  i18n.t('other.daysOfTheWeek_short.monday'),
+  i18n.t('other.daysOfTheWeek_short.tuesday'),
+  i18n.t('other.daysOfTheWeek_short.wednesday'),
+  i18n.t('other.daysOfTheWeek_short.thursday'),
+  i18n.t('other.daysOfTheWeek_short.friday'),
+  i18n.t('other.daysOfTheWeek_short.saturday'),
 ];
 
 export const typeOfToast = {

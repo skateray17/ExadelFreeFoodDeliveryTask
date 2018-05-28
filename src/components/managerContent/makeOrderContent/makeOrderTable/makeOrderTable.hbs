@@ -1,7 +1,7 @@
 <div id="make-order__printableArea-table">
     <div class="make-order__table-header">
-        <span class="make-order__dish-header-title">Наименование</span><span
-            class="make-order__dish-amount">Количество</span>
+        <span class="make-order__dish-header-title">{{i18n 'managerPage.makeAnOrder.dishTitle'}}</span><span
+            class="make-order__dish-amount">{{i18n 'managerPage.makeAnOrder.amount'}}</span>
     </div>
     {{#each items}}
 
@@ -13,6 +13,6 @@
 
     {{/each}}
     {{#unless items}}
-        <span class="make-order__empty-list">Заказов на сегодня нет:(</span>
+        <span class="make-order__empty-list">{{i18n 'managerPage.makeAnOrder.emptyList'}}</span>
     {{/unless}}
 </div>

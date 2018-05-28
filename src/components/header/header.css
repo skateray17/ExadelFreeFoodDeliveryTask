@@ -55,15 +55,45 @@ header {
 	font-weight: 500;
 }
 
-.header-content__language-label--manager{
-	display: none;
-}
-
 .header-content__switch-language-container{
 	display: flex;
 	align-items: center;
 	margin-left: 10px;
 	cursor: pointer;
+	min-width: 69px;
+	justify-content: space-between;
+}
+
+.header-content__switch-language-label, .header-content__switch-language-delimiter{
+	font-size: 20px;
+	color: #FFFFFF;
+	position: relative;
+}
+
+.header-content__switch-language-label::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	height: 2px;
+	background-color: #FFFFFF;
+	width: 0;
+	transition: .3s;
+}
+
+.header-content__switch-language-label:hover::after{
+	left: 0;
+	width: 100%;
+}
+
+.header-content__switch-language-label--selected::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	background-color: #FFFFFF;
+	width: 100%;
 }
 
 .header-content__title{
@@ -97,7 +127,7 @@ header {
 	margin-top: -5px;
 }
 
-.exit-ico, .history-ico, .language-ico{
+.exit-ico, .language-ico{
 	cursor: pointer;
 	margin-left: 20px;
 	color: #FFFFFF;
@@ -171,14 +201,10 @@ header {
 		text-align: center;
 	}
 
-	.header-content__switch-language-container--manager{
+	.header-content__switch-language-container--new-order{
 		order: 2;
 		margin-top: 15px;
 		margin-left: 0;
-	}
-
-	.header-content__language-label--manager{
-		display: block;
 	}
 
 }

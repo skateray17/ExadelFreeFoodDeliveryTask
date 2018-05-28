@@ -16,11 +16,14 @@
       "currentWeek": "Current week",
       "nextWeek": "Next week",
       "publishMenu": "Publish menu",
-      "selectMenu": "Select menu",
-      "nomenu": "There is no menu on this week"
+      "selectMenu": "Select file",
+      "nomenu": "There is no menu on this week",
+      "noFileSelected": "No file selected",
+      "sendFile": "Send"
     },
     "todaysOrder": {
-      "tabName": "Today's order"
+      "tabName": "Today's order",
+      "emptyList": "There aren't orders for today"
     },
     "updateBalance": {
       "tabName": "Update balance",
@@ -28,12 +31,16 @@
       "balance": "Balance",
       "searchForUser": "Search for user",
       "usersPerPage": "Users per page",
-      "replenish": "Replenish",
+      "replenish": "update",
       "enterSum": "sum",
-      "emptySearch": "There is no such user"
+      "emptySearch": "There is no such user",
+      "of": "of"
     },
     "makeAnOrder": {
-      "tabName": "Make an order"
+      "tabName": "Make an order",
+      "emptyList": "There aren't orders for today",
+      "amount": "Amount",
+      "dishTitle": "Dish"
     }
   },
   "other": {
@@ -45,6 +52,7 @@
     "currency": "BYN",
     "weight": "g",
     "extra": "Extra",
+    "more": "+ more ",
     "daysOfTheWeek": {
       "monday": "Monday",
       "tuesday": "Tuesday",
@@ -55,13 +63,13 @@
       "sunday": "Sunday"
     },
     "daysOfTheWeek_short": {
-      "monday": "mon",
-      "tuesday": "tue",
-      "wednesday": "wed",
-      "thursday": "thu",
-      "friday": "fri",
-      "saturday": "sat",
-      "sunday": "sun"
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun"
     }
   }
 }

@@ -5,6 +5,7 @@ import OrderItem from '../orderItem/orderItem';
 import ShowMore from '../showMore/showMore';
 import { createElementsFromString } from '../../../../common/utils';
 import { rusDays } from '../../../../common/constants';
+import i18n from './../../../../common/i18n';
 
 const MAX_VISIBLE_ITEMS = 3;
 
@@ -57,7 +58,7 @@ export default class Card {
     return {
       totalPrice: props.order ? props.order.totalPrice.toFixed(2) : null,
       active: props.menu && true,
-      button: props.order && true ? 'Редактировать' : 'Заказать',
+      button: props.order && true ? i18n.t('userPage.editOrder') : i18n.t('userPage.makeAnOrder'),
       sumPrice: props.order && true,
       emptyMenu: !(props.menu && true),
       emptyOrder: !(props.order && true),
