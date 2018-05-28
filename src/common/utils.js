@@ -68,3 +68,7 @@ export function getUrlParams() {
   }
   return props;
 }
+export function makeNormalDate(date) {
+  return date.toISOString().slice(0, -1);
+}
+
