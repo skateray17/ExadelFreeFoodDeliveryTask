@@ -17,7 +17,7 @@
       "nextWeek": "Next week",
       "publishMenu": "Publish menu",
       "selectMenu": "Select menu",
-      "nomenu": "There is no menu for the week"
+      "nomenu": "There is no menu on this week"
     },
     "todaysOrder": {
       "tabName": "Today's order",
