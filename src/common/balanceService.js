@@ -1,22 +1,24 @@
 import { get } from './requests';
+import { eventBus } from './eventBus';
 
 let currentBalance;
 
-function loadBalance() {
-  return get('balance/', {}).then((res) => {
+export function loadBalance() {
+  currentBalance = get('balance/', {}).then((res) => {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject();
   }).then((data) => {
     const { balance } = data;
+    eventBus.publish('onBalanceChange', balance);
     return balance;
   });
 }
 
 export function getBalance() {
   if (!currentBalance) {
-    currentBalance = loadBalance();
+    loadBalance();
   }
   return currentBalance;
 }
