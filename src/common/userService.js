@@ -3,7 +3,7 @@ import { get } from './requests';
 let currentUser;
 
 function loadUserInfo() {
-  return get('user/', {}).then((res) => {
+  currentUser = get('user/', {}).then((res) => {
     if (res.ok) {
       return res.json();
     }
@@ -17,7 +17,7 @@ function loadUserInfo() {
 
 export function getUserInfo() {
   if (!currentUser) {
-    currentUser = loadUserInfo();
+    loadUserInfo();
   }
   return currentUser;
 }
