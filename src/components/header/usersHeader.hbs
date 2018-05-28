@@ -1,14 +1,10 @@
 <header class="shadow">
     <div class="header-content">
         <div class="header-content__button-container">
-            {{#if isUserManager}}
-            <div class="header-content__switch-language-container header-content__switch-language-container--manager">   
-                <span class="header-content__language-label header-content__language-label--manager">{{i18n "other.switchLanguage"}}</span>
-                {{else}}
-            <div class="header-content__switch-language-container">
-                <span class="header-content__language-label">{{i18n "other.switchLanguage"}}</span>
-                {{/if}} 
-                <i class="language-ico material-icons">&#xE894;</i>
+            <div class="header-content__switch-language-container header-content__switch-language-container--new-order">
+                <span class="header-content__switch-language-label" data-language='en'>EN</span>
+                <span class="header-content__switch-language-delimiter">/</span>
+                <span class="header-content__switch-language-label" data-language='ru'>RU</span>
             </div>
             {{#if isUserManager}}
             <div class="header-content__switch-mode-button">
