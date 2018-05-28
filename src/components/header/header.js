@@ -49,14 +49,6 @@ export default class Header {
           logout(props.router);
         });
 
-        // to remove
-        if (props.page === 'user') {
-          header.querySelector('.history-ico').addEventListener('click', () => {
-            eventBus.publish('onBalanceChange', 200);
-          });
-        }
-        //
-
         return header;
       });
     });
