@@ -1,9 +1,9 @@
 import './login.css';
 import loginContent from './login.hbs';
 import Spinner from '../../components/spinner/spinner';
-import { getUserInfo } from '../../common/user.service';
-import { checkType, removeCookie, setCookie } from '../../common/utils';
-import { login } from '../../common/login.service';
+import { getUserInfo } from '../../common/userService';
+import { checkType } from '../../common/utils';
+import { login } from '../../common/loginService';
 
 export default class LoginScreen {
   constructor(router) {
@@ -31,28 +31,17 @@ export default class LoginScreen {
 
     const spinner = new Spinner();
     spinner.render(target.querySelector('.login__content'));
-    login(email, password).then((res) => {
-      if (!res.ok) {
-        return Promise.reject();
-      }
-      return res.json();
-    }).then((data) => {
-      setCookie('token', data.token, 365);
-      setCookie('username', data.firstName, 365);
-      setCookie('type', data.type, 365);
-      this.router.navigate(checkType(getUserInfo().type));
+    login(email, password).then(() => {
+      let type;
+      getUserInfo().then((curUser) => {
+        type = curUser.type;
+        this.router.navigate(checkType(type));
+      });
     }).catch(() => {
       this.render(target, { displayError: true, email });
     })
       .finally(() => {
         spinner.destroy();
       });
-  }
-
-  static logOut() {
-    removeCookie('token');
-    removeCookie('username');
-    removeCookie('type');
-    this.router.navigate('login');
   }
 }

@@ -12,6 +12,8 @@ import Toast from '../../components/toast/toast';
 import Popup from '../../components/popup/popup';
 import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 import Spinner from '../../components/spinner/spinner';
+import { eventBus } from '../../common/eventBus';
+import { onBalanceChange } from '../../common/balanceService';
 import serverSendOrder from '../../common/orderService';
 import serverGetBalance from '../../common/balanceService';
 
@@ -107,7 +109,6 @@ function createPropsForCards(menuFromServer) {
         }
       }
     }
-
   }
 
   /**
@@ -128,7 +129,6 @@ function createPropsForCards(menuFromServer) {
         day.order.totalPrice = order.totalPrice;
       }
     }
-
   }
 
   const datesToDisplay = getDatesToDisplay();
@@ -147,6 +147,7 @@ export default class UsersScreen {
   constructor(router) {
     this.router = router;
     this.cards = [];
+    this.unsubscribers = [];
     this.makePopup = this.makePopup.bind(this);
     this.update = this.update.bind(this);
     this.editCardCallback = this.editCardCallback.bind(this);
@@ -158,8 +159,10 @@ export default class UsersScreen {
       router: this.router,
     };
 
-    const header = new Header();
-    header.render(target, props);
+    this.header = new Header();
+    this.header.render(target, props);
+
+    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this.header, target, props)));
 
     const screen = createElementsFromString(template());
     target.appendChild(screen);
@@ -281,4 +284,9 @@ export default class UsersScreen {
     }
 
   }
+
+  destroy() {
+    this.unsubscribers.forEach(unsubscribe => unsubscribe());
+  }
 }
+
