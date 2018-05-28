@@ -1,6 +1,7 @@
 import { makeNormalDate } from './utils';
 import { put } from './requests';
 import Toast from '../components/toast/toast';
+import {loadBalance} from "./balanceService";
 
 export default function serverSendOrder(cardUpdates, spin) {
   const date = makeNormalDate(new Date(cardUpdates.unixDay * 24000 * 3600));
@@ -19,6 +20,7 @@ export default function serverSendOrder(cardUpdates, spin) {
       if (res.status !== 200) {
         throw body;
       }
+      loadBalance();
       return body;
     })
     .catch((body) => {
