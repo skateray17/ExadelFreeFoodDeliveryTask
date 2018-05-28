@@ -1,5 +1,7 @@
 import './index.css';
-import Card from './components/userContent/cardTemplate/card';
+import Card from './components/userContent/cardTemplate/card/card';
+import EditCard from './components/userContent/cardTemplate/editCard/editCard';
+import Popup from './components/popup/popup';
 
 const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const engDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -48,6 +50,7 @@ const menuFromServer = {
           name: 'суп из чечевицы с овощами',
           weight: 350,
           cost: 1.3,
+          quantity: 5,
         },
         {
           name: 'голубцы ленивые',
@@ -256,5 +259,21 @@ for (let order of dataFromServer.dishList) {
     }
   }
 }
+const propsEdit = {
+  header: {
+    weekday: days[new Date(dataFromServer.date).getDay() - 1],
+    date: new Date(dataFromServer.date).toDateString(),
+  },
+  menu: menuFromServer.menu.mon.menu,
+  totalCost: 6.5,
+};
+const propsPopup = {
+  data: propsEdit,
+  elem: EditCard,
+};
 const card = new Card();
-card.render(document.getElementById('card-test'), props);
+const editCard = new EditCard();
+//card.render(document.getElementById('card-test'), props);
+const popup = new Popup();
+popup.render(propsPopup);
+//editCard.render(document.getElementById('card-test'), propsEdit);

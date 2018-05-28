@@ -158,7 +158,6 @@ export default class MenuTable {
         .catch(() => {
           Toast.show({ title: 'Network error', type: 'error' });
           this.showError('Cannot upload file. Please try again.');
-          document.querySelector('.file-msg').value = 'no file selected';
         })
         .finally(() => {
           spinner.destroy();
@@ -189,5 +188,7 @@ export default class MenuTable {
     } else {
       parent.appendChild(error);
     }
+    const fileMsg = document.querySelector('.file-msg');
+    if (fileMsg) fileMsg.innerText = 'no file selected';
   }
 }
