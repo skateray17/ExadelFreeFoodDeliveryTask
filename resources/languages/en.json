@@ -52,6 +52,7 @@
     "currency": "BYN",
     "weight": "g",
     "extra": "Extra",
+    "more": "+ more ",
     "daysOfTheWeek": {
       "monday": "Monday",
       "tuesday": "Tuesday",
