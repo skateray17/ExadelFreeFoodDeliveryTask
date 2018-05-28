@@ -45,8 +45,9 @@
     text-align: start;
 }
 .quantity-center{
+    user-select: none;
     color: white;
-    background: rgb(90, 173, 60);
+    background:  #989ea7;
     border-radius: 100px;
     width: 60px;
     display: flex;

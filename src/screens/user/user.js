@@ -12,6 +12,8 @@ import Toast from '../../components/toast/toast';
 import Popup from '../../components/popup/popup';
 import EditCard from '../../components/userContent/cardTemplate/editCard/editCard';
 import Spinner from '../../components/spinner/spinner';
+import serverSendOrder from '../../common/orderService';
+import serverGetBalance from '../../common/balanceService';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
@@ -126,6 +128,7 @@ function createPropsForCards(menuFromServer) {
         day.order.totalPrice = order.totalPrice;
       }
     }
+
   }
 
   const datesToDisplay = getDatesToDisplay();
@@ -139,50 +142,7 @@ function createPropsForCards(menuFromServer) {
   return propsForCards;
 }
 
-function serverSendOrder(cardUpdates, spin) {
-  const date = makeNormalDate(new Date(cardUpdates.unixDay * 24000 * 3600));
-  const dishList = [];
-  cardUpdates.order.forEach((el) => {
-    dishList.push({
-      dishTitle: el.name,
-      amount: el.quantity,
-    });
-  });
-  return put('order/', {
-    'content-type': 'application/json',
-  }, {}, JSON.stringify({ dishList, date }))
-    .then((res) => {
-      if (res.status !== 200) {
-        return Promise.reject();
-      }
-      return res.json();
-    })
-    .catch((err) => {
-      Toast.show({
-        title: 'Server error',
-        type: 'error',
-        canDismiss: true,
-      });
-    })
-    .finally(() => {
-      spin.destroy();
-    });
-}
-function serverGetBalance(res) {
-  if (res) {
-    get('balance', {})
-      .then((response) => {
-        if (response.status !== 200) {
-          return Promise.reject();
-        }
-        return response.json();
-      })
-      .then((body) => {
-        console.log(body.balance);
-      });
-  }
-  return res;
-}
+
 export default class UsersScreen {
   constructor(router) {
     this.router = router;
@@ -240,6 +200,17 @@ export default class UsersScreen {
     });
     if (props.order) {
       props.order.forEach((order) => {
+        popupOrders.find((el, i) => {
+          if (el.name === order.name) {
+            popupOrders[i].quantity = order.quantity;
+            return true;
+          }
+          return false;
+        });
+      });
+    }
+    if (props.common) {
+      props.common.forEach((order) => {
         popupOrders.find((el, i) => {
           if (el.name === order.name) {
             popupOrders[i].quantity = order.quantity;

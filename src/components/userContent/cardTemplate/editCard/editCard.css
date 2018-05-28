@@ -18,7 +18,7 @@
   padding: 10px 20px 5px 20px;
   display: flex;
   justify-content: space-between;
-  color: rgb(90, 173, 60);
+  color: #3e2dd6;
   font-size: 19px;
 }
 .edit-card-footer{
@@ -29,14 +29,14 @@
   margin-bottom: 10px;
 }
 .edit-card-cancel{
-  background: red;
+  background: #d64343;
   color: white;
   width: 49%;
   height: 30px;
   font-size: 19px;
 }
 .edit-card-sub{
-  background: #0acd0a;
+  background: #39c139;
   color: white;
   width: 49%;
   height: 30px;
