@@ -48,6 +48,10 @@ export default class Header {
         header.querySelector('.exit-ico').addEventListener('click', () => {
           logout(props.router);
         });
+        target.querySelector('.header-content__switch-language-container').addEventListener('click', (event) => { switchLanguage(event); });
+
+        const selectedLanguage = localStorage.getItem('language');
+        header.querySelector(`[data-language=${selectedLanguage}]`).classList.add('header-content__switch-language-label--selected');
 
         return header;
       });
@@ -64,12 +68,18 @@ function switchMode(props) {
   }
 }
 
-function switchLanguage(props) {
+function switchLanguage(event) {
+  const target = event.target;
   const language = localStorage.getItem('language');
-  if (language === 'ru') {
-    localStorage.setItem('language', 'en');
-  } else {
-    localStorage.setItem('language', 'ru');
+  if (!target.classList.contains('header-content__switch-language-label')) {
+    return false;
   }
-  window.location.reload();
+  if (target.getAttribute('data-language') === 'ru' && language !== 'ru') {
+    localStorage.setItem('language', 'ru');
+    window.location.reload();
+  }
+  if (target.getAttribute('data-language') === 'en' && language !== 'en') {
+    localStorage.setItem('language', 'en');
+    window.location.reload();
+  }
 }
