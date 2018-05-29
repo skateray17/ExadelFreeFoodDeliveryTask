@@ -105,11 +105,13 @@ function createPropsForCards(menuFromServer) {
           menuWithOrders.push({
             unixDay: toUnixDay(new Date(week[weekDay].day)),
             menu: week[weekDay],
+            common: week.common,
           });
         }
       }
     }
   }
+
 
 
   /**
@@ -128,6 +130,9 @@ function createPropsForCards(menuFromServer) {
           addOrderItem(item, day.menu.menu, day);
         });
         day.order.totalPrice = order.totalPrice;
+        if (day.orderedCommon) {
+          day.orderedCommon = order.orderedCommon;
+        }
       }
     }
   }
@@ -140,6 +145,7 @@ function createPropsForCards(menuFromServer) {
       unixDay: Math.round(day.getTime() / 24000 / 3600),
     }));
 
+  console.log(propsForCards);
   return propsForCards;
 }
 
@@ -169,6 +175,7 @@ export default class UsersScreen {
     target.appendChild(screen);
 
     fetchMenu().then((menu) => {
+      console.log(menu);
       menuFromServer = menu;
       getUserOrders(
         new Date().toISOString().slice(0, -1),
