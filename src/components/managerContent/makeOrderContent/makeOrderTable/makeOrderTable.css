@@ -15,11 +15,13 @@
 
 .make-order__dish-title {
     font-size: 18px;
+    font-weight: 300;
     color: #212121;
 }
 
 .make-order__amount {
     font-size: 18px;
+    font-weight: 300;
     padding-left: 60px;
     color: #212121;
 }

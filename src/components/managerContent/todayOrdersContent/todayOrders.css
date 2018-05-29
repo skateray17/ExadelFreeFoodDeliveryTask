@@ -40,7 +40,6 @@
   max-width: 25%;
 }}
 .today-orders__container {
-  justify-content: space-between;
   flex: 1;
   margin-top: 20px;
   padding-right: 15px;
@@ -62,6 +61,7 @@
 }
 .today-orders__text{
   font-size: 18px;
+  font-weight: 300;
 }
 .today-orders__empty{
   margin: auto;

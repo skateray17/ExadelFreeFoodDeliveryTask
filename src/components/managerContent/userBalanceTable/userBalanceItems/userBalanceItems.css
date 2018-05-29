@@ -10,6 +10,7 @@
 
 .user-balance__user-name-title, .user-balance__balance-title{
   font-size: 18px;
+  font-weight: 300;
   color: #6E6E6E;
 }
 
@@ -26,6 +27,7 @@
 
 .user-balance__user-name, .user-balance__balance, .user-balance__currency{
   font-size: 18px;
+  font-weight: 300;
   color: #212121;
 }
 
