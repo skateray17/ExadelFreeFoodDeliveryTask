@@ -34,6 +34,9 @@ export default class Card {
     }
   }
   createOrderItem(cardItem, order) {
+    if (order.price) {
+      order.price = (+order.price).toFixed(2);
+    }
     const orderItem = new OrderItem();
     orderItem.render(cardItem.querySelector('.card-content'), order);
   }
