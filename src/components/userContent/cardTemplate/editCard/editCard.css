@@ -15,6 +15,8 @@
     font-size: 19px;
 }
 .total-cost{
+  margin-left: 10px;
+  margin-right: 10px;
   padding: 10px 20px 5px 20px;
   display: flex;
   justify-content: space-between;
@@ -29,6 +31,7 @@
   margin-bottom: 10px;
 }
 .edit-card-cancel{
+  cursor: pointer;
   background: #d64343;
   color: white;
   width: 49%;
@@ -36,6 +39,7 @@
   font-size: 19px;
 }
 .edit-card-sub{
+  cursor: pointer;
   background: #39c139;
   color: white;
   width: 49%;

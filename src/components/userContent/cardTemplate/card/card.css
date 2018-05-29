@@ -56,7 +56,14 @@
     margin: 20px 0;
     font-size: 19px;
 }
-
+.card-total-price{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.card-price-num{
+  font-size: 19px;
+}
 .edit-button {
     border: none;
     color: white;

@@ -28,6 +28,8 @@ export default class EditCard {
     }
     this.state.unixDay = props.data.unixDay;
     this.state.menu = props.data.menu;
+    this.state.orderedCommon = props.data.orderedCommon;
+    this.state.common = props.data.common;
     this.updateTotal();
     const header = new Header();
     header.render(target.querySelector('.header'), this.createHeaderProps(props.data));
@@ -42,6 +44,12 @@ export default class EditCard {
         if (!temp.index) {
           temp.index = I++;
         }
+        if (temp.quantity === 0) {
+          temp.color = 'gray';
+        } else {
+          temp.color = 'blue';
+        }
+        temp.cost = temp.cost.toFixed(2);
         temp.callback = this.itemChange;
         this.state.order.push(temp);
         this.createMenuItem(target, temp);
@@ -78,6 +86,8 @@ export default class EditCard {
       order: this.state.order,
       target: this.onScreenTarget,
       menu: this.state.menu,
+      common: this.state.common,
+      orderedCommon: this.state.orderedCommon,
     });
   }
 

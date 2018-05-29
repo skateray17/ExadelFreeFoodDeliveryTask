@@ -47,12 +47,17 @@
 .quantity-center{
     user-select: none;
     color: white;
-    background:  #989ea7;
     border-radius: 100px;
     width: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.quantity-center[color="gray"]{
+    background:  #989ea7;
+}
+.quantity-center[color="blue"]{
+  background:  #008AFF;
 }
 .weight,.cost{
   font-size: 19px;
