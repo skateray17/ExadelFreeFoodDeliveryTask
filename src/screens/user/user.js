@@ -105,11 +105,13 @@ function createPropsForCards(menuFromServer) {
           menuWithOrders.push({
             unixDay: toUnixDay(new Date(week[weekDay].day)),
             menu: week[weekDay],
+            common: week.common,
           });
         }
       }
     }
   }
+
 
 
   /**
@@ -128,6 +130,9 @@ function createPropsForCards(menuFromServer) {
           addOrderItem(item, day.menu.menu, day);
         });
         day.order.totalPrice = order.totalPrice;
+        if (day.orderedCommon) {
+          day.orderedCommon = order.orderedCommon;
+        }
       }
     }
   }
