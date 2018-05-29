@@ -1,15 +1,16 @@
 .login__screen {
-    width: 350px;
-    padding: 8% 0 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    max-width: 350px;
     margin: auto;
+    height: 100vh;
 }
 
 .login__content {
     position: relative;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 350px;
-    margin: 0 auto 100px;
     padding: 40px 30px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -20,7 +21,7 @@
     display: block;
     font-size: 27px;
     font-weight: lighter;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     margin: auto auto 15px;
 }
 
@@ -68,16 +69,4 @@
 
 .hidden{
     display: none;
-}
-
-@media screen and (max-width: 960px) {
-    #login__content {
-        padding: 120px 0;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    #login__content {
-        padding: 50px 0;
-    }
 }

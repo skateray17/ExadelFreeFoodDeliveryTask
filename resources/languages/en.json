@@ -4,11 +4,11 @@
     "switchToManagerPage": "Switch to manager"
   },
   "userPage": {
-    "unchosenMenu": "No menu selected",
+    "unchosenMenu": "No order yet",
     "unavailableMenu": "Unavailable menu",
     "makeAnOrder": "Make order",
     "editOrder": "Edit order",
-    "cancel": "Cancel"
+    "cancel": "Reset"
   },
   "managerPage": {
     "uploadMenu": {
@@ -54,6 +54,9 @@
     "weight": "g",
     "extra": "Extra",
     "more": "+ more ",
+    "somethingWrong": "Something went wrong. Please, reload page.",
+    "networkError": "Network error",
+    "uploadError": "Cannot upload file. Please try again.",
     "daysOfTheWeek": {
       "monday": "Monday",
       "tuesday": "Tuesday",

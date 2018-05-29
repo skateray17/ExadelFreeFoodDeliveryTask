@@ -10,21 +10,34 @@ export default class MenuItem {
     };
     this.plusDish = this.plusDish.bind(this);
     this.minDish = this.minDish.bind(this);
+    this.resetDish = this.resetDish.bind(this);
   }
-  updateHTML() {
+  updateHTML(plus) {
+    if (plus && this.state.quantity === 1) {
+      const center = this.target.querySelector('.quantity-center');
+      center.style.background = '#008AFF';
+    } else if (!plus && this.state.quantity === 0) {
+      const center = this.target.querySelector('.quantity-center');
+      center.style.background = '#989ea7';
+    }
     const quantity = this.target.querySelector('.quantity');
     quantity.innerHTML = this.state.quantity;
   }
-  plusDish(event) {
+  plusDish() {
     this.state.quantity++;
-    this.updateHTML(event.currentTarget);
+    this.updateHTML(true);
     this.callback(this.state);
   }
-  minDish(event) {
+  minDish() {
     if (this.state.quantity > 0) {
       this.state.quantity--;
     }
-    this.updateHTML(event.currentTarget);
+    this.updateHTML(false);
+    this.callback(this.state);
+  }
+  resetDish() {
+    this.state.quantity = 0;
+    this.updateHTML(false);
     this.callback(this.state);
   }
   render(target, props) {

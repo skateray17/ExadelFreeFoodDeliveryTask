@@ -1,18 +1,18 @@
 {
   "header": {
-    "switchToUserPage": "Сделать заказ",
+    "switchToUserPage": "Заказать обед",
     "switchToManagerPage": "Страница менеджера"
   },
   "userPage": {
-    "unchosenMenu": "Меню не выбрано",
+    "unchosenMenu": "Заказ не сделан",
     "unavailableMenu": "Меню ещё не доступно",
     "makeAnOrder": "Заказать",
     "editOrder": "Редактировать",
-    "cancel": "Отменить"
+    "cancel": "Сбросить"
   },
   "managerPage": {
     "uploadMenu": {
-      "tabName": "Загрузить меню",
+      "tabName": "Загрузка меню",
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
@@ -54,6 +54,9 @@
     "weight": "г",
     "extra": "Дополнительно",
     "more": "+ ещё ",
+    "somethingWrong": "Что-то пошло не так. Перезагрузите страницу.",
+    "networkError": "Ошибка сети",
+    "uploadError": "Ошибка загрузки файла.",
     "daysOfTheWeek": {
       "monday": "Понедельник",
       "tuesday": "Вторник",

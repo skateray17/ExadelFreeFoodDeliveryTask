@@ -15,6 +15,8 @@ export default class EditCard {
     this.updateTotal = this.updateTotal.bind(this);
     this.submit = this.submit.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.createMenuItem = this.createMenuItem.bind(this);
+    this.menuItems = [];
   }
   render(target, props) {
     this.onScreenTarget = props.data.target;
@@ -28,6 +30,8 @@ export default class EditCard {
     }
     this.state.unixDay = props.data.unixDay;
     this.state.menu = props.data.menu;
+    this.state.orderedCommon = props.data.orderedCommon;
+    this.state.common = props.data.common;
     this.updateTotal();
     const header = new Header();
     header.render(target.querySelector('.header'), this.createHeaderProps(props.data));
@@ -42,6 +46,12 @@ export default class EditCard {
         if (!temp.index) {
           temp.index = I++;
         }
+        if (temp.quantity === 0) {
+          temp.color = 'gray';
+        } else {
+          temp.color = 'blue';
+        }
+        temp.cost = temp.cost.toFixed(2);
         temp.callback = this.itemChange;
         this.state.order.push(temp);
         this.createMenuItem(target, temp);
@@ -56,7 +66,7 @@ export default class EditCard {
     return editCardHTML;
   }
   updateTotal() {
-    this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)}Р`;
+    this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)} BYN`;
   }
   itemChange(state) {
     this.state.order[state.index].quantity = state.quantity;
@@ -67,8 +77,8 @@ export default class EditCard {
     this.updateTotal();
   }
   cancel() {
-    this.callback({
-      status: 'Cancel',
+    this.menuItems.forEach((el) => {
+      el.resetDish();
     });
   }
   submit() {
@@ -78,11 +88,14 @@ export default class EditCard {
       order: this.state.order,
       target: this.onScreenTarget,
       menu: this.state.menu,
+      common: this.state.common,
+      orderedCommon: this.state.orderedCommon,
     });
   }
 
   createMenuItem(target, item) {
     const menuItem = new MenuItem();
+    this.menuItems.push(menuItem);
     menuItem.render(target.querySelector('.edit-card-content'), item);
   }
 

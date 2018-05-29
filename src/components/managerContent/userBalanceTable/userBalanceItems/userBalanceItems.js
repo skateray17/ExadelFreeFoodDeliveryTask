@@ -1,9 +1,8 @@
 import './userBalanceItems.css';
 import template from './userBalanceItems.hbs';
 import { createElementsFromString } from '../../../../common/utils';
-import { put } from '../../../../common/requests';
 import Toast from '../../../toast/toast';
-import {loadBalance} from "../../../../common/balanceService";
+import { changeUserBalance } from '../../../../common/balanceService';
 
 export default class UserBalanceItems {
   render(target, props) {
@@ -36,16 +35,7 @@ export default class UserBalanceItems {
         input.value = '';
         if (!Number.isNaN(toAdd)) {
           const ind = [].indexOf.call(this.elem.children, e.target.parentNode) - 1;
-          put('balance/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({
-            username: this.props.result[ind].username,
-            balance: toAdd,
-          })).then((res) => {
-            if (res.ok) {
-              loadBalance();
-              return res.json();
-            }
-            return Promise.reject();
-          })
+          changeUserBalance(this.props.result[ind].username, toAdd)
             .then((res) => {
               this.props.result[ind].balance = res.balance;
               this.rerender(this.props);

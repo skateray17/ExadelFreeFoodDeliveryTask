@@ -15,7 +15,6 @@ import Spinner from '../../components/spinner/spinner';
 import { eventBus } from '../../common/eventBus';
 import { onBalanceChange } from '../../common/balanceService';
 import serverSendOrder from '../../common/orderService';
-import serverGetBalance from '../../common/balanceService';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
@@ -105,11 +104,13 @@ function createPropsForCards(menuFromServer) {
           menuWithOrders.push({
             unixDay: toUnixDay(new Date(week[weekDay].day)),
             menu: week[weekDay],
+            common: week.common,
           });
         }
       }
     }
   }
+
 
 
   /**
@@ -121,13 +122,29 @@ function createPropsForCards(menuFromServer) {
       const day = menuWithOrders.find((day) => {
         return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
       });
-
       if (day) {
+        day.orderedCommon = [];
         day.order = [];
         order.dishList.forEach((item) => {
-          addOrderItem(item, day.menu.menu, day);
+          addOrderItem(item, [].concat(day.menu.menu, day.common.menu), day);
         });
-        day.order.totalPrice = order.totalPrice;
+        for (let i = 0; i < day.order.length; i++) {
+          const el = day.order[i];
+          if (day.common.menu.find((e) => {
+            if (e.name === el.name) {
+              return true;
+            }
+            return false;
+          })) {
+            day.orderedCommon.push(el);
+            day.order.splice(i, 1);
+            i--;
+          }
+        }
+        day.totalPrice = order.totalPrice;
+        if (day.order.length === 0) {
+          day.order = undefined;
+        }
       }
     }
   }
@@ -191,6 +208,7 @@ export default class UsersScreen {
       });
     });
   }
+
   makePopup(props) {
     const { menu } = props.menu;
     const popupOrders = [];
@@ -214,7 +232,16 @@ export default class UsersScreen {
       });
     }
     if (props.common) {
-      props.common.forEach((order) => {
+      props.common.menu.forEach((el) => {
+        popupOrders.push({
+          name: el.name,
+          cost: el.cost,
+          quantity: 0,
+        });
+      });
+    }
+    if (props.orderedCommon) {
+      props.orderedCommon.forEach((order) => {
         popupOrders.find((el, i) => {
           if (el.name === order.name) {
             popupOrders[i].quantity = order.quantity;
@@ -225,9 +252,11 @@ export default class UsersScreen {
       });
     }
     const propsEdit = {
+      common: props.common,
+      orderedCommon: props.orderedCommon,
       menu: props.menu,
       orders: popupOrders,
-      totalCost: props.order ? props.order.totalPrice : 0,
+      totalCost: props.totalPrice ? props.totalPrice : 0,
       target: props.target,
       unixDay: props.unixDay,
     };
@@ -238,6 +267,7 @@ export default class UsersScreen {
     };
     this.closePopup = Popup.show(propsPopup);
   }
+
   editCardCallback(res) {
     if (res.status === 'Cancel') {
       this.closePopup();
@@ -259,19 +289,34 @@ export default class UsersScreen {
         unixDay: res.unixDay,
         target: res.target,
         menu: res.menu,
+        common: res.common,
       };
       const spin = new Spinner();
       spin.render(cardUpdates.target);
       const date = new Date(res.unixDay * 24000 * 3600);
       serverSendOrder(cardUpdates, spin)
-        .then(serverGetBalance)
         .then((response) => {
           if (response) {
-            if (response.totalPrice === 0) {
-              cardUpdates.order = undefined;
-            } else {
-              cardUpdates.order.totalPrice = response.totalPrice;
+            cardUpdates.orderedCommon = [];
+            if (cardUpdates.order) {
+              for (let i = 0; i < cardUpdates.order.length; i++) {
+                const el = cardUpdates.order[i];
+                if (cardUpdates.common.menu.find((e) => {
+                  if (e.name === el.name) {
+                    return true;
+                  }
+                  return false;
+                })) {
+                  cardUpdates.orderedCommon.push(el);
+                  cardUpdates.order.splice(i, 1);
+                  i--;
+                }
+              }
             }
+            if (cardUpdates.order.length === 0) {
+              cardUpdates.order = undefined;
+            }
+            cardUpdates.totalPrice = response.totalPrice;
             this.update(cardUpdates, date);
           }
         });

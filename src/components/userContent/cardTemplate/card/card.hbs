@@ -19,7 +19,10 @@
         {{#if active}}
             <div class="card-footer">
                 {{#if sumPrice}}
-                    <div class="order-price">{{i18n 'other.amount'}}{{totalPrice}} р</div>
+                <div class="card-total-price">
+                    <div class="order-price">{{i18n 'other.amount'}}</div>
+                    <div class="card-price-num">{{totalPrice}} BYN</div>
+                </div>
                 {{/if}}
                 {{#if showButton }}
                     <button class="edit-button">{{button}}</button>

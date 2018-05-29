@@ -6,6 +6,7 @@ import ShowMore from '../showMore/showMore';
 import { createElementsFromString } from '../../../../common/utils';
 import { rusDays } from '../../../../common/constants';
 import i18n from './../../../../common/i18n';
+import Popup from '../../../popup/popup';
 
 const MAX_VISIBLE_ITEMS = 3;
 
@@ -16,6 +17,7 @@ export default class Card {
     this.target.addEventListener('click', this.onEdit);
     this.props = props;
     this.id = props.unixDay;
+    this.onMore = this.onMore.bind(this);
   }
 
   render(target, props) {
@@ -26,6 +28,9 @@ export default class Card {
     const cardItem = target.appendChild(createElementsFromString(cardTemplate));
     this.insertCardContent(cardItem, props, target);
     this.cardShadow = target.querySelector('.card.shadow');
+    if (props.inPopup) {
+      this.cardShadow.style.height = 'auto';
+    }
     return cardItem;
   }
   onEdit(event) {
@@ -34,15 +39,23 @@ export default class Card {
     }
   }
   createOrderItem(cardItem, order) {
+    if (order.price) {
+      order.price = (+order.price).toFixed(2);
+    }
     const orderItem = new OrderItem();
     orderItem.render(cardItem.querySelector('.card-content'), order);
   }
-
+  onMore() {
+    const propsPopup = Object.assign({ elem: Card, inPopup: true }, this.props);
+    Popup.show(propsPopup);
+  }
   createShowMore(target, props) {
     const showMore = new ShowMore();
-    showMore.render(target.querySelector('.free-space'), {
+    const space = target.querySelector('.free-space');
+    showMore.render(space, {
       numberOfAdditionalOrders: props.order.length - MAX_VISIBLE_ITEMS,
     });
+    space.addEventListener('click', this.onMore);
   }
 
   createHeaderProps(props) {
@@ -56,13 +69,13 @@ export default class Card {
 
   createCardProps(props) {
     return {
-      totalPrice: props.order ? props.order.totalPrice.toFixed(2) : null,
+      totalPrice: props.order ? props.totalPrice.toFixed(2) : null,
       active: props.menu && true,
       button: props.order && true ? i18n.t('userPage.editOrder') : i18n.t('userPage.makeAnOrder'),
       sumPrice: props.order && true,
       emptyMenu: !(props.menu && true),
       emptyOrder: !(props.order && true),
-      showButton: props.menu && true ? props.menu.available : false,
+      showButton: props.menu && !props.inPopup && true ? props.menu.available : false,
       imageUrl: require('../../../../images/not-chosen-menu.png'),
     };
   }
@@ -72,7 +85,7 @@ export default class Card {
     header.render(cardItem.querySelector('.header'), this.createHeaderProps(props));
 
     if (props.order) {
-      if (props.order.length > MAX_VISIBLE_ITEMS /* && props.header.active */) {
+      if (!this.props.inPopup && props.order.length > MAX_VISIBLE_ITEMS /* && props.header.active */) {
         this.createShowMore(target, props);
 
         for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
@@ -80,7 +93,7 @@ export default class Card {
         }
       } else if (
         props.order.length > 0
-        && props.order.length <= MAX_VISIBLE_ITEMS
+        && (props.order.length <= MAX_VISIBLE_ITEMS || this.props.inPopup)
         && props.menu
       ) {
         for (const order of props.order) {

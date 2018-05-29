@@ -10,8 +10,10 @@ import i18n from './../../common/i18n';
 import { eventBus } from '../../common/eventBus';
 import { onBalanceChange } from '../../common/balanceService';
 
-const tabs = [
-  {
+let tabs = [];
+
+function setTabs() {
+  tabs =   [{
     component: new Menu(),
     title: i18n.t('managerPage.uploadMenu.tabName'),
     icon: '&#xE561;',
@@ -30,8 +32,8 @@ const tabs = [
     component: new MakeOrder(),
     title: i18n.t('managerPage.makeAnOrder.tabName'),
     icon: '&#xE8CC;',
-  },
-];
+  }];
+}
 
 export default class ManagerHomeScreen {
   constructor(router) {
@@ -47,7 +49,7 @@ export default class ManagerHomeScreen {
     this.header = new Header();
     this.header.render(target, props);
     this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this.header, target, props)));
-
+    setTabs();
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
     target.appendChild(screen);
     const contentTarget = target.querySelector('.manager-content');
