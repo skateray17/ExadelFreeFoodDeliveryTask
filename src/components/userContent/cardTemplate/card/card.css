@@ -1,11 +1,18 @@
 .card {
     margin-bottom: 30px;
-    min-width: 355px;
+    width: 355px;
     height: 480px;
     display: flex;
     flex-direction: column;
     background-color: white;
     font-size: 19px;
+}
+
+@media screen and (max-width: 330px) {
+    .card {
+        width: 310px;
+    }
+
 }
 
 .jc {
