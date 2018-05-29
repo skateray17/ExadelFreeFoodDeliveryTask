@@ -15,7 +15,6 @@ import Spinner from '../../components/spinner/spinner';
 import { eventBus } from '../../common/eventBus';
 import { onBalanceChange } from '../../common/balanceService';
 import serverSendOrder from '../../common/orderService';
-import serverGetBalance from '../../common/balanceService';
 
 const VISIBLE_NUMBER_OF_CARDS = 8;
 const WEEK = VISIBLE_NUMBER_OF_CARDS * 24 * 60 * 60 * 1000;
@@ -296,7 +295,6 @@ export default class UsersScreen {
       spin.render(cardUpdates.target);
       const date = new Date(res.unixDay * 24000 * 3600);
       serverSendOrder(cardUpdates, spin)
-        .then(serverGetBalance)
         .then((response) => {
           if (response) {
             cardUpdates.orderedCommon = [];

@@ -10,6 +10,7 @@ export default class MenuItem {
     };
     this.plusDish = this.plusDish.bind(this);
     this.minDish = this.minDish.bind(this);
+    this.resetDish = this.resetDish.bind(this);
   }
   updateHTML(plus) {
     if (plus && this.state.quantity === 1) {
@@ -31,6 +32,11 @@ export default class MenuItem {
     if (this.state.quantity > 0) {
       this.state.quantity--;
     }
+    this.updateHTML(false);
+    this.callback(this.state);
+  }
+  resetDish() {
+    this.state.quantity = 0;
     this.updateHTML(false);
     this.callback(this.state);
   }

@@ -15,6 +15,8 @@ export default class EditCard {
     this.updateTotal = this.updateTotal.bind(this);
     this.submit = this.submit.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.createMenuItem = this.createMenuItem.bind(this);
+    this.menuItems = [];
   }
   render(target, props) {
     this.onScreenTarget = props.data.target;
@@ -75,8 +77,8 @@ export default class EditCard {
     this.updateTotal();
   }
   cancel() {
-    this.callback({
-      status: 'Cancel',
+    this.menuItems.forEach((el) => {
+      el.resetDish();
     });
   }
   submit() {
@@ -93,6 +95,7 @@ export default class EditCard {
 
   createMenuItem(target, item) {
     const menuItem = new MenuItem();
+    this.menuItems.push(menuItem);
     menuItem.render(target.querySelector('.edit-card-content'), item);
   }
 
