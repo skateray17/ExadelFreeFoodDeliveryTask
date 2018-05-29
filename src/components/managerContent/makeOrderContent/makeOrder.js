@@ -32,7 +32,7 @@ export default class MakeOrderPage {
     makeOrderHeader.render(makeOrderTableElement, props);
 
     const spinner = new Spinner();
-    spinner.render(document.querySelector('.manager-home-screen'));
+    spinner.render(document.querySelector('.content'));
     get('order/', {}, { currentDate: new Date().toISOString().replace('Z', '') })
       .then(response => response.json())
       .then((res) => {
@@ -49,6 +49,7 @@ export default class MakeOrderPage {
           });
           totalPrice += item.totalPrice;
         });
+        totalPrice = parseFloat((totalPrice).toFixed(2));
         makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
         makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
         makeOrderFooter.render(makeOrderTableElement, props);
