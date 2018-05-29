@@ -99,8 +99,8 @@ function createPropsForCards(menuFromServer) {
         }
       }
     }
-
   }
+
 
   /**
    * inserting orders
@@ -127,7 +127,7 @@ function createPropsForCards(menuFromServer) {
   const propsForCards = datesToDisplay.map(day =>
     menuWithOrders.find(c => c.unixDay === Math.round(day.getTime() / 24000 / 3600))
     || emptyCardProps({
-      unixDay: Math.floor(day.getTime() / 24000 / 3600),
+      unixDay: Math.round(day.getTime() / 24000 / 3600),
     }));
 
   return propsForCards;
