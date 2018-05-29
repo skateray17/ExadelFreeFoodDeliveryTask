@@ -305,19 +305,22 @@ export default class UsersScreen {
               cardUpdates.order.totalPrice = response.totalPrice;
             }
             cardUpdates.orderedCommon = [];
-            for (let i = 0; i < cardUpdates.order.length; i++) {
-              const el = cardUpdates.order[i];
-              if (cardUpdates.common.menu.find((e) => {
-                if (e.name === el.name) {
-                  return true;
+            if (cardUpdates.order) {
+              for (let i = 0; i < cardUpdates.order.length; i++) {
+                const el = cardUpdates.order[i];
+                if (cardUpdates.common.menu.find((e) => {
+                  if (e.name === el.name) {
+                    return true;
+                  }
+                  return false;
+                })) {
+                  cardUpdates.orderedCommon.push(el);
+                  cardUpdates.order.splice(i, 1);
+                  i--;
                 }
-                return false;
-              })) {
-                cardUpdates.orderedCommon.push(el);
-                cardUpdates.order.splice(i, 1);
-                i--;
               }
             }
+
             this.update(cardUpdates, date);
           }
         });
