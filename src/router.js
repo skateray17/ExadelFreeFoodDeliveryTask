@@ -78,4 +78,8 @@ export default class Router {
       this.navigate(this.routes.rootPath);
     }
   }
+
+  reload() {
+    this.render(window.location.href);
+  }
 }

@@ -42,3 +42,20 @@ export const typeOfToast = {
   info: '#ABE1FF',
   success: '#8FE8A4',
 };
+
+export function reInit() {
+  daysOfWeek.mon = i18n.t('other.daysOfTheWeek.monday');
+  daysOfWeek.tue = i18n.t('other.daysOfTheWeek.tuesday');
+  daysOfWeek.wed = i18n.t('other.daysOfTheWeek.wednesday');
+  daysOfWeek.thu = i18n.t('other.daysOfTheWeek.thursday');
+  daysOfWeek.fri = i18n.t('other.daysOfTheWeek.friday');
+  daysOfWeek.sat = i18n.t('other.daysOfTheWeek.saturday');
+
+  rusDays[0] = i18n.t('other.daysOfTheWeek_short.sunday');
+  rusDays[1] = i18n.t('other.daysOfTheWeek_short.monday');
+  rusDays[2] = i18n.t('other.daysOfTheWeek_short.tuesday');
+  rusDays[3] = i18n.t('other.daysOfTheWeek_short.wednesday');
+  rusDays[4] = i18n.t('other.daysOfTheWeek_short.thursday');
+  rusDays[5] = i18n.t('other.daysOfTheWeek_short.friday');
+  rusDays[6] = i18n.t('other.daysOfTheWeek_short.saturday');
+}
