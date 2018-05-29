@@ -1,6 +1,6 @@
 {
   "header": {
-    "switchToUserPage": "Сделать заказ",
+    "switchToUserPage": "Заказать обед",
     "switchToManagerPage": "Страница менеджера"
   },
   "userPage": {
@@ -12,7 +12,7 @@
   },
   "managerPage": {
     "uploadMenu": {
-      "tabName": "Загрузить меню",
+      "tabName": "Загрузка меню",
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
