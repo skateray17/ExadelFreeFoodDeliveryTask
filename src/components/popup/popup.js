@@ -18,8 +18,8 @@ export default class Popup {
   static show(props) {
     const popupHTML = createElementsFromString(popup());
     document.querySelector('body').appendChild(popupHTML);
-    const elem = new props.elem();
     const popupEl = document.querySelector('.popup');
+    const elem = new props.elem(popupEl, props);
     elem.render(popupEl, props);
     popupEl.addEventListener('click', backClick);
     return close;
