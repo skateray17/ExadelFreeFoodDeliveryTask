@@ -54,6 +54,9 @@
     "weight": "г",
     "extra": "Дополнительно",
     "more": "+ ещё ",
+    "somethingWrong": "Что-то пошло не так. Перезагрузите страницу.",
+    "networkError": "Ошибка сети",
+    "uploadError": "Ошибка загрузки файла.",
     "daysOfTheWeek": {
       "monday": "Понедельник",
       "tuesday": "Вторник",
