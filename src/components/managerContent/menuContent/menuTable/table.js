@@ -24,8 +24,8 @@ export default class MenuTable {
         this.renderContent(target, weeksMenu);
       })
       .catch(() => {
-        Toast.show({ title: 'Network error', type: 'error' });
-        this.showError('Something get wrong. Please reload page.');
+        Toast.show({ title: i18n.t('other.networkError'), type: 'error' });
+        this.showError(i18n.t('other.somethingWrong'));
       })
       .finally(() => {
         spinner.destroy();
@@ -78,7 +78,7 @@ export default class MenuTable {
           });
       })
       .catch(() => {
-        Toast.show({ title: 'Network error', type: 'error' });
+        Toast.show({ title: i18n.t('other.networkError'), type: 'error' });
       })
       .finally(() => {
         spinner.destroy();
@@ -156,14 +156,14 @@ export default class MenuTable {
           this.showWeek(current);
         })
         .catch(() => {
-          Toast.show({ title: 'Network error', type: 'error' });
-          this.showError('Cannot upload file. Please try again.');
+          Toast.show({ title: i18n.t('other.networkError'), type: 'error' });
+          this.showError(i18n.t('other.uploadError'));
         })
         .finally(() => {
           spinner.destroy();
         });
     } else {
-      this.showError('Please select file.');
+      this.showError(i18n.t('managerPage.uploadMenu.noFileSelected'));
     }
   }
 

@@ -56,7 +56,7 @@ export default class EditCard {
     return editCardHTML;
   }
   updateTotal() {
-    this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)}Р`;
+    this.target.querySelector('.edit-card-txt-C').innerHTML = `${this.state.totalCost.toFixed(2)} BYN`;
   }
   itemChange(state) {
     this.state.order[state.index].quantity = state.quantity;

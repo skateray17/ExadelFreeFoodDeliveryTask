@@ -53,6 +53,9 @@
     "weight": "g",
     "extra": "Extra",
     "more": "+ more ",
+    "somethingWrong": "Something went wrong. Please, reload page.",
+    "networkError": "Network error",
+    "uploadError": "Cannot upload file. Please try again.",
     "daysOfTheWeek": {
       "monday": "Monday",
       "tuesday": "Tuesday",
