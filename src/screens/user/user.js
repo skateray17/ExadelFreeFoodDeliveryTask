@@ -123,7 +123,6 @@ function createPropsForCards(menuFromServer) {
       const day = menuWithOrders.find((day) => {
         return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
       });
-
       if (day) {
         day.orderedCommon = [];
         day.order = [];
@@ -143,7 +142,7 @@ function createPropsForCards(menuFromServer) {
             i--;
           }
         }
-        day.order.totalPrice = order.totalPrice;
+        day.totalPrice = order.totalPrice;
         if (day.order.length === 0) {
           day.order = undefined;
         }
@@ -258,7 +257,7 @@ export default class UsersScreen {
       orderedCommon: props.orderedCommon,
       menu: props.menu,
       orders: popupOrders,
-      totalCost: props.order ? props.order.totalPrice : 0,
+      totalCost: props.totalPrice ? props.totalPrice : 0,
       target: props.target,
       unixDay: props.unixDay,
     };
@@ -269,6 +268,7 @@ export default class UsersScreen {
     };
     this.closePopup = Popup.show(propsPopup);
   }
+
   editCardCallback(res) {
     if (res.status === 'Cancel') {
       this.closePopup();
@@ -299,11 +299,6 @@ export default class UsersScreen {
         .then(serverGetBalance)
         .then((response) => {
           if (response) {
-            if (cardUpdates.order.length === 0) {
-              cardUpdates.order = undefined;
-            } else {
-              cardUpdates.order.totalPrice = response.totalPrice;
-            }
             cardUpdates.orderedCommon = [];
             if (cardUpdates.order) {
               for (let i = 0; i < cardUpdates.order.length; i++) {
@@ -320,7 +315,10 @@ export default class UsersScreen {
                 }
               }
             }
-
+            if (cardUpdates.order.length === 0) {
+              cardUpdates.order = undefined;
+            }
+            cardUpdates.totalPrice = response.totalPrice;
             this.update(cardUpdates, date);
           }
         });
