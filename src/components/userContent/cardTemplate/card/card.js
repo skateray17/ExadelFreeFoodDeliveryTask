@@ -49,7 +49,7 @@ export default class Card {
     const date = new Date(props.unixDay * 24000 * 3600);
     return {
       weekday: rusDays[new Date(props.unixDay * 24000 * 3600).getDay()],
-      date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth()}`).slice(-2)}`,
+      date: `${(`0${date.getDate()}`).slice(-2)}.${(`0${date.getMonth() + 1}`).slice(-2)}`,
       headerStyle: props.menu && true ? 'active-card' : 'inactive-card',
     };
   }

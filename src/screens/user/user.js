@@ -62,7 +62,7 @@ function getDatesToDisplay() {
   // case when it is sunday today
 
   let howManyDaysToCheck;
-  if (currentDate.getDay() === 0) {
+  if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
     howManyDaysToCheck = 10;
   } else {
     howManyDaysToCheck = 9;
@@ -111,6 +111,7 @@ function createPropsForCards(menuFromServer) {
     }
   }
 
+
   /**
    * inserting orders
    */
@@ -136,7 +137,7 @@ function createPropsForCards(menuFromServer) {
   const propsForCards = datesToDisplay.map(day =>
     menuWithOrders.find(c => c.unixDay === Math.round(day.getTime() / 24000 / 3600))
     || emptyCardProps({
-      unixDay: Math.floor(day.getTime() / 24000 / 3600),
+      unixDay: Math.round(day.getTime() / 24000 / 3600),
     }));
 
   return propsForCards;
