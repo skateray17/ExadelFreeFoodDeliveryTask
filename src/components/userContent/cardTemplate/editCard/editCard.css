@@ -1,0 +1,47 @@
+.edit-card {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    font-size: 19px;
+}
+.card-header {
+    padding: 0 10px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    line-height: 50px;
+    height: 50px;
+    font-size: 19px;
+}
+.total-cost{
+  padding: 10px 20px 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  color: #3e2dd6;
+  font-size: 19px;
+}
+.edit-card-footer{
+  padding: 10px 20px 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+.edit-card-cancel{
+  background: #d64343;
+  color: white;
+  width: 49%;
+  height: 30px;
+  font-size: 19px;
+}
+.edit-card-sub{
+  background: #39c139;
+  color: white;
+  width: 49%;
+  height: 30px;
+  font-size: 19px;
+}
+.edit-card-txt-T,.edit-card-txt-C{
+  font-size: 19px; 
+}

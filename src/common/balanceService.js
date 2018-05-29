@@ -1,0 +1,54 @@
+import { get } from './requests';
+
+export default function serverGetBalance(res) {
+  if (res) {
+    get('balance', {})
+      .then((response) => {
+        if (response.status !== 200) {
+          return Promise.reject();
+        }
+        return response.json();
+      })
+      .then((body) => {
+        console.log(body.balance);
+      });
+  }
+  return res;
+}
+import { eventBus } from './eventBus';
+
+let currentBalance;
+
+export function loadBalance() {
+  currentBalance = get('balance/', {}).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject();
+  }).then((data) => {
+    const { balance } = data;
+    eventBus.publish('onBalanceChange', balance);
+    return balance;
+  });
+}
+
+export function getBalance() {
+  if (!currentBalance) {
+    loadBalance();
+  }
+  return currentBalance;
+}
+
+export function setBalance(balance) {
+  if (balance) {
+    currentBalance = new Promise(resolve => (resolve(balance)));
+  } else {
+    currentBalance = undefined;
+  }
+}
+
+export function onBalanceChange(target, props, balance) {
+  currentBalance = new Promise(resolve => (resolve(balance)));
+  this.render(target, props);
+}
+

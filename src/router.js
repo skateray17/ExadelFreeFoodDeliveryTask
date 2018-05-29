@@ -17,20 +17,33 @@ export default class Router {
   }
 
   cleanContainer() {
+    if (this.component && typeof this.component.destroy === 'function') {
+      this.component.destroy();
+    }
     while (this.rootElement.hasChildNodes()) {
       this.rootElement.removeChild(this.rootElement.childNodes[0]);
     }
   }
 
   checkGuards(guards, field) {
+    const guardsPromises = [];
     for (let i = 0; i < guards.length; i++) {
-      const guard = guards[i];
-      const guardResult = guard(field);
-      if (!guardResult.allow) {
-        setTimeout(() => this.navigate(guardResult.path), 0);
-        return;
-      }
+      guardsPromises.push(guards[i](field));
     }
+    return new Promise((resolve) => {
+      Promise.all(guardsPromises)
+        .then((resolvedGuards) => {
+          resolvedGuards.forEach((resolvedGuard) => {
+            if (!resolvedGuard.allow) {
+              this.navigate(resolvedGuard.path);
+              resolve(false);
+              return;
+            }
+          });
+          resolve(true);
+          return;
+        });
+    });
   }
 
   render(url) {
@@ -51,10 +64,13 @@ export default class Router {
       }
       const field = temp.substring(1);
       if (this.routes.hasOwnProperty(field)) {
-        this.checkGuards(this.routes[field].guards, field);
-        const ComponentConstructor = this.routes[field].component;
-        const component = new ComponentConstructor(this);
-        component.render(this.rootElement, props);
+        this.checkGuards(this.routes[field].guards, field).then((isAllowed) => {
+          if (isAllowed) {
+            const ComponentConstructor = this.routes[field].component;
+            this.component = new ComponentConstructor(this);
+            this.component.render(this.rootElement, props);
+          }
+        });
       } else {
         this.navigate('error');
       }

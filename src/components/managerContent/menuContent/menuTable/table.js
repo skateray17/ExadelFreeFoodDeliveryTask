@@ -189,6 +189,6 @@ export default class MenuTable {
       parent.appendChild(error);
     }
     const fileMsg = document.querySelector('.file-msg');
-    if (fileMsg) fileMsg.innerText = 'no file selected';
+    if (fileMsg) fileMsg.innerText = i18n.t('managerPage.uploadMenu.noFileSelected');
   }
 }

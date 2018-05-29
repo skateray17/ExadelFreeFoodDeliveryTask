@@ -49,6 +49,7 @@ export default class MakeOrderPage {
           });
           totalPrice += item.totalPrice;
         });
+        totalPrice = parseFloat((totalPrice).toFixed(2));
         makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
         makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
         makeOrderFooter.render(makeOrderTableElement, props);

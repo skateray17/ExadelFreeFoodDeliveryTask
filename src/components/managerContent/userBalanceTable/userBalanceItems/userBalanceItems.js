@@ -3,6 +3,7 @@ import template from './userBalanceItems.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { put } from '../../../../common/requests';
 import Toast from '../../../toast/toast';
+import {loadBalance} from "../../../../common/balanceService";
 
 export default class UserBalanceItems {
   render(target, props) {
@@ -40,6 +41,7 @@ export default class UserBalanceItems {
             balance: toAdd,
           })).then((res) => {
             if (res.ok) {
+              loadBalance();
               return res.json();
             }
             return Promise.reject();

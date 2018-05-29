@@ -16,11 +16,14 @@
       "currentWeek": "Текущая неделя",
       "nextWeek": "Следующая неделя",
       "publishMenu": "Опубликовать",
-      "selectMenu": "Выбрать меню",
-      "nomenu": "Меню на эту неделю отсутсвует"
+      "selectMenu": "Выбрать файл",
+      "nomenu": "Меню на эту неделю отсутсвует",
+      "noFileSelected": "Файл не выбран",
+      "sendFile": "Отправить"
     },
     "todaysOrder": {
-      "tabName": "Заказы на сегодня"
+      "tabName": "Заказы на сегодня",
+      "emptyList": "Заказов на сегодня нет"
     },
     "updateBalance": {
       "tabName": "Пополнить баланс",
@@ -30,10 +33,14 @@
       "usersPerPage": "Сотрудников на странице",
       "replenish": "зачислить",
       "enterSum": "сумма",
-      "emptySearch": "Такого пользователя нет"
+      "emptySearch": "Такого пользователя нет",
+      "of": "из"
     },
     "makeAnOrder": {
-      "tabName": "Сделать заказ"
+      "tabName": "Сделать заказ",
+      "emptyList": "Заказов на сегодня нет",
+      "amount": "Колличество",
+      "dishTitle": "Наименование"
     }
   },
   "other": {
@@ -45,6 +52,7 @@
     "currency": "BYN",
     "weight": "г",
     "extra": "Дополнительно",
+    "more": "+ ещё ",
     "daysOfTheWeek": {
       "monday": "Понедельник",
       "tuesday": "Вторник",
