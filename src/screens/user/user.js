@@ -145,7 +145,6 @@ function createPropsForCards(menuFromServer) {
       unixDay: Math.round(day.getTime() / 24000 / 3600),
     }));
 
-  console.log(propsForCards);
   return propsForCards;
 }
 
@@ -175,7 +174,6 @@ export default class UsersScreen {
     target.appendChild(screen);
 
     fetchMenu().then((menu) => {
-      console.log(menu);
       menuFromServer = menu;
       getUserOrders(
         new Date().toISOString().slice(0, -1),
