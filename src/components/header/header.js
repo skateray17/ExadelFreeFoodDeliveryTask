@@ -4,6 +4,7 @@ import managersHeader from './managersHeader.hbs';
 import { createElementsFromString, roles } from '../../common/utils';
 import { getUserInfo } from '../../common/user.service';
 import { logout } from '../../common/login.service';
+import { reInit } from '../../common/constants';
 
 export default class Header {
   render(target, props) {
@@ -30,7 +31,7 @@ export default class Header {
       });
     }
     target.querySelector('.exit-ico').addEventListener('click', () => { logout(props.router); });
-    target.querySelector('.header-content__switch-language-container').addEventListener('click', (event) => { switchLanguage(event) });
+    target.querySelector('.header-content__switch-language-container').addEventListener('click', (event) => { switchLanguage(event, props.router) });
 
     const selectedLanguage = localStorage.getItem('language');
     screenWithHeader.querySelector('[data-language='+selectedLanguage+']').classList.add('header-content__switch-language-label--selected');
@@ -48,7 +49,7 @@ function switchMode(props) {
   }
 }
 
-function switchLanguage(event) {
+function switchLanguage(event, router) {
   const target = event.target;
   const language = localStorage.getItem('language');
   if (!target.classList.contains('header-content__switch-language-label')) {
@@ -56,10 +57,12 @@ function switchLanguage(event) {
   }
   if (target.getAttribute('data-language') === 'ru' && language !== 'ru') {
     localStorage.setItem('language', 'ru');
-    window.location.reload();
+    reInit();
+    router.reload();
   }
   if (target.getAttribute('data-language') === 'en' && language !== 'en') {
     localStorage.setItem('language', 'en');
-    window.location.reload();
+    reInit();
+    router.reload();
   }
 }

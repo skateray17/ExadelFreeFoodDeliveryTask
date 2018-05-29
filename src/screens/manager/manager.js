@@ -10,8 +10,10 @@ import TodayOrders from '../../components/managerContent/todayOrdersContent/toda
 import i18n from './../../common/i18n';
 
 
-const tabs = [
-  {
+let tabs = [];
+
+function setTabs() {
+  tabs = [{
     component: new Menu(),
     title: i18n.t('managerPage.uploadMenu.tabName'),
     icon: '&#xE561;',
@@ -30,8 +32,8 @@ const tabs = [
     component: new MakeOrder(),
     title: i18n.t('managerPage.makeAnOrder.tabName'),
     icon: '&#xE8CC;',
-  },
-];
+  }];
+}
 
 export default class ManagerHomeScreen {
   constructor(router) {
@@ -45,6 +47,7 @@ export default class ManagerHomeScreen {
     };
     const header = new Header();
     header.render(screenTarget, props);
+    setTabs();
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
     screenTarget.appendChild(screen);
     const contentTarget = screenTarget.querySelector('.manager-content');
