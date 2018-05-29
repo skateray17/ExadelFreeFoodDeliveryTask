@@ -4,7 +4,7 @@
     "switchToManagerPage": "Switch to manager"
   },
   "userPage": {
-    "unchosenMenu": "No menu selected",
+    "unchosenMenu": "No order yet",
     "unavailableMenu": "Unavailable menu",
     "makeAnOrder": "Make order",
     "editOrder": "Edit order",
