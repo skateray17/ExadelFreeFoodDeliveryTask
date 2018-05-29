@@ -4,9 +4,9 @@ import UserBalanceItems from './userBalanceItems/userBalanceItems';
 import UserBalanceHeader from './userBalanceHeader/userBalanceHeader';
 import UserBalanceFooter from './userBalanceFooter/userBalanceFooter';
 import { createElementsFromString } from '../../../common/utils';
-import { get } from '../../../common/requests';
 import Spinner from '../../spinner/spinner';
 import Toast from '../../toast/toast';
+import { getBalanceByName } from '../../../common/balanceService';
 
 function createDelayedInputEvent(target, delay, callback) {
   let inputTimeout;
@@ -90,12 +90,6 @@ export default class UserBalanceTable {
   }
 
   getData() {
-    return get('balance/', {}, {
-      perPage: this.perPage, name: this.name, page: this.page,
-    })
-      .then((res) => {
-        if (res.ok) return res.json();
-        return { result: [] };
-      });
+    return getBalanceByName(this.name, this.perPage, this.page);
   }
 }

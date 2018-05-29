@@ -1,4 +1,5 @@
-import { get } from './requests';
+import { get, put } from './requests';
+import { eventBus } from './eventBus';
 
 export default function serverGetBalance(res) {
   if (res) {
@@ -15,7 +16,6 @@ export default function serverGetBalance(res) {
   }
   return res;
 }
-import { eventBus } from './eventBus';
 
 let currentBalance;
 
@@ -52,3 +52,23 @@ export function onBalanceChange(target, props, balance) {
   this.render(target, props);
 }
 
+export function getBalanceByName(name, perPage, page) {
+  return get('balance/', {}, {
+    perPage, name, page,
+  }).then((res) => {
+    if (res.ok) return res.json();
+    return { result: [] };
+  });
+}
+
+export function changeUserBalance(username, balance) {
+  return put('balance/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({
+    username, balance,
+  })).then((res) => {
+    if (res.ok) {
+      loadBalance();
+      return res.json();
+    }
+    return Promise.reject();
+  });
+}
