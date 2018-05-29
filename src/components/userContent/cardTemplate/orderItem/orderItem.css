@@ -23,3 +23,17 @@
 .mass, .quantity, .price, .weekday, .date {
     font-size: 19px;
 }
+
+.mass{
+    flex:  1;
+}
+
+.quantity{
+    flex:  1;
+    text-align: center;
+}
+
+.price{
+    flex:  1;
+    text-align: right
+}
