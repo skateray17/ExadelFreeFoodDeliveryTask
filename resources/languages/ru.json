@@ -4,7 +4,7 @@
     "switchToManagerPage": "Страница менеджера"
   },
   "userPage": {
-    "unchosenMenu": "Меню не выбрано",
+    "unchosenMenu": "Заказ не сделан",
     "unavailableMenu": "Меню ещё не доступно",
     "makeAnOrder": "Заказать",
     "editOrder": "Редактировать",
