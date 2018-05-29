@@ -1,13 +1,11 @@
 import './makeOrderFooter.css';
 import template from './makeOrderFooter.hbs';
-import { createElementsFromString, getCookie } from '../../../../common/utils';
+import { createElementsFromString } from '../../../../common/utils';
 import { put } from '../../../../common/requests';
 import { fetchMenu } from '../../../../common/menuService';
 import { daysByNumbers } from '../../../../common/constants';
 import Spinner from '../../../../components/spinner/spinner';
-
 import MakeOrderPage from '../makeOrder';
-// import Spinner from "../../../spinner/spinner";
 
 function isMenuForTodayAvailable() {
   return fetchMenu().then((res) => {
