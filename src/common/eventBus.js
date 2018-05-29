@@ -29,7 +29,7 @@ class EventBus {
       return;
     }
     this.topics[topic].forEach((listener) => {
-      listener(data || {});
+      listener(arguments.length < 2 ? {} : data);
     });
   }
 }
