@@ -12,9 +12,9 @@ export default class {
     spinner.render(elem);
     this.getProps()
       .then((res) => {
-        spinner.destroy();
         (new OrdersInner()).render(elem, res);
-      });
+      })
+      .finally(() => spinner.destroy());
     target.appendChild(elem);
     return elem;
   }

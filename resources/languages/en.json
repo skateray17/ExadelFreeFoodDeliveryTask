@@ -1,0 +1,75 @@
+{
+  "header": {
+    "switchToUserPage": "Switch to order",
+    "switchToManagerPage": "Switch to manager"
+  },
+  "userPage": {
+    "unchosenMenu": "No menu selected",
+    "unavailableMenu": "Unavailable menu",
+    "makeAnOrder": "Make order",
+    "editOrder": "Edit order",
+    "cancel": "Cancel"
+  },
+  "managerPage": {
+    "uploadMenu": {
+      "tabName": "Upload menu",
+      "currentWeek": "Current week",
+      "nextWeek": "Next week",
+      "publishMenu": "Publish menu",
+      "selectMenu": "Select file",
+      "nomenu": "There is no menu on this week",
+      "noFileSelected": "No file selected",
+      "sendFile": "Send"
+    },
+    "todaysOrder": {
+      "tabName": "Today's order",
+      "emptyList": "There aren't orders for today"
+    },
+    "updateBalance": {
+      "tabName": "Update balance",
+      "user": "User",
+      "balance": "Balance",
+      "searchForUser": "Search for user",
+      "usersPerPage": "Users per page",
+      "replenish": "update",
+      "enterSum": "sum",
+      "emptySearch": "There is no such user",
+      "of": "of"
+    },
+    "makeAnOrder": {
+      "tabName": "Make an order",
+      "emptyList": "There aren't orders for today",
+      "amount": "Amount",
+      "dishTitle": "Dish"
+    }
+  },
+  "other": {
+    "switchLanguage": "Switch to RUS",
+    "amount": "Total price: ",
+    "print": "Print",
+    "submit": "Submit",
+    "price": "Price",
+    "currency": "BYN",
+    "weight": "g",
+    "extra": "Extra",
+    "more": "+ more ",
+    "daysOfTheWeek": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "daysOfTheWeek_short": {
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun"
+    }
+  }
+}

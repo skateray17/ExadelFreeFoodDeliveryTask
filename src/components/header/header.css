@@ -49,6 +49,53 @@ header {
 	min-width: 325px;
 }
 
+.header-content__language-label{
+	font-size: 20px;
+	color: #FFFFFF;
+	font-weight: 500;
+}
+
+.header-content__switch-language-container{
+	display: flex;
+	align-items: center;
+	margin-left: 10px;
+	cursor: pointer;
+	min-width: 69px;
+	justify-content: space-between;
+}
+
+.header-content__switch-language-label, .header-content__switch-language-delimiter{
+	font-size: 20px;
+	color: #FFFFFF;
+	position: relative;
+}
+
+.header-content__switch-language-label::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	height: 2px;
+	background-color: #FFFFFF;
+	width: 0;
+	transition: .3s;
+}
+
+.header-content__switch-language-label:hover::after{
+	left: 0;
+	width: 100%;
+}
+
+.header-content__switch-language-label--selected::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	background-color: #FFFFFF;
+	width: 100%;
+}
+
 .header-content__title{
 	font: 300 35px 'Roboto', sans-serif;
 	color: white;
@@ -80,11 +127,16 @@ header {
 	margin-top: -5px;
 }
 
-.exit-ico, .history-ico{
+.exit-ico, .language-ico{
 	cursor: pointer;
 	margin-left: 20px;
 	color: #FFFFFF;
 	font-size: 30px !important;/*  to rewrite default material-icons font-size */
+}
+
+.language-ico{
+	margin-left: 5px;
+	margin-right: 10px;
 }
 
 .exit-ico--managers-page{
@@ -130,6 +182,10 @@ header {
 		justify-content: center;
 	}
 
+	.header-content__button-container{
+		flex-direction: column;
+	}
+
 	.header-content__title-container{
 		padding: 15px 20px 10px;
 	}
@@ -143,6 +199,12 @@ header {
 		border-color: #FFFFFF;
 		width: 100%;
 		text-align: center;
+	}
+
+	.header-content__switch-language-container--new-order{
+		order: 2;
+		margin-top: 15px;
+		margin-left: 0;
 	}
 
 }

@@ -4,30 +4,31 @@ import Header from '../../components/header/header';
 import Menu from '../../components/managerContent/menuContent/menuTable/table';
 import UserBalanceTable from '../../components/managerContent/userBalanceTable/userBalanceTable';
 import { createElementsFromString } from '../../common/utils';
-import EmptyComponent from '../../components/emptyComponent/empty';
 import MakeOrder from '../../components/managerContent/makeOrderContent/makeOrder';
 import TodayOrders from '../../components/managerContent/todayOrdersContent/todayOrders';
-
+import i18n from './../../common/i18n';
+import { eventBus } from '../../common/eventBus';
+import { onBalanceChange } from '../../common/balanceService';
 
 const tabs = [
   {
     component: new Menu(),
-    title: 'Upload menu',
+    title: i18n.t('managerPage.uploadMenu.tabName'),
     icon: '&#xE561;',
   },
   {
     component: new TodayOrders(),
-    title: 'Today\'s orders',
+    title: i18n.t('managerPage.todaysOrder.tabName'),
     icon: '&#xE8DF;',
   },
   {
     component: new UserBalanceTable(),
-    title: 'Replenish balance',
+    title: i18n.t('managerPage.updateBalance.tabName'),
     icon: '&#xE926;',
   },
   {
     component: new MakeOrder(),
-    title: 'Make an order',
+    title: i18n.t('managerPage.makeAnOrder.tabName'),
     icon: '&#xE8CC;',
   },
 ];
@@ -35,22 +36,29 @@ const tabs = [
 export default class ManagerHomeScreen {
   constructor(router) {
     this.router = router;
+    this.unsubscribers = [];
   }
 
-  render(screenTarget, props) {
+  render(target, props) {
     props = {
       page: 'manager',
       router: this.router,
     };
-    const header = new Header();
-    header.render(screenTarget, props);
+    this.header = new Header();
+    this.header.render(target, props);
+    this.unsubscribers.push(eventBus.subscribe('onBalanceChange', onBalanceChange.bind(this.header, target, props)));
+
     const screen = createElementsFromString(managerTemplate({ tab: tabs }));
-    screenTarget.appendChild(screen);
-    const contentTarget = screenTarget.querySelector('.manager-content');
-    const navBar = screenTarget.querySelector('.nav-bar');
+    target.appendChild(screen);
+    const contentTarget = target.querySelector('.manager-content');
+    const navBar = target.querySelector('.nav-bar');
     renderTab(contentTarget, 0, navBar);
     managerListeners(contentTarget, navBar);
-    return screenTarget;
+    return target;
+  }
+
+  destroy() {
+    this.unsubscribers.forEach(unsubscribe => unsubscribe());
   }
 }
 

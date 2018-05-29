@@ -4,7 +4,11 @@ import { createElementsFromString } from '../../common/utils';
 import { typeOfToast } from '../../common/constants';
 
 export default class Toast {
-  // props = { title:, type:, canDismiss:, timeout: }
+  /**
+     *
+     * @param props = { title:, type:, canDismiss:, timeout: }
+     * @returns {Element | null}
+     */
   static show(props) {
     const context = { title: props.title };
     document.body.appendChild(createElementsFromString(toastContent(context)));

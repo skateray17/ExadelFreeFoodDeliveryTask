@@ -1,13 +1,14 @@
 <header class="shadow">
     <div class="header-content">
-        {{#if isUserManager}}
         <div class="header-content__button-container">
-        {{else}}
-        <div class="header-content__button-container header-content__button-container--not-manager">
-        {{/if}}
+            <div class="header-content__switch-language-container header-content__switch-language-container--new-order">
+                <span class="header-content__switch-language-label" data-language='en'>EN</span>
+                <span class="header-content__switch-language-delimiter">/</span>
+                <span class="header-content__switch-language-label" data-language='ru'>RU</span>
+            </div>
             {{#if isUserManager}}
             <div class="header-content__switch-mode-button">
-                Страница менеджера
+                {{i18n 'header.switchToManagerPage'}}
             </div>
             {{/if}}            
         </div>
@@ -15,13 +16,13 @@
         {{#if isUserManager}}
         <div class="header-content__tools-container">
         {{else}}
-        <div class="header-content__tools-container header-content__tools-container--not-manager">
+        <div class="header-content__tools-container">
         {{/if}}
             <div class="header-content__about-user">
                 <span class="header-content__users-login">{{nickname}}</span>
-                <span class="header-content__balance">{{balance}}<span class="header-content__currency">P</span></span>
+                <span class="header-content__balance">{{balance}}
+                <span class="header-content__currency">P</span></span>
             </div>
-            <i class="history-ico material-icons">&#xE889;</i>
             <i class="exit-ico material-icons md-25">&#xE879;</i>
         </div>
     </div>
