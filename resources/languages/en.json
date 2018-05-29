@@ -40,7 +40,8 @@
       "tabName": "Make an order",
       "emptyList": "There aren't orders for today",
       "amount": "Amount",
-      "dishTitle": "Dish"
+      "dishTitle": "Dish",
+      "send":"Send"
     }
   },
   "other": {
