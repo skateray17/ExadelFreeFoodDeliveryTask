@@ -67,6 +67,7 @@
   margin: auto;
 }
 .today-orders_print-button {
+  transition: .4s;
   height: 40px;
   max-width: 250px;
   width: 35%;

@@ -55,9 +55,6 @@
 .tab-icon{
     display: none;
 }
-.nav-bar__link:hover{
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
 .nav-bar__link:active,.nav-bar-selected{
     background-color: #008AFF;
     color: white; 
