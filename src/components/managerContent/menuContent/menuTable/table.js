@@ -47,7 +47,7 @@ export default class MenuTable {
       });
       target.appendChild(items);
       new UploadMenuForm().render(target);
-      this.showError('You can change menu by uploading new file.');
+      this.showError(i18n.t('managerPage.uploadMenu.changeMenu'));
       target.querySelector('.upload-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         this.uploadMenu(target, isCurrent);

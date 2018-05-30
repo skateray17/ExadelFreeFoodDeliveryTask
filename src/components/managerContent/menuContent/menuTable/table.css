@@ -102,12 +102,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     border: 1px solid #5aad3c;
+    transition: .4s;
 }
 .file-msg{
     margin: 10px;
 }
 .upload-menu__button{
     align-self: center;
+    transition: .4s;
 }
 .menu-item__no-menu-msg{
     font-size: 15px;
@@ -125,6 +127,7 @@
 }
 .publish-button{
     margin: 10px;
+    transition: .4s;
 }
 
 .menu-table__error{
