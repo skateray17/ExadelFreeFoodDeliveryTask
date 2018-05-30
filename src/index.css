@@ -17,3 +17,7 @@ body{
 .shadow{
   box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15);
 }
+
+.universal-hover-effect:hover{
+  box-shadow: 0 10px 17px rgba(0,0,0,0.25), 0 7px 7px rgba(0,0,0,0.22);  
+}
