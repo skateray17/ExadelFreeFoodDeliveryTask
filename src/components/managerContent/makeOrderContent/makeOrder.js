@@ -38,17 +38,21 @@ export default class MakeOrderPage {
       .then((res) => {
         const array = [];
         let totalPrice = 0;
+        const obj = {};
         res.result.forEach((item) => {
           item.dishList.forEach((dish) => {
-            if (array.includes(a => dish.dishTitle === a.dishTitle)) {
-              const index = array.find(a => dish.dishTitle === a.dishTitle);
-              array[index].amount += dish.amount;
+            if (obj[dish.dishTitle] !== undefined) {
+              obj[dish.dishTitle] += dish.amount;
             } else {
-              array.push(dish);
+              obj[dish.dishTitle] = dish.amount;
             }
           });
           totalPrice += item.totalPrice;
         });
+        Object.keys(obj).forEach((key) => {
+          array.push({ dishTitle: key, amount: obj[key] });
+        });
+
         totalPrice = parseFloat((totalPrice).toFixed(2));
         makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
         makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
