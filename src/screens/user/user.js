@@ -99,7 +99,7 @@ function createPropsForCards(menuFromServer) {
        */
 
       for (const weekDay of engDays) {
-        const dayOfTheYear = moment(week[weekDay].day).dayOfYear();
+        const dayOfTheYear = week[weekDay] && moment(week[weekDay].day).dayOfYear();
         if (week[weekDay] && dayOfTheYear - moment().dayOfYear() <= 8 && dayOfTheYear >= moment().dayOfYear()) {
           menuWithOrders.push({
             unixDay: toUnixDay(new Date(week[weekDay].day)),
@@ -110,6 +110,8 @@ function createPropsForCards(menuFromServer) {
       }
     }
   }
+
+
 
 
 
