@@ -19,6 +19,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       title: 'FoodDelivery',
+      favicon: './src/images/exadel_icon.ico',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
