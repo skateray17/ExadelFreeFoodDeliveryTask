@@ -7,7 +7,7 @@ export default class i18n {
   static t(key) {
     let target = getLanguage();
     key = key.split('.');
-    for (let i in key){
+    for (const i in key) {
       target = target[key[i]];
     }
     return target;

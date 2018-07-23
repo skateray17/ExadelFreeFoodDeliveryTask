@@ -15,7 +15,10 @@ function createDelayedInputEvent(target, delay, callback) {
       clearTimeout(inputTimeout);
       inputTimeout = null;
     }
-    inputTimeout = setTimeout(() => { inputTimeout = null; callback(e); }, delay);
+    inputTimeout = setTimeout(() => {
+      inputTimeout = null;
+      callback(e);
+    }, delay);
   };
 }
 
@@ -23,6 +26,7 @@ const DEFAULT_PER_PAGE = 10;
 
 export default class UserBalanceTable {
   render(target, props) {
+    this.data = null;
     this.perPage = DEFAULT_PER_PAGE;
     this.name = '';
     this.page = 1;
@@ -57,12 +61,26 @@ export default class UserBalanceTable {
   }
 
   createFooterEvents() {
-    this.userBalanceFooter.onNextPage = () => {
-      if (this.mayClickRight) {
-        this.page++;
-        this.rerender();
-      }
-    };
+    if (this.data) {
+      this.userBalanceFooter.onNextPage = () => {
+        this.checkRight(this.data);
+        if (this.mayClickRight) {
+          this.page++;
+          this.rerender();
+        }
+      };
+    } else {
+      this.userBalanceFooter.onNextPage = () => {
+        this.getData().then((data) => {
+          this.checkRight(data);
+          if (this.mayClickRight) {
+            this.page++;
+            this.rerender();
+          }
+        });
+      };
+    }
+
     this.userBalanceFooter.onPrevPage = () => {
       if (this.page > 1) {
         this.page--;
@@ -76,13 +94,15 @@ export default class UserBalanceTable {
     });
   }
 
+
   checkRight(props) {
     props.perPage = props.perPage || DEFAULT_PER_PAGE;
-    this.mayClickRight = props.totalAmount > props.currentPage * props.perPage;
+    this.mayClickRight = props.totalAmount > this.page * props.perPage;
   }
 
   rerender() {
     this.getData().then((data) => {
+      this.data = data;
       this.userBalanceItems.render(null, data);
       this.userBalanceFooter.render(null, data);
       this.checkRight(data);
