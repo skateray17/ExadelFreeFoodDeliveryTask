@@ -19,13 +19,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       title: 'FoodDelivery',
+      favicon: './src/images/exadel_icon.ico',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
     new Dotenv({
-      path: './.env.' + process.env.NODE_ENV,
+      path: `./.env.${process.env.NODE_ENV}`,
     }),
   ],
   module: {
@@ -58,7 +59,7 @@ module.exports = {
         loader: 'handlebars-loader',
         exclude: /node_modules/,
         options: {
-          helperDirs: [__dirname + '/src/common/helpers/'],
+          helperDirs: [`${__dirname}/src/common/helpers/`],
         },
       },
       {
