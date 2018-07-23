@@ -1,6 +1,10 @@
 import uploadMenuTemplate from './uploadMenuForm.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 
+function setFakeValue(fileMsg, fileInput) {
+  fileMsg.innerText = fileInput.files[0].name;
+}
+
 export default class uploadMenuForm {
   render(target) {
     const uploadForm = createElementsFromString(uploadMenuTemplate());
@@ -14,6 +18,4 @@ export default class uploadMenuForm {
     return uploadForm;
   }
 }
-function setFakeValue(fileMsg, fileInput) {
-  fileMsg.innerText = fileInput.files[0].name;
-}
+
