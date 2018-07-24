@@ -44,11 +44,6 @@
   border-color: #008AFF;
 }
 
-.user-balance__submit-form{
-  display: flex;
-  flex-direction: row;
-}
-
 .user-balance__submit-button{
   font-size: 16px;
   line-height: 24px;

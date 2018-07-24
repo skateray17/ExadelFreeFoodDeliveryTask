@@ -43,5 +43,16 @@ export default class UserBalanceItems {
           .catch(() => Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true }));
       }
     };
+    this.elem.onkeypress = (e) => {
+      if (e.target.tagName === 'INPUT') {
+        const symbol = String.fromCharCode(e.which);
+        if (this.checkSymbol(symbol, e)) {
+          e.preventDefault();
+        }
+      }
+    };
+  }
+  checkSymbol(symbol, event) {
+    return (((!symbol.match(/[0-9.]/) || (symbol === '.' && (event.target.value.indexOf('.') !== -1))) || (event.target.value.split('.')[1] || { length: 0 }).length >= 2) && (!(symbol === '-' && !event.target.value.length) &&git  event.which !== 13));
   }
 }
