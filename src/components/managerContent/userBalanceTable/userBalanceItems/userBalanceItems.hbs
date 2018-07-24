@@ -10,8 +10,10 @@
       <span class="user-balance__balance">{{balance}} </span>
       <span class="user-balance__currency"> BYN</span>
     </div>
-    <input type='number' class="user-balance__balance-input" placeholder="{{i18n 'managerPage.updateBalance.enterSum'}}"></input>
-    <button class="user-balance__submit-button user-balance__submit-button--active">{{i18n 'managerPage.updateBalance.replenish'}}</button>
+    <form class="user-balance__submit-form">
+      <input type='number' class="user-balance__balance-input" placeholder="{{i18n 'managerPage.updateBalance.enterSum'}}"></input>
+      <button type="submit" class="user-balance__submit-button user-balance__submit-button--active">{{i18n 'managerPage.updateBalance.replenish'}}</button>
+    </form>
   </div>
   {{/each}} {{#unless result}}
   <span class="user-balance__empty-list">{{i18n 'managerPage.updateBalance.emptySearch'}}</span>

@@ -27,21 +27,20 @@ export default class UserBalanceItems {
   }
 
   setEvent() {
-    this.elem.onclick = (e) => {
+    this.elem.onsubmit = (e) => {
       e.stopImmediatePropagation();
-      if (e.target.tagName === 'BUTTON') {
-        const input = e.target.parentNode.querySelector('.user-balance__balance-input');
-        const toAdd = Number.parseFloat(input.value);
-        input.value = '';
-        if (!Number.isNaN(toAdd)) {
-          const ind = [].indexOf.call(this.elem.children, e.target.parentNode) - 1;
-          changeUserBalance(this.props.result[ind].username, toAdd)
-            .then((res) => {
-              this.props.result[ind].balance = res.balance;
-              this.rerender(this.props);
-            })
-            .catch(() => Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true }));
-        }
+      e.preventDefault();
+      const input = e.target.elements[0];
+      const toAdd = Number.parseFloat(input.value);
+      input.value = '';
+      if (!Number.isNaN(toAdd)) {
+        const ind = [].indexOf.call(this.elem.children, e.target.parentNode) - 1;
+        changeUserBalance(this.props.result[ind].username, toAdd)
+          .then((res) => {
+            this.props.result[ind].balance = res.balance;
+            this.rerender(this.props);
+          })
+          .catch(() => Toast.show({ title: 'Something went wrong', type: 'error', canDismiss: true }));
       }
     };
   }
