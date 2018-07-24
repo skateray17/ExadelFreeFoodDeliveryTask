@@ -110,7 +110,10 @@ export default class MenuTable {
       new DeleteMenuForm().render(target);
       target.querySelector('.delete-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
-        this.render();
+
+        const menuTableComponent = target.parentNode;
+        this.reloadContent(menuTableComponent);
+        this.render(menuTableComponent);
       });
     }
 
