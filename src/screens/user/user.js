@@ -81,7 +81,6 @@ function getDatesToDisplay() {
 }
 
 function createPropsForCards(menuFromServer) {
-
   /*
     * types of days
     *   -null -> Menu is not available
@@ -112,18 +111,13 @@ function createPropsForCards(menuFromServer) {
   }
 
 
-
-
-
   /**
    * inserting orders
    */
 
   if (userOrders) {
     for (const order of userOrders) {
-      const day = menuWithOrders.find((day) => {
-        return day.unixDay === Math.round(toUnixDay(new Date(order.date)));
-      });
+      const day = menuWithOrders.find(day => day.unixDay === Math.round(toUnixDay(new Date(order.date))));
       if (day) {
         day.orderedCommon = [];
         day.order = [];
@@ -332,7 +326,6 @@ export default class UsersScreen {
         card.render(card.target, Object.assign({ callback: this.makePopup }, cardUpdates));
       }
     }
-
   }
 
   destroy() {

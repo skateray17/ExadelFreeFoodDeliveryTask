@@ -5,12 +5,14 @@ import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, fetchMenu } from '../../../../common/menuService';
-import { post, put } from '../../../../common/requests';
+import { post, put, Delete } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
+import DeleteMenuForm from '../deleteMenuForm/deleteMenuForm';
 import Toast from '../../../toast/toast';
 import i18n from './../../../../common/i18n';
+
 
 export default class MenuTable {
   render(target) {
@@ -92,6 +94,7 @@ export default class MenuTable {
       menu: menuObj,
     };
     const menu = createElementsFromString(tableTemplate(props));
+
     if (!props.menu) {
       new UploadMenuForm().render(target);
       this.showError(i18n.t('managerPage.uploadMenu.nomenu'));
@@ -101,7 +104,21 @@ export default class MenuTable {
       });
     }
     target.appendChild(menu);
+
     this.rendermenuItems(target, menuObj, current);
+
+    if (props.menu) {
+      new DeleteMenuForm().render(target);
+      target.querySelector('.delete-menu__button').addEventListener('click', (e) => {
+        e.preventDefault();
+        Delete('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ date: menuObj.date })).then(() => {
+          const menuTableComponent = target.parentNode;
+          this.reloadContent(menuTableComponent);
+          this.render(menuTableComponent);
+        });
+      });
+    }
+
     return target;
   }
 

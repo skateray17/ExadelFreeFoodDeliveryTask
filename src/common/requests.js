@@ -8,7 +8,7 @@ function request(method, url, headers, urlParams = {}, body, secure) {
     typeof urlParams === 'object' && urlParams !== null ?
       Object.entries(urlParams).map(([key, value]) => `${key}=${value}`).join('&')
       : ''
-    }`, {
+  }`, {
     method,
     headers: (secure) ? new Headers(Object.assign(headers, {
       authorization: getCookie('token'),

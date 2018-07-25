@@ -2,7 +2,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.menu-table,.upload-menu{
+.menu-table,.upload-menu,.delete-menu{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -12,6 +12,9 @@
 .upload-menu{
    align-items: center;
 }
+.delete-menu{
+    align-items: center;
+ }
 .send-menu{
     display: flex;
     margin: 20px;
@@ -88,11 +91,16 @@
     width: 120px;
 }
 
-.upload-menu__message,.upload-menu__button,.menu-item__no-menu-msg,.menu-table__error,.fake-button,.file-msg,.publish-button{
+.upload-menu__message,.upload-menu__button,.delete-menu__button,.menu-item__no-menu-msg,.menu-table__error,.fake-button,.file-msg,.publish-button{
     font-size: 20px;
     font-weight: 300;
 }
 
+@media(max-width: 400px){
+    .upload-menu__button,.delete-menu__button,.fake-button,.file-msg{
+        font-size: 14px;
+    }
+}
 .choose-file{
    display: none;
 }
@@ -110,7 +118,7 @@
 .file-msg{
     margin: 10px;
 }
-.upload-menu__button{
+.upload-menu__button,.delete-menu__button{
     align-self: center;
 }
 .menu-item__no-menu-msg{
@@ -120,6 +128,15 @@
 }
 .publish-button,.upload-menu__button{
     background-color: #5aad3c;
+    width: auto;
+    padding: 8px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+    align-self: center;
+    cursor: pointer;
+}
+.delete-menu__button{
+    background-color: #f70000;
     width: auto;
     padding: 8px;
     color: white;

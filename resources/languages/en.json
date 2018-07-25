@@ -19,7 +19,8 @@
       "selectMenu": "Select file",
       "nomenu": "There is no menu on this week",
       "noFileSelected": "No file selected",
-      "sendFile": "Send"
+      "sendFile": "Send",
+      "deleteMenu": "Delete menu"
     },
     "todaysOrder": {
       "tabName": "Today's order",

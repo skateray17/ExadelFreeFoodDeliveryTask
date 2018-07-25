@@ -15,7 +15,7 @@ export function login(email, password) {
     const {
       token, type, firstName, lastName,
     } = data;
-    setCookie('token', token, 365);
+    setCookie('token', token, 7);
     setUserInfo({ username: `${firstName} ${lastName}`, type });
     setBalance();
   });
