@@ -20,7 +20,8 @@
 .week-tab{
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid #95989A;
+    border-bottom: 1px solid #95989a6e;
+    padding-top: 10px;
 }
 .week-tab__pick-week{
     font-size: 18px;
@@ -30,43 +31,50 @@
     padding: 5px;
     background-color: transparent;
     cursor: pointer;
+    padding-bottom: 12px
 }
 .picked-week{
     border-bottom: 1.8px solid #008AFF;
-    font-size: 20px;
+    border-radius: 0;
+    /*font-size: 20px;*/
 }
 .menu-table__date{
     align-self: center;
     margin: 10px;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400;
 }
 .menu-table-content, .menu-table-component__content{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-top: 10px;
 }
 .menu-item{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 10px;
+    margin: 5px 10px;
 }
 .menu-item__day{
     color: #008AFF;
     font-size: 20px;
-    border-bottom: 0.6px solid #95989A;
+    /*border-bottom: 0.6px solid #95989A;*/
+    padding-bottom: 10px
 }
+
 .menu-item__dish{
     display: flex;
     justify-content:  space-between;
-    border-bottom: 0.6px solid #95989A;
+    /*border-bottom: 0.6px solid #95989A;*/
     padding: 5px;
     font-size: 8px;
     color: #000000d1;
 }
+.menu-item__dish:hover {
+    background: #008aff26;
+}
 .dish-name{
-    margin-left: 10px;
     flex: 1;
 }
 .dish-name,.dish-weight,.dish-price{
@@ -84,11 +92,7 @@
     font-size: 20px;
     font-weight: 300;
 }
-@media(max-width: 400px){
-    .upload-menu__button,.fake-button,.file-msg{
-        font-size: 14px;
-    }
-}
+
 .choose-file{
    display: none;
 }
@@ -130,4 +134,10 @@
 .menu-table__error{
     align-self: center;
     margin: 10px;
+}
+
+@media(max-width: 400px){
+    .upload-menu__button,.fake-button,.file-msg{
+        font-size: 14px;
+    }
 }

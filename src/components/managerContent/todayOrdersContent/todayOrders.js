@@ -13,18 +13,24 @@ export default class {
     this.getProps()
       .then((res) => {
         (new OrdersInner()).render(elem, res);
-        document.querySelector('.today-orders_print-button').addEventListener('click', () => {
-          const printContents = document.querySelector('.today-orders__container').outerHTML;
-          const screen = document.getElementById('screen');
-          screen.style.display = 'none';
-          const newLi = document.createElement('div');
-          newLi.innerHTML = printContents;
-          document.body.insertBefore(newLi, null);
-          newLi.querySelector('.today-orders_print-button').style.display = 'none';
-          window.print();
-          document.body.removeChild(newLi);
-          screen.style.display = '';
-        });
+        const buttonPrint = document.querySelector('.today-orders_print-button');
+        if (buttonPrint) {
+          buttonPrint.addEventListener('click', () => {
+            const printContents = document.querySelector('.today-orders__container').outerHTML;
+            const screen = document.getElementById('screen');
+            screen.style.display = 'none';
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('print_orders');
+            const newLi = document.createElement('div');
+            newLi.innerHTML = printContents;
+            wrapper.appendChild(newLi)
+            document.body.insertBefore(wrapper, null);
+            newLi.querySelector('.today-orders_print-button').style.display = 'none';
+            window.print(printContents);
+            document.body.removeChild(wrapper);
+            screen.style.display = '';
+          });
+        }
       }).finally(() => {
         spinner.destroy();
       });

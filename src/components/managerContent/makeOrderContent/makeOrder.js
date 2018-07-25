@@ -29,7 +29,7 @@ export default class MakeOrderPage {
     const makeOrderTableFooter = new MakeOrderTableFooter();
     const makeOrderTableElement = target.appendChild(createElementsFromString(template()));
 
-    makeOrderHeader.render(makeOrderTableElement, props);
+
 
     const spinner = new Spinner();
     spinner.render(document.querySelector('.content'));
@@ -39,24 +39,34 @@ export default class MakeOrderPage {
         const array = [];
         let totalPrice = 0;
         const obj = {};
-        res.result.forEach((item) => {
-          item.dishList.forEach((dish) => {
-            if (obj[dish.dishTitle] !== undefined) {
-              obj[dish.dishTitle] += dish.amount;
-            } else {
-              obj[dish.dishTitle] = dish.amount;
-            }
-          });
-          totalPrice += item.totalPrice;
-        });
-        Object.keys(obj).forEach((key) => {
-          array.push({ dishTitle: key, amount: obj[key] });
-        });
+        let isEmpty = {
+            empty:false
+        };
 
-        totalPrice = parseFloat((totalPrice).toFixed(2));
-        makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
-        makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
-        makeOrderFooter.render(makeOrderTableElement, props);
+        if (res.result.length > 0) {
+            res.result.forEach((item) => {
+                item.dishList.forEach((dish) => {
+                    if (obj[dish.dishTitle] !== undefined) {
+                        obj[dish.dishTitle] += dish.amount;
+                    } else {
+                        obj[dish.dishTitle] = dish.amount;
+                    }
+                });
+                totalPrice += item.totalPrice;
+            });
+            Object.keys(obj).forEach((key) => {
+                array.push({ dishTitle: key, amount: obj[key] });
+            });
+            totalPrice = parseFloat((totalPrice).toFixed(2));
+            makeOrderHeader.render(makeOrderTableElement, isEmpty);
+            makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
+            makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
+            makeOrderFooter.render(makeOrderTableElement, props);
+        }
+        else {
+            isEmpty.empty = true;
+            makeOrderHeader.render(makeOrderTableElement, isEmpty);
+        }
       }).finally(() => {
         spinner.destroy();
       });

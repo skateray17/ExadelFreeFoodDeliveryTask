@@ -23,7 +23,8 @@
     },
     "todaysOrder": {
       "tabName": "Заказы на сегодня",
-      "emptyList": "Заказов на сегодня нет"
+      "emptyList": "Заказов на сегодня нет",
+      "tableHeader": "Заказ на сегодня"
     },
     "updateBalance": {
       "tabName": "Пополнить баланс",
@@ -39,7 +40,7 @@
     "makeAnOrder": {
       "tabName": "Подтвердить заказ",
       "emptyList": "Заказов на сегодня нет",
-      "amount": "Колличество",
+      "amount": "Количество",
       "dishTitle": "Наименование",
       "send":"Отправить"
     }

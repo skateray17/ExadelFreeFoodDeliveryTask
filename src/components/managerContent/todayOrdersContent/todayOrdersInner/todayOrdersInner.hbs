@@ -1,5 +1,7 @@
 <div class="today-orders__row">
+
     {{#each this}}
+
     <div class="today-orders__card-outside">
       <div class="today-orders__card">
         <div class="today-orders__header today-orders__text">
@@ -18,7 +20,14 @@
       </div>
     </div>
     {{else}}  
-    <span class="today-orders__empty today-orders__text">{{i18n 'managerPage.todaysOrder.emptyList'}}</span>
+        <span class="today-orders__empty today-orders__text">{{i18n 'managerPage.todaysOrder.emptyList'}}</span>
     {{/each}}
 </div>
-<div class="today-orders_print-button-container"><button class="today-orders_print-button universal-hover-effect">Print</button></div>
+
+{{#if this}}
+    <div class="today-orders_print-button-container">
+        <button class="today-orders_print-button universal-hover-effect">
+            {{i18n 'other.print'}}
+        </button>
+    </div>
+{{/if}}
