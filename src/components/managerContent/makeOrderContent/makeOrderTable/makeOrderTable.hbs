@@ -3,16 +3,14 @@
         <span class="make-order__dish-header-title">{{i18n 'managerPage.makeAnOrder.dishTitle'}}</span><span
             class="make-order__dish-amount">{{i18n 'managerPage.makeAnOrder.amount'}}</span>
     </div>
-    {{#each items}}
+    <div class="make-order__table">
+        {{#each items}}
 
-        <div class="make-order_order-item">
-            <span class="make-order__dish-title">{{dishTitle}}</span>
-            <span class="make-order__amount">{{amount}}</span>
+            <div class="make-order_order-item">
+                <span class="make-order__dish-title">{{dishTitle}}</span>
+                <span class="make-order__amount">{{amount}}</span>
+            </div>
 
-        </div>
-
-    {{/each}}
-    {{#unless items}}
-        <span class="make-order__empty-list">{{i18n 'managerPage.makeAnOrder.emptyList'}}</span>
-    {{/unless}}
+        {{/each}}
+    </div>
 </div>

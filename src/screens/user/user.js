@@ -192,8 +192,10 @@ export default class UsersScreen {
 
         propsForCards.forEach((props) => {
           const cardContainer = document.createElement('div');
-          target.querySelector('.menus-cards-container').appendChild(cardContainer);
-
+          const container = target.querySelector('.menus-cards-container');
+          if (container) {
+            container.appendChild(cardContainer);
+          }
           const card = new Card(cardContainer, Object.assign({ callback: this.makePopup }, props));
           card.render(cardContainer, Object.assign({ callback: this.makePopup }, props));
 

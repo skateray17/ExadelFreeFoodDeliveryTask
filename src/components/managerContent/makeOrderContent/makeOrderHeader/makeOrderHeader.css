@@ -6,7 +6,9 @@
 }
 
 .make-order__header-title {
-    font-size: 18px;
+    font-size: 21px;
+    /*font-weight: 600;*/
     text-align: center;
-    padding: 8px 0;
+    padding: 10px 0;
+    color: #6E6E6E;
 }

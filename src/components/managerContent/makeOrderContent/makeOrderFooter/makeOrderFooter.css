@@ -2,6 +2,9 @@
     padding: 10px 20%;
     display: flex;
     justify-content: space-evenly;
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
 }
 .make-order_submit-button,.make-order_print-button {
     height: 40px;

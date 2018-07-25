@@ -24,7 +24,8 @@
     },
     "todaysOrder": {
       "tabName": "Today's order",
-      "emptyList": "There aren't orders for today"
+      "emptyList": "There aren't orders for today",
+      "tableHeader": "Orders for today"
     },
     "updateBalance": {
       "tabName": "Update balance",
