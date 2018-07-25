@@ -68,14 +68,16 @@ export default class Card {
   }
 
   createCardProps(props) {
+    const isAnyOrders = !!props.order || !!props.orderedCommon;
+
     return {
-      totalPrice: props.order ? props.totalPrice.toFixed(2) : null,
-      active: props.menu && true,
-      button: props.order && true ? i18n.t('userPage.editOrder') : i18n.t('userPage.makeAnOrder'),
-      sumPrice: props.order && true,
-      emptyMenu: !(props.menu && true),
-      emptyOrder: !(props.order && true),
-      showButton: props.menu && !props.inPopup && true ? props.menu.available : false,
+      totalPrice: isAnyOrders ? props.totalPrice.toFixed(2) : null,
+      active: !!props.menu,
+      button: isAnyOrders ? i18n.t('userPage.editOrder') : i18n.t('userPage.makeAnOrder'),
+      sumPrice: isAnyOrders,
+      emptyMenu: !props.menu,
+      emptyOrder: !isAnyOrders,
+      showButton: !!props.menu && !props.inPopup ? props.menu.available : false,
       imageUrl: require('../../../../images/not-chosen-menu.png'),
     };
   }
@@ -83,20 +85,20 @@ export default class Card {
   insertCardContent(cardItem, props, target) {
     const header = new Header();
     header.render(cardItem.querySelector('.header'), this.createHeaderProps(props));
-
-    if (props.order) {
-      if (!this.props.inPopup && props.order.length > MAX_VISIBLE_ITEMS /* && props.header.active */) {
+    const allOrders = (props.order || []).concat(props.orderedCommon || []);
+    if (allOrders) {
+      if (!this.props.inPopup && allOrders.length > MAX_VISIBLE_ITEMS /* && props.header.active */) {
         this.createShowMore(target, props);
 
         for (let i = 0; i < MAX_VISIBLE_ITEMS; i++) {
-          this.createOrderItem(target, props.order[i]);
+          this.createOrderItem(target, allOrders[i]);
         }
       } else if (
-        props.order.length > 0
-        && (props.order.length <= MAX_VISIBLE_ITEMS || this.props.inPopup)
+        allOrders.length > 0
+        && (allOrders.length <= MAX_VISIBLE_ITEMS || this.props.inPopup)
         && props.menu
       ) {
-        for (const order of props.order) {
+        for (const order of allOrders) {
           this.createOrderItem(cardItem, order);
         }
       }
