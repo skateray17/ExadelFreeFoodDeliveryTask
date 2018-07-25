@@ -46,13 +46,11 @@ export default class UserBalanceItems {
     this.elem.onkeypress = (e) => {
       if (e.target.tagName === 'INPUT') {
         const symbol = String.fromCharCode(e.which);
-        if (this.checkSymbol(symbol, e)) {
+        const isBadSymbol = !/^[+-]?\d*(\.\d{0,2})?\r?$/g.test(e.target.value + symbol);
+        if (isBadSymbol) {
           e.preventDefault();
         }
       }
     };
-  }
-  checkSymbol(symbol, event) {
-    return (((!symbol.match(/[0-9.]/) || (symbol === '.' && (event.target.value.indexOf('.') !== -1))) || (event.target.value.split('.')[1] || { length: 0 }).length >= 2) && (!(symbol === '-' && !event.target.value.length) &&git  event.which !== 13));
   }
 }
