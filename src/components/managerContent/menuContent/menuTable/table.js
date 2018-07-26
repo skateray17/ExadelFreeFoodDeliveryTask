@@ -163,18 +163,21 @@ export default class MenuTable {
       post('menu', {
         'content-type': 'text/plain',
       }, { date: isCurrParam }, file)
-        .then((res) => {
+        .then(async (res) => {
           if (res.status !== 200) {
-            return Promise.reject();
+            return Promise.reject(res.json());
           }
           return res.json();
         })
         .then(() => {
           this.showWeek(current);
         })
-        .catch(() => {
-          Toast.show({ title: i18n.t('other.networkError'), type: 'error' });
-          this.showError(i18n.t('other.uploadError'));
+        .catch((err) => {
+          err.then((error) => {
+            Toast.show({ title: error.message, type: 'error' });
+            this.showError(i18n.t('other.uploadError'));
+          });
+
         })
         .finally(() => {
           spinner.destroy();
