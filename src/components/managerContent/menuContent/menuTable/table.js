@@ -163,7 +163,7 @@ export default class MenuTable {
       post('menu', {
         'content-type': 'text/plain',
       }, { date: isCurrParam }, file)
-        .then(async (res) => {
+        .then((res) => {
           if (res.status !== 200) {
             return Promise.reject(res.json());
           }
