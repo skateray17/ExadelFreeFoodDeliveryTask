@@ -79,7 +79,7 @@
     }
   },
   "error": {
-    "file error": "file error",
-    "date error": "date error"
+    "file error": "Incorrect menu",
+    "date error": "Wrong date"
   }
 }
