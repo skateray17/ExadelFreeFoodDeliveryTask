@@ -77,5 +77,9 @@
       "saturday": "Sat",
       "sunday": "Sun"
     }
+  },
+  "error": {
+    "file error": "file error",
+    "date error": "date error"
   }
 }
