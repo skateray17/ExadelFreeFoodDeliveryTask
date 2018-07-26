@@ -78,7 +78,7 @@
       "sunday": "Sun"
     }
   },
-  "error": {
+  "fromServer": {
     "file error": "Incorrect menu",
     "date error": "Wrong date"
   }

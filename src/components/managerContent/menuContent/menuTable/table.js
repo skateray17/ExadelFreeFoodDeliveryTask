@@ -174,7 +174,7 @@ export default class MenuTable {
         })
         .catch((err) => {
           err.then((error) => {
-            Toast.show({ title: i18n.t(`error.${error.message}`), type: 'error' });
+            Toast.show({ title: i18n.t(`fromServer.${error.message}`), type: 'error' });
             this.showError(i18n.t('other.uploadError'));
           });
 

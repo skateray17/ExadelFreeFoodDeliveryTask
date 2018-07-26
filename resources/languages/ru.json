@@ -78,7 +78,7 @@
       "sunday": "Вс"
     }
   },
-  "error": {
+  "fromServer": {
     "file error": "Некорректное меню",
     "date error": "Неправильная дата"
   }
