@@ -69,7 +69,6 @@ export default class Card {
 
   createCardProps(props) {
     const isAnyOrders = !!props.order || !!props.orderedCommon;
-
     return {
       totalPrice: isAnyOrders ? props.totalPrice.toFixed(2) : null,
       active: !!props.menu,
