@@ -50,10 +50,11 @@ export default class Card {
     Popup.show(propsPopup);
   }
   createShowMore(target, props) {
+    const length = (props.order || []).length + (props.orderedCommon || []).length;
     const showMore = new ShowMore();
     const space = target.querySelector('.free-space');
     showMore.render(space, {
-      numberOfAdditionalOrders: props.order.length - MAX_VISIBLE_ITEMS,
+      numberOfAdditionalOrders: length - MAX_VISIBLE_ITEMS,
     });
     space.addEventListener('click', this.onMore);
   }
