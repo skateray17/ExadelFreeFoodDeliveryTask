@@ -17,28 +17,30 @@ function isMenuForTodayAvailable() {
 export default class makeOrderFooter {
   render(target, props) {
     const element = target.appendChild(createElementsFromString(template(props)));
-    element.querySelector('.make-order_print-button').addEventListener('click', () => (new MakeOrderPage()).printTable());
-    isMenuForTodayAvailable().then((res) => {
-      if (res) {
-        element.querySelector('.make-order_submit-button').addEventListener('click', () => {
-          const spinner = new Spinner();
-          spinner.render(document.querySelector('.content'));
-          put('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ available: false }))
-            .then((response) => {
-              if (response.ok) {
-                element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
-                element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
-              }
-            }).finally(() => {
-              spinner.destroy();
-            });
-        });
-      } else {
-        element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
-        element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
-      }
-    });
-
+    const buttonPrint = element.querySelector('.make-order_print-button');
+    if (buttonPrint) {
+      buttonPrint.addEventListener('click', () => (new MakeOrderPage()).printTable());
+      isMenuForTodayAvailable().then((res) => {
+        if (res) {
+          element.querySelector('.make-order_submit-button').addEventListener('click', () => {
+            const spinner = new Spinner();
+            spinner.render(document.querySelector('.content'));
+            put('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ available: false }))
+              .then((response) => {
+                if (response.ok) {
+                  element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+                  element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
+                }
+              }).finally(() => {
+                spinner.destroy();
+              });
+          });
+        } else {
+          element.querySelector('.make-order_submit-button').style = 'cursor: not-allowed;';
+          element.querySelector('.make-order_submit-button').setAttribute('disabled', 'true');
+        }
+      });
+    }
     return element;
   }
 }

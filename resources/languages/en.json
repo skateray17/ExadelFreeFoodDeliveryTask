@@ -24,7 +24,8 @@
     },
     "todaysOrder": {
       "tabName": "Today's order",
-      "emptyList": "There aren't orders for today"
+      "emptyList": "There aren't orders for today",
+      "tableHeader": "Orders for today"
     },
     "updateBalance": {
       "tabName": "Update balance",
@@ -76,5 +77,9 @@
       "saturday": "Sat",
       "sunday": "Sun"
     }
+  },
+  "fromServer": {
+    "file error": "Incorrect menu",
+    "date error": "Wrong date"
   }
 }

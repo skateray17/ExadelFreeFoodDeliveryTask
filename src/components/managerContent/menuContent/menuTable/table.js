@@ -5,13 +5,14 @@ import weekTabTemplate from './weektab.hbs';
 import menuItem from '../menuItem/menuItem.hbs';
 import { createElementsFromString } from '../../../../common/utils';
 import { getMenu, fetchMenu } from '../../../../common/menuService';
-import { post, put } from '../../../../common/requests';
+import { post, put, Delete } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
 import DeleteMenuForm from '../deleteMenuForm/deleteMenuForm';
 import Toast from '../../../toast/toast';
 import i18n from './../../../../common/i18n';
+
 
 export default class MenuTable {
   render(target) {
@@ -110,10 +111,11 @@ export default class MenuTable {
       new DeleteMenuForm().render(target);
       target.querySelector('.delete-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
-
-        const menuTableComponent = target.parentNode;
-        this.reloadContent(menuTableComponent);
-        this.render(menuTableComponent);
+        Delete('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ date: menuObj.date })).then(() => {
+          const menuTableComponent = target.parentNode;
+          this.reloadContent(menuTableComponent);
+          this.render(menuTableComponent);
+        });
       });
     }
 
@@ -163,16 +165,19 @@ export default class MenuTable {
       }, { date: isCurrParam }, file)
         .then((res) => {
           if (res.status !== 200) {
-            return Promise.reject();
+            return Promise.reject(res.json());
           }
           return res.json();
         })
         .then(() => {
           this.showWeek(current);
         })
-        .catch(() => {
-          Toast.show({ title: i18n.t('other.networkError'), type: 'error' });
-          this.showError(i18n.t('other.uploadError'));
+        .catch((err) => {
+          err.then((error) => {
+            Toast.show({ title: i18n.t(`fromServer.${error.message}`), type: 'error' });
+            this.showError(i18n.t('other.uploadError'));
+          });
+
         })
         .finally(() => {
           spinner.destroy();

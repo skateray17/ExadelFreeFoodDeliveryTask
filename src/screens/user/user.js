@@ -141,6 +141,9 @@ function createPropsForCards(menuFromServer) {
         if (day.order.length === 0) {
           day.order = undefined;
         }
+        if (day.orderedCommon.length === 0) {
+          day.orderedCommon = undefined;
+        }
       }
     }
   }
@@ -192,8 +195,10 @@ export default class UsersScreen {
 
         propsForCards.forEach((props) => {
           const cardContainer = document.createElement('div');
-          target.querySelector('.menus-cards-container').appendChild(cardContainer);
-
+          const container = target.querySelector('.menus-cards-container');
+          if (container) {
+            container.appendChild(cardContainer);
+          }
           const card = new Card(cardContainer, Object.assign({ callback: this.makePopup }, props));
           card.render(cardContainer, Object.assign({ callback: this.makePopup }, props));
 
@@ -311,6 +316,9 @@ export default class UsersScreen {
             }
             if (cardUpdates.order.length === 0) {
               cardUpdates.order = undefined;
+            }
+            if (cardUpdates.orderedCommon.length === 0) {
+              cardUpdates.orderedCommon = undefined;
             }
             cardUpdates.totalPrice = response.totalPrice;
             this.update(cardUpdates, date);

@@ -1,16 +1,17 @@
 .user-balance__table-header{
   border-bottom: 1px solid #E0E0E0;
-  border-top: 1px solid #E0E0E0;
+  /*border-top: 1px solid #E0E0E0;*/
   display: flex;
   min-height: 40px;
   justify-content: space-between;
   align-items: center;
   padding: 0 270px 0 34px;
+  margin-top: 15px;
 }
 
 .user-balance__user-name-title, .user-balance__balance-title{
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 19px;
+  font-weight: 500;
   color: #6E6E6E;
 }
 

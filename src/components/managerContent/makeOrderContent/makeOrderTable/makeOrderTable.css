@@ -1,15 +1,45 @@
+.make-order__table {
+    max-height: 335px;
+    overflow: auto;
+    margin-right: 3px;
+}
+.make-order__table::-webkit-scrollbar {
+    padding-left:10px;
+    width: 10px;
+    margin-right: 5px;
+}
+
+.make-order__table::-webkit-scrollbar-track {
+    border-radius: 9px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.make-order__table::-webkit-scrollbar-thumb {
+    background-color: #008AFF;
+    border-radius: 9px;
+    outline: 1px solid slategrey;
+}
+
+.make-order__table::-webkit-scrollbar-thumb:hover {
+    background-color: #68a3f7;
+}
+
 .make-order__table-header, .make-order_order-item {
     min-height: 42px;
-    border-top: 1px solid #E0E0E0;
+    /*border-top: 1px solid #E0E0E0;*/
     border-bottom: 1px solid #E0E0E0;
     padding: 0 34px 0 34px;
     align-items: center;
     display: flex;
     justify-content: space-between;
 }
-
+.make-order__table-header {
+    border:none;
+    margin-bottom: 10px;
+}
 .make-order__dish-header-title, .make-order__dish-amount {
-    font-size: 18px;
+    font-size: 19px;
+    font-weight: 500;
     color: #6E6E6E;
 }
 
@@ -31,4 +61,11 @@
     color: #6E6E6E;
     margin: 20px 30px;
     text-align: center;
+}
+
+@media screen and (max-width: 500px){
+    .make-order__table {
+        max-height: max-content;
+        overflow: unset;
+    }
 }
