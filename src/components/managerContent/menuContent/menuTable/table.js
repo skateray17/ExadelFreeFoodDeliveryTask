@@ -9,7 +9,6 @@ import { post, put, Delete } from '../../../../common/requests';
 import errorTemplate from './error.hbs';
 import Spinner from '../../../spinner/spinner';
 import UploadMenuForm from '../uploadMenuForm/uploadMenuForm';
-import DeleteMenuForm from '../deleteMenuForm/deleteMenuForm';
 import Toast from '../../../toast/toast';
 import i18n from './../../../../common/i18n';
 
@@ -110,9 +109,6 @@ export default class MenuTable {
     if (props.menu) {
       console.log(menuObj);
       console.log(target);
-      const render = menuObj.published ? target : target.querySelector('.123');
-      console.log(render);
-      new DeleteMenuForm().render(render);
       target.querySelector('.delete-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         Delete('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ date: menuObj.date })).then(() => {
