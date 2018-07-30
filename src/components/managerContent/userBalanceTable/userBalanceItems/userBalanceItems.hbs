@@ -4,17 +4,16 @@
     <span class="user-balance__balance-title">{{i18n 'managerPage.updateBalance.balance'}}</span>
   </div>
   {{#each result}}
-  <div class="user-balance__user-item">
+  <form class="user-balance__user-item">
     <span class="user-balance__user-name">{{firstName}} {{lastName}}</span>
     <div class="user-balance__balance-container">
       <span class="user-balance__balance">{{balance}} </span>
       <span class="user-balance__currency"> BYN</span>
     </div>
-    <form class="user-balance__submit-form">
-      <input class="user-balance__balance-input" placeholder="{{i18n 'managerPage.updateBalance.enterSum'}}"></input>
-      <button type="submit" class="user-balance__submit-button user-balance__submit-button--active">{{i18n 'managerPage.updateBalance.replenish'}}</button>
-    </form>
-  </div>
+
+    <input class="user-balance__balance-input" placeholder="{{i18n 'managerPage.updateBalance.enterSum'}}"></input>
+    <button type="submit" class="user-balance__submit-button user-balance__submit-button--active">{{i18n 'managerPage.updateBalance.replenish'}}</button>
+  </form>
   {{/each}} {{#unless result}}
   <span class="user-balance__empty-list">{{i18n 'managerPage.updateBalance.emptySearch'}}</span>
   {{/unless}}

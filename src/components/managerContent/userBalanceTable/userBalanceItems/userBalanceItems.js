@@ -34,7 +34,7 @@ export default class UserBalanceItems {
       const toAdd = Number.parseFloat(input.value);
       input.value = '';
       if (!Number.isNaN(toAdd)) {
-        const ind = [].indexOf.call(this.elem.children, e.target.parentNode) - 1;
+        const ind = [].indexOf.call(this.elem.children, e.target) - 1;
         changeUserBalance(this.props.result[ind].username, toAdd)
           .then((res) => {
             this.props.result[ind].balance = res.balance;
