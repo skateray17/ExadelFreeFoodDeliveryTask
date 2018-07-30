@@ -124,7 +124,7 @@
 .menu-controllers{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 }
 .publish-button,.upload-menu__button{
     background-color: #5aad3c;
