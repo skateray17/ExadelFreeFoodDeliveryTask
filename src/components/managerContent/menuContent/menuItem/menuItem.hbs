@@ -14,9 +14,14 @@
     {{/if}}
 </div>
 {{/each}}
-{{#if published}}
-{{else}}
-<button class="publish-button shadow">
-    {{i18n 'managerPage.uploadMenu.publishMenu'}}
-</button>
-{{/if}}
+
+<div class="menu-controllers">
+    {{#if published}} {{else}}
+    <button class="publish-button shadow">
+        {{i18n 'managerPage.uploadMenu.publishMenu'}}
+    </button>
+    {{/if}}
+    <button type="submit" class="delete-menu__button">
+        {{i18n 'managerPage.uploadMenu.deleteMenu'}}
+    </button>
+</div>
