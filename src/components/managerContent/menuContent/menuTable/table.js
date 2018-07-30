@@ -108,7 +108,11 @@ export default class MenuTable {
     this.rendermenuItems(target, menuObj, current);
 
     if (props.menu) {
-      new DeleteMenuForm().render(target);
+      console.log(menuObj);
+      console.log(target);
+      const render = menuObj.published ? target : target.querySelector('.123');
+      console.log(render);
+      new DeleteMenuForm().render(render);
       target.querySelector('.delete-menu__button').addEventListener('click', (e) => {
         e.preventDefault();
         Delete('menu/', { 'Content-Type': 'application/json' }, {}, JSON.stringify({ date: menuObj.date })).then(() => {

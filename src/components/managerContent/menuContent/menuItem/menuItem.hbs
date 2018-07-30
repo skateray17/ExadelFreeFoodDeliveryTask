@@ -13,10 +13,10 @@
     <div class="menu-item__no-menu-msg">{{i18n 'managerPage.uploadMenu.nomenu'}}</div>
     {{/if}}
 </div>
-{{/each}}
-{{#if published}}
-{{else}}
-<button class="publish-button shadow">
-    {{i18n 'managerPage.uploadMenu.publishMenu'}}
-</button>
+{{/each}} {{#if published}} {{else}}
+<div class="123">
+    <button class="publish-button shadow">
+        {{i18n 'managerPage.uploadMenu.publishMenu'}}
+    </button>
+</div>
 {{/if}}
