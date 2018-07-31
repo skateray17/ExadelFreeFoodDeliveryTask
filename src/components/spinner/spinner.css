@@ -9,6 +9,7 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 15;
+    border-radius: 5px;
 }
 .lds-roller {
     margin: auto;

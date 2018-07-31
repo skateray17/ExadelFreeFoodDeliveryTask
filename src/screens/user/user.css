@@ -1,6 +1,6 @@
 .menus-cards-container{
-	background-color: #eee;
-	margin: 16px auto;
+	/*background-color: #eee;*/
+	margin: 50px auto;
 	max-width: 1500px;
 	display: flex;
 	flex-direction: row;

@@ -1,1 +1,20 @@
-<div class="popup"></div>
+<div class="popup">
+    {{#if text}}
+    <div class="popup_content">
+        <div class="popup_content_header">
+            {{i18n 'other.warning'}}
+            <span class="popup_content_close">✖</span>
+        </div>
+        {{i18n text}}
+
+        <div class="popup_content_buttons">
+            <div class="popup_content_buttons_agree">
+                {{i18n 'other.yes'}}
+            </div>
+            <div class="popup_content_buttons_disagree">
+                {{i18n 'other.no'}}
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>

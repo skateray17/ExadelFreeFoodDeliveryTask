@@ -4,6 +4,8 @@
     flex-direction: column;
     background-color: white;
     font-size: 19px;
+    max-height: 768px;
+    border-radius: 6px;
 }
 .card-header {
     padding: 0 10px 0 10px;
@@ -14,9 +16,33 @@
     height: 50px;
     font-size: 19px;
 }
+.edit-card-content {
+    margin-right: 3px;
+    overflow: auto;
+    margin-top: 3px;
+}
+.edit-card-content::-webkit-scrollbar {
+    padding-left:10px;
+    width: 10px;
+    margin-right: 5px;
+}
+
+.edit-card-content::-webkit-scrollbar-track {
+    border-radius: 9px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.edit-card-content::-webkit-scrollbar-thumb {
+    background-color: #008AFF;
+    border-radius: 9px;
+    outline: 1px solid slategrey;
+}
+
+.edit-card-content::-webkit-scrollbar-thumb:hover {
+    background-color: #68a3f7;
+}
 .total-cost{
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 14px 10px;
   padding: 10px 20px 5px 20px;
   display: flex;
   justify-content: space-between;
@@ -30,22 +56,33 @@
   justify-content: space-around;
   margin-bottom: 10px;
 }
-.edit-card-cancel{
+.edit-card-cancel,.edit-card-sub{
   cursor: pointer;
-  background: #d64343;
   color: white;
-  width: 49%;
-  height: 30px;
+  width: 45%;
+  height: 35px;
   font-size: 19px;
+}
+.edit-card-cancel{
+    background: #d64343;
 }
 .edit-card-sub{
-  cursor: pointer;
-  background: #39c139;
-  color: white;
-  width: 49%;
-  height: 30px;
-  font-size: 19px;
+    background: #5aad3c;
 }
+
 .edit-card-txt-T,.edit-card-txt-C{
   font-size: 19px; 
+}
+
+@media screen and (max-width: 420px) {
+    .edit-card {
+        width: 95%;
+        max-height: 75%;
+    }
+    .edit-card-cancel, .edit-card-sub, .edit-card-txt-T, .edit-card-txt-C, .menu-item-info, .weight, .cost {
+        font-size: 17px;
+    }
+    .menu-item {
+        padding: 10px 13px 5px 5px;
+    }
 }
