@@ -66,11 +66,6 @@ export default class Router {
         this.navigate('error');
       }
       const field = temp.substring(1);
-      console.log(url);
-      console.log(hash);
-      console.log(temp);
-      console.log(field);
-      console.log(this.routs);
 
       if (this.routes.hasOwnProperty(field)) {
         this.checkGuards(this.routes[field].guards, field).then((isAllowed) => {
