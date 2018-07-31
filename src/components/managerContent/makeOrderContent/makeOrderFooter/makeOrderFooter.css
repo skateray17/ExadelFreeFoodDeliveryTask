@@ -16,3 +16,9 @@
     cursor: pointer;
     transition: .4s;
 }
+
+@media screen and (max-width: 420px) {.login__content
+    .make-order_print-button-container {
+        padding: unset;
+    }
+}

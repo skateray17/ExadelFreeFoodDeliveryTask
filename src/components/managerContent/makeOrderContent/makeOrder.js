@@ -28,9 +28,6 @@ export default class MakeOrderPage {
     const makeOrderTable = new MakeOrderTable();
     const makeOrderTableFooter = new MakeOrderTableFooter();
     const makeOrderTableElement = target.appendChild(createElementsFromString(template()));
-
-
-
     const spinner = new Spinner();
     spinner.render(document.querySelector('.content'));
     get('order/', {}, { currentDate: new Date().toISOString().replace('Z', '') })
@@ -42,16 +39,15 @@ export default class MakeOrderPage {
         let isEmpty = {
             empty:false
         };
-
         if (res.result.length > 0) {
             res.result.forEach((item) => {
-                item.dishList.forEach((dish) => {
-                    if (obj[dish.dishTitle] !== undefined) {
-                        obj[dish.dishTitle] += dish.amount;
-                    } else {
-                        obj[dish.dishTitle] = dish.amount;
-                    }
-                });
+            item.dishList.forEach((dish) => {
+            if (obj[dish.dishTitle] !== undefined) {
+                obj[dish.dishTitle] += dish.amount;
+            } else {
+                obj[dish.dishTitle] = dish.amount;
+            }
+            });
                 totalPrice += item.totalPrice;
             });
             Object.keys(obj).forEach((key) => {
@@ -59,11 +55,10 @@ export default class MakeOrderPage {
             });
             totalPrice = parseFloat((totalPrice).toFixed(2));
             makeOrderHeader.render(makeOrderTableElement, isEmpty);
+            makeOrderFooter.render(makeOrderTableElement, props);
             makeOrderTable.render(makeOrderTableElement, { items: array, totalPrice });
             makeOrderTableFooter.render(makeOrderTableElement, { totalPrice });
-            makeOrderFooter.render(makeOrderTableElement, props);
-        }
-        else {
+        } else {
             isEmpty.empty = true;
             makeOrderHeader.render(makeOrderTableElement, isEmpty);
         }

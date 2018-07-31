@@ -32,6 +32,12 @@
   color: #212121;
 }
 
+.user-balance__submit-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .user-balance__balance-input{
   padding-bottom: 3px;
   text-align: center;
@@ -94,8 +100,8 @@
   }
 
   .user-balance__submit-button{
-    grid-column: span 3;
-    width: 100%;
+    /*grid-column: span 3;*/
+    /*width: 100%;*/
     height: 30px;
     line-height: 30px;
     font-size: 18px;
@@ -111,15 +117,14 @@
 
 }
 
-@media screen and (max-width: 375px){
+@media screen and (max-width: 420px){
 
   .user-balance__user-item{
     grid-template-columns: auto auto;
     grid-template-rows: 40px 40px auto;
   }
 
-  .user-balance__submit-button, .user-balance__balance-input{
-    grid-column: span 2;
+  .user-balance__submit-button{
   }
 
   .user-balance__table-header{
@@ -127,7 +132,10 @@
   }
 
   .user-balance__balance-input{
-    width: 100%;
+  }
+
+  .user-balance__submit-form {
+    justify-content: flex-start;
   }
 
 }

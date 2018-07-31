@@ -106,17 +106,28 @@
 }
 .fake-input{
     background-color: white;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: center;
 }
 .fake-button{
-    padding: 5px;
+    padding: 5px 12px;
     background-color: rgba(0,0,0,0);
     color: #212121;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     border: 1px solid #5aad3c;
+    border-radius: 3px;
 }
+/*.fake-button:hover{*/
+    /*background: #008aff;*/
+    /*color: white;*/
+    /*border: 1px solid #008aff;*/
+/*}*/
 .file-msg{
     margin: 10px;
+    font-size: 18px;
 }
 .upload-menu__button,.delete-menu__button{
     align-self: center;
@@ -136,12 +147,10 @@
     cursor: pointer;
 }
 .delete-menu__button{
-    background-color: #f70000;
-    width: auto;
-    padding: 8px;
+    background-color: #f70000ba;
+    padding: 8px 15px;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
-    align-self: center;
     cursor: pointer;
 }
 .publish-button{

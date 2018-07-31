@@ -19,12 +19,12 @@ export default class Toast {
     // fix animation
     setImmediate(() => { toast.classList.add(showClassName); });
 
-    toast.querySelector('#snackbar').style.backgroundColor = typeOfToast[props.type];
+    // toast.querySelector('#snackbar').style.backgroundColor = typeOfToast[props.type];
     const time = props.timeout || 3000;
     if (props.canDismiss) {
       dismissButton.classList.add(showClassName);
       dismissButton.addEventListener('click', (event) => {
-        const target = event.target.closest('.snackbar__container');
+        const target = event.target.closest('#snackbar');
         removeToast(target);
       });
     } else {
